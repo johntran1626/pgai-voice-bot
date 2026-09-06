@@ -1,3 +1,26 @@
-requests>=2.31.0
+# Web server that receives the phone call's audio (a WebSocket server).
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+
+# WebSocket *client* — used to talk to OpenAI's Realtime API.
+# >=14 because that version renamed the header argument we use.
+websockets>=14.0
+
+# Twilio's official library — used to place the phone call and grab recordings.
+twilio>=9.3.0
+
+# OpenAI's official library — used only for the after-the-fact bug analysis.
+# (The live call talks to OpenAI over a raw WebSocket, not through this.)
+openai>=1.50.0
+
+# Reads your secret keys out of the .env file.
 python-dotenv>=1.0.0
-anthropic>=0.40.0
+
+# Plain HTTP requests (downloading recordings).
+requests>=2.31.0
+
+# Needed by tools/selftest.py (FastAPI's TestClient).
+httpx>=0.27.0
+
+# Opens a public internet tunnel to your laptop so Twilio can reach it.
+pyngrok>=7.2.0

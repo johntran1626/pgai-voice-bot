@@ -1,7 +1,15 @@
-env
+# NEVER commit real secrets.
 .env
+
+# Python junk
 __pycache__/
 *.pyc
-.DS_Store
 venv/
 .venv/
+
+# macOS junk
+.DS_Store
+
+# Raw per-call working files are committed (they're deliverables),
+# but ignore anything temporary.
+*.tmp
