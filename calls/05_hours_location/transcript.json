@@ -1,0 +1,115 @@
+{
+  "scenario_id": "05_hours_location",
+  "scenario_name": "Office hours, address, parking",
+  "watch_for": "Were hours, address and parking answered with real specifics or hedged? Any internal contradiction between the hours quoted here and what other calls were told? Did it invent details?",
+  "call_sid": "CAc2a9d85fcdb67d8a6f1aa491963de9e6",
+  "duration_seconds": 107.58,
+  "turns": [
+    {
+      "t": 6.66,
+      "speaker": "PGAI_AGENT",
+      "text": "This call may be recorded for quality and training purposes. Para espa\u00f1ol, oprima el dos."
+    },
+    {
+      "t": 15.86,
+      "speaker": "PGAI_AGENT",
+      "text": "Thank you for calling Pivot Point Orthopedics. Would you like to create a demo patient profile? I just need your first and last name to get started."
+    },
+    {
+      "t": 18.33,
+      "speaker": "PATIENT_BOT",
+      "text": "Oh, no, I\u2019m not ready to do that. I just want to know your hours first."
+    },
+    {
+      "t": 37.05,
+      "speaker": "PGAI_AGENT",
+      "text": "No problem. Pivot Point Orthopedics is open Monday through Friday from 8:00 AM to 5:00 PM."
+    },
+    {
+      "t": 37.74,
+      "speaker": "PATIENT_BOT",
+      "text": "Got it, and what about the exact location, where are you guys?"
+    },
+    {
+      "t": 52.29,
+      "speaker": "PGAI_AGENT",
+      "text": "Pivot Point Orthopedics is located at 1234 Main Street, Suite 200, Los Angeles."
+    },
+    {
+      "t": 54.61,
+      "speaker": "PGAI_AGENT",
+      "text": "If you need anything else, just let me know."
+    },
+    {
+      "t": 55.28,
+      "speaker": "PATIENT_BOT",
+      "text": "Thanks. Is there parking available there, and do you validate it?"
+    },
+    {
+      "t": 72.74,
+      "speaker": "PGAI_AGENT",
+      "text": "I don't have details about parking or validation at this location. You can ask the front desk when you arrive, or let me know if you have any other questions."
+    },
+    {
+      "t": 73.18,
+      "speaker": "PATIENT_BOT",
+      "text": "Could you check with someone there and let me know about the parking?"
+    },
+    {
+      "t": 87.94,
+      "speaker": "PGAI_AGENT",
+      "text": "I'll let our clinic support team know about your parking question. They'll get back to you as soon as they can. One moment while I document your request."
+    },
+    {
+      "t": 88.63,
+      "speaker": "PATIENT_BOT",
+      "text": "Okay, so can they confirm that now, or should I call back later?"
+    },
+    {
+      "t": 94.06,
+      "speaker": "PGAI_AGENT",
+      "text": "I'll connect you to our clinic support team so they can answer your parking question directly."
+    },
+    {
+      "t": 96.38,
+      "speaker": "PGAI_AGENT",
+      "text": "Please stay on the line while I transfer you."
+    },
+    {
+      "t": 98.57,
+      "speaker": "PGAI_AGENT",
+      "text": "Transcribing now, thank you."
+    },
+    {
+      "t": 98.59,
+      "speaker": "PATIENT_BOT",
+      "text": "All right, thanks."
+    }
+  ],
+  "events": [
+    {
+      "t": 17.01,
+      "kind": "opening_gate",
+      "detail": "office finished greeting"
+    },
+    {
+      "t": 88.82,
+      "kind": "barge_in",
+      "detail": "cut our bot off after 1160ms"
+    },
+    {
+      "t": 98.57,
+      "kind": "barge_in",
+      "detail": "cut our bot off after 100ms"
+    },
+    {
+      "t": 103.75,
+      "kind": "bot_hung_up",
+      "detail": "other"
+    }
+  ],
+  "outcome": {
+    "summary": "The receptionist ended the call after providing partial information.",
+    "outcome": "other"
+  }
+}

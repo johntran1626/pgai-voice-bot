@@ -2,148 +2,123 @@
   "scenario_id": "02_reschedule",
   "scenario_name": "Move an existing appointment",
   "watch_for": "Did the agent handle both halves \u2014 cancelling the old slot AND booking the new one? Or did it silently create a duplicate appointment? Did it verify identity before changing a booking?",
-  "call_sid": "CA0c201535678a5e4d064cf00f7144866e",
-  "duration_seconds": 240.69,
+  "call_sid": "CAffde424eb2b82361de9c8f24d8c58ac4",
+  "duration_seconds": 194.14,
   "turns": [
     {
-      "t": 6.42,
+      "t": 6.46,
       "speaker": "PGAI_AGENT",
       "text": "This call may be recorded for quality and training purposes. Para espa\u00f1ol, oprima el dos."
     },
     {
-      "t": 15.5,
+      "t": 16.06,
       "speaker": "PGAI_AGENT",
       "text": "Thank you for calling Pivot Point Orthopedics. Would you like to create a demo patient profile? I just need your first and last name to get started."
     },
     {
-      "t": 18.45,
+      "t": 18.32,
       "speaker": "PATIENT_BOT",
-      "text": "Oh, no, I\u2019m actually trying to reschedule an appointment I already have."
+      "text": "Oh, I\u2019ve already got an appointment this Thursday. I need to reschedule it."
     },
     {
-      "t": 31.33,
+      "t": 29.61,
       "speaker": "PGAI_AGENT",
-      "text": "I can help with that. To reschedule your appointment, you'll need a demo patient profile. Would you like to create one now?"
+      "text": "I can help with that. Would you like to create a demo patient profile first?"
     },
     {
-      "t": 33.3,
+      "t": 32.35,
       "speaker": "PGAI_AGENT",
-      "text": "I just need your first and last name."
+      "text": "I just need your first and last name to get started."
     },
     {
-      "t": 33.67,
+      "t": 32.85,
       "speaker": "PATIENT_BOT",
-      "text": "Name\u2019s David Osei."
+      "text": "Hi, yeah, my name's David Osei."
     },
     {
-      "t": 45.51,
+      "t": 50.61,
       "speaker": "PGAI_AGENT",
-      "text": "Your patient profile is set up, and your date of birth is July 4, 2000 for demo purposes."
+      "text": "Your demo patient profile is set up, and your date of birth is July 4, 2000. How can I help you today?"
     },
     {
-      "t": 49.77,
-      "speaker": "PGAI_AGENT",
-      "text": "How can I help you today?"
-    },
-    {
-      "t": 50.51,
+      "t": 51.03,
       "speaker": "PATIENT_BOT",
-      "text": "I need to move my Thursday 2 p.m. appointment to Monday morning."
+      "text": "No, my date of birth is July 9th, 1975."
     },
     {
-      "t": 74.3,
+      "t": 75.42,
       "speaker": "PGAI_AGENT",
-      "text": "I see you have an appointment scheduled for Wednesday, September 9, at 3:00 PM with Dr. Zbigniew Lukaski at Nashville, 220 Athens Way. Is this the appointment you want to move to Monday morning?"
+      "text": "I see you have a follow-up appointment scheduled for Monday, September 14th at 10:00 AM with Doogie Howser at Nashville 220 Athens Way. Is this the appointment you want to reschedule?"
     },
     {
-      "t": 74.77,
+      "t": 75.94,
       "speaker": "PATIENT_BOT",
-      "text": "No, it\u2019s actually the Thursday 2 p.m. one I need to change."
+      "text": "No, that\u2019s not the one I\u2019m calling about. Mine\u2019s on Thursday at 2 p.m."
     },
     {
-      "t": 84.96,
+      "t": 92.3,
       "speaker": "PGAI_AGENT",
-      "text": "The only appointment I see on file is for Wednesday, September 9th at 3pm."
+      "text": "I only see an appointment for Monday, September 14th at 10 AM in your records. Are you possibly calling about a different appointment, or could it be under another name or phone number?"
     },
     {
-      "t": 92.11,
-      "speaker": "PGAI_AGENT",
-      "text": "There isn't a Thursday 2:00 p.m. appointment listed. Would you like to reschedule the Wednesday, September 9th appointment instead?"
-    },
-    {
-      "t": 93.54,
+      "t": 92.73,
       "speaker": "PATIENT_BOT",
-      "text": "I definitely have a Thursday 2 p.m. appointment. Could you double-check under David Osei, born July 9th, 1975?"
+      "text": "Could you double-check under my full name, David Osei?"
     },
     {
-      "t": 112.48,
+      "t": 113.21,
       "speaker": "PGAI_AGENT",
-      "text": "Thanks for clarifying. I'll check for appointments under David Osei with date of birth July 9th, 1975. One moment while I look this up."
+      "text": "I checked your records under the name David Osei and only found the appointment for Monday, September 14th at 10:00 a.m. Are you sure the Thursday appointment was booked at Pivot Point Orthopedics, or could it be with a different clinic?"
     },
     {
-      "t": 112.75,
+      "t": 113.9,
       "speaker": "PATIENT_BOT",
-      "text": "Sure, I\u2019ll wait."
+      "text": "Okay, no worries, maybe it\u2019s under something else. Can we book a new appointment for Monday morning?"
     },
     {
-      "t": 127.87,
+      "t": 134.28,
       "speaker": "PGAI_AGENT",
-      "text": "The only appointment I see is for Wednesday, September 9 at 3PM with Dr. Zbigniew Lukawski at Nashville 220 Athens Way. Would you like to move this appointment to Monday morning?"
+      "text": "Let's look for a new appointment on Monday morning for you. What kind of visit do you need to book? For example, is this for a routine check-up, a follow-up, a new patient consultation, or something else?"
     },
     {
-      "t": 129.2,
-      "speaker": "PATIENT_BOT",
-      "text": "That\u2019s not the right one. I need the Thursday 2 p.m. slot changed. Can you find that appointment or help me reschedule it?"
-    },
-    {
-      "t": 156.51,
-      "speaker": "PGAI_AGENT",
-      "text": "I only see the appointment for Wednesday, September 9th at 3 PM on file. There isn't a Thursday 2 PM appointment listed for you. Would you like to speak with someone from the clinic now to help sort this out? I can transfer you to live support."
-    },
-    {
-      "t": 157.1,
-      "speaker": "PATIENT_BOT",
-      "text": "Okay, can we just book a Monday morning appointment now, and confirm that time?"
-    },
-    {
-      "t": 176.02,
-      "speaker": "PGAI_AGENT",
-      "text": "Before I can book your Monday morning appointment, can you tell me what type of visit you need? For example, is this for a routine office visit, a follow-up, a procedure, or something else?"
-    },
-    {
-      "t": 176.34,
+      "t": 134.41,
       "speaker": "PATIENT_BOT",
       "text": "It\u2019s a follow-up visit."
     },
     {
-      "t": 194.51,
+      "t": 166.85,
       "speaker": "PGAI_AGENT",
-      "text": "The soonest morning appointment I found is Tuesday, September 8 at 10:00 AM with Doogie Howser, Kelly Noble, or Carl Mentz. Would you like to book the 10:00 AM slot on Tuesday?"
+      "text": "Let me try searching for Monday morning appointments again. You already have a follow-up appointment booked for Monday, September 14 at 10:00 a.m. Would you like to keep this appointment, reschedule it, or cancel it?"
     },
     {
-      "t": 195.08,
-      "speaker": "PATIENT_BOT",
-      "text": "I really need a Monday morning. Anything available with any doctor?"
-    },
-    {
-      "t": 213.94,
+      "t": 172.56,
       "speaker": "PGAI_AGENT",
-      "text": "Yes, there is a Monday morning slot available at 10 a.m. on September 14th with Doogie Howser or Kelly Noble. Would you like to book the 10 a.m. slot on Monday?"
+      "text": "Let me know how you'd like to proceed."
     },
     {
-      "t": 214.79,
+      "t": 173.57,
       "speaker": "PATIENT_BOT",
-      "text": "Yeah, let\u2019s go with the 10 a.m. on Monday. And the Thursday one is cancelled, right?"
+      "text": "I want to keep that Monday at 10 a.m. one. And the Thursday one is cancelled, right?"
     },
     {
-      "t": 236.52,
+      "t": 183.0,
       "speaker": "PGAI_AGENT",
-      "text": "You're all set for Monday, September 14th at 10 AM with Dr. Doogie Howser at Pivot Point Orthopedics. Please bring your photo ID, insurance card, and a list of your current medications. Would you like a text confirmation?"
+      "text": "I don't see any Thursday appointment in your records."
     },
     {
-      "t": 236.71,
+      "t": 185.28,
+      "speaker": "PGAI_AGENT",
+      "text": "So there's nothing to cancel for that day."
+    },
+    {
+      "t": 189.22,
+      "speaker": "PGAI_AGENT",
+      "text": "Your Monday, September 14th appointment at 10 AM is still confirmed."
+    },
+    {
+      "t": 190.17,
       "speaker": "PATIENT_BOT",
-      "text": "Sure, a text confirmation would be great."
+      "text": "All right, that works. Thanks a lot\u2014take care."
     }
   ],
   "events": [
@@ -153,18 +128,13 @@
       "detail": "office finished greeting"
     },
     {
-      "t": 113.11,
-      "kind": "barge_in",
-      "detail": "cut our bot off after 780ms"
-    },
-    {
-      "t": 237.37,
+      "t": 190.82,
       "kind": "bot_hung_up",
       "detail": "goal_achieved"
     }
   ],
   "outcome": {
     "outcome": "goal_achieved",
-    "summary": "Appointment rescheduled to Monday at 10 a.m. and old Thursday appointment canceled."
+    "summary": "Confirmed a new appointment for Monday and clarified that no Thursday appointment existed to cancel."
   }
 }

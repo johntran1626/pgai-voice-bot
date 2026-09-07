@@ -1,47 +1,41 @@
 Scenario : 02_reschedule — Move an existing appointment
-Call SID : CA0c201535678a5e4d064cf00f7144866e
-Duration : 4:00
+Call SID : CAffde424eb2b82361de9c8f24d8c58ac4
+Duration : 3:14
 
 PATIENT_BOT = our simulated patient
 PGAI_AGENT  = the AI agent under test at +1-805-439-8008
 ====================================================================
 
 [0:06] PGAI_AGENT: This call may be recorded for quality and training purposes. Para español, oprima el dos.
-[0:15] PGAI_AGENT: Thank you for calling Pivot Point Orthopedics. Would you like to create a demo patient profile? I just need your first and last name to get started.
-[0:18] PATIENT_BOT: Oh, no, I’m actually trying to reschedule an appointment I already have.
-[0:31] PGAI_AGENT: I can help with that. To reschedule your appointment, you'll need a demo patient profile. Would you like to create one now?
-[0:33] PGAI_AGENT: I just need your first and last name.
-[0:33] PATIENT_BOT: Name’s David Osei.
-[0:45] PGAI_AGENT: Your patient profile is set up, and your date of birth is July 4, 2000 for demo purposes.
-[0:49] PGAI_AGENT: How can I help you today?
-[0:50] PATIENT_BOT: I need to move my Thursday 2 p.m. appointment to Monday morning.
-[1:14] PGAI_AGENT: I see you have an appointment scheduled for Wednesday, September 9, at 3:00 PM with Dr. Zbigniew Lukaski at Nashville, 220 Athens Way. Is this the appointment you want to move to Monday morning?
-[1:14] PATIENT_BOT: No, it’s actually the Thursday 2 p.m. one I need to change.
-[1:24] PGAI_AGENT: The only appointment I see on file is for Wednesday, September 9th at 3pm.
-[1:32] PGAI_AGENT: There isn't a Thursday 2:00 p.m. appointment listed. Would you like to reschedule the Wednesday, September 9th appointment instead?
-[1:33] PATIENT_BOT: I definitely have a Thursday 2 p.m. appointment. Could you double-check under David Osei, born July 9th, 1975?
-[1:52] PGAI_AGENT: Thanks for clarifying. I'll check for appointments under David Osei with date of birth July 9th, 1975. One moment while I look this up.
-[1:52] PATIENT_BOT: Sure, I’ll wait.
-[2:07] PGAI_AGENT: The only appointment I see is for Wednesday, September 9 at 3PM with Dr. Zbigniew Lukawski at Nashville 220 Athens Way. Would you like to move this appointment to Monday morning?
-[2:09] PATIENT_BOT: That’s not the right one. I need the Thursday 2 p.m. slot changed. Can you find that appointment or help me reschedule it?
-[2:36] PGAI_AGENT: I only see the appointment for Wednesday, September 9th at 3 PM on file. There isn't a Thursday 2 PM appointment listed for you. Would you like to speak with someone from the clinic now to help sort this out? I can transfer you to live support.
-[2:37] PATIENT_BOT: Okay, can we just book a Monday morning appointment now, and confirm that time?
-[2:56] PGAI_AGENT: Before I can book your Monday morning appointment, can you tell me what type of visit you need? For example, is this for a routine office visit, a follow-up, a procedure, or something else?
-[2:56] PATIENT_BOT: It’s a follow-up visit.
-[3:14] PGAI_AGENT: The soonest morning appointment I found is Tuesday, September 8 at 10:00 AM with Doogie Howser, Kelly Noble, or Carl Mentz. Would you like to book the 10:00 AM slot on Tuesday?
-[3:15] PATIENT_BOT: I really need a Monday morning. Anything available with any doctor?
-[3:33] PGAI_AGENT: Yes, there is a Monday morning slot available at 10 a.m. on September 14th with Doogie Howser or Kelly Noble. Would you like to book the 10 a.m. slot on Monday?
-[3:34] PATIENT_BOT: Yeah, let’s go with the 10 a.m. on Monday. And the Thursday one is cancelled, right?
-[3:56] PGAI_AGENT: You're all set for Monday, September 14th at 10 AM with Dr. Doogie Howser at Pivot Point Orthopedics. Please bring your photo ID, insurance card, and a list of your current medications. Would you like a text confirmation?
-[3:56] PATIENT_BOT: Sure, a text confirmation would be great.
+[0:16] PGAI_AGENT: Thank you for calling Pivot Point Orthopedics. Would you like to create a demo patient profile? I just need your first and last name to get started.
+[0:18] PATIENT_BOT: Oh, I’ve already got an appointment this Thursday. I need to reschedule it.
+[0:29] PGAI_AGENT: I can help with that. Would you like to create a demo patient profile first?
+[0:32] PGAI_AGENT: I just need your first and last name to get started.
+[0:32] PATIENT_BOT: Hi, yeah, my name's David Osei.
+[0:50] PGAI_AGENT: Your demo patient profile is set up, and your date of birth is July 4, 2000. How can I help you today?
+[0:51] PATIENT_BOT: No, my date of birth is July 9th, 1975.
+[1:15] PGAI_AGENT: I see you have a follow-up appointment scheduled for Monday, September 14th at 10:00 AM with Doogie Howser at Nashville 220 Athens Way. Is this the appointment you want to reschedule?
+[1:15] PATIENT_BOT: No, that’s not the one I’m calling about. Mine’s on Thursday at 2 p.m.
+[1:32] PGAI_AGENT: I only see an appointment for Monday, September 14th at 10 AM in your records. Are you possibly calling about a different appointment, or could it be under another name or phone number?
+[1:32] PATIENT_BOT: Could you double-check under my full name, David Osei?
+[1:53] PGAI_AGENT: I checked your records under the name David Osei and only found the appointment for Monday, September 14th at 10:00 a.m. Are you sure the Thursday appointment was booked at Pivot Point Orthopedics, or could it be with a different clinic?
+[1:53] PATIENT_BOT: Okay, no worries, maybe it’s under something else. Can we book a new appointment for Monday morning?
+[2:14] PGAI_AGENT: Let's look for a new appointment on Monday morning for you. What kind of visit do you need to book? For example, is this for a routine check-up, a follow-up, a new patient consultation, or something else?
+[2:14] PATIENT_BOT: It’s a follow-up visit.
+[2:46] PGAI_AGENT: Let me try searching for Monday morning appointments again. You already have a follow-up appointment booked for Monday, September 14 at 10:00 a.m. Would you like to keep this appointment, reschedule it, or cancel it?
+[2:52] PGAI_AGENT: Let me know how you'd like to proceed.
+[2:53] PATIENT_BOT: I want to keep that Monday at 10 a.m. one. And the Thursday one is cancelled, right?
+[3:03] PGAI_AGENT: I don't see any Thursday appointment in your records.
+[3:05] PGAI_AGENT: So there's nothing to cancel for that day.
+[3:09] PGAI_AGENT: Your Monday, September 14th appointment at 10 AM is still confirmed.
+[3:10] PATIENT_BOT: All right, that works. Thanks a lot—take care.
 
 --------------------------------------------------------------------
 EVENT LOG (non-speech)
 
 [0:17] opening_gate office finished greeting
-[1:53] barge_in cut our bot off after 780ms
-[3:57] bot_hung_up goal_achieved
+[3:10] bot_hung_up goal_achieved
 
 --------------------------------------------------------------------
 Bot-reported outcome: goal_achieved
-Bot-reported summary: Appointment rescheduled to Monday at 10 a.m. and old Thursday appointment canceled.
+Bot-reported summary: Confirmed a new appointment for Monday and clarified that no Thursday appointment existed to cancel.

@@ -1,0 +1,87 @@
+{
+  "scenario_id": "04_refill",
+  "scenario_name": "Prescription refill, overdue for a check-up",
+  "watch_for": "Refills are clinical. Did the agent promise a refill it can't authorize? Did it flag that a lapsed check-up may block the refill? Did it give a specific timeframe or hand off to a nurse?",
+  "call_sid": "CAf40de68c16792088cd8fdca7ba8e8c28",
+  "duration_seconds": 115.78,
+  "turns": [
+    {
+      "t": 6.27,
+      "speaker": "PGAI_AGENT",
+      "text": "This call may be recorded for quality and training purposes."
+    },
+    {
+      "t": 16.3,
+      "speaker": "PGAI_AGENT",
+      "text": "Thank you for calling Pivot Point Orthopedics. Would you like to create a demo patient profile? I just need your first and last name to get started."
+    },
+    {
+      "t": 19.52,
+      "speaker": "PATIENT_BOT",
+      "text": "Oh, no, I'm actually trying to get a refill on my lisinopril prescription."
+    },
+    {
+      "t": 39.26,
+      "speaker": "PGAI_AGENT",
+      "text": "I can help with that. To request a refill, you'll need a demo patient profile. Would you like to create one now? I just need your first and last name."
+    },
+    {
+      "t": 39.48,
+      "speaker": "PATIENT_BOT",
+      "text": "Sure, it's Tom Reilly."
+    },
+    {
+      "t": 55.1,
+      "speaker": "PGAI_AGENT",
+      "text": "Your patient profile is set up and your date of birth is July 4, 2000 for demo purposes. How can I help you today?"
+    },
+    {
+      "t": 55.9,
+      "speaker": "PATIENT_BOT",
+      "text": "I\u2019m running low on my lisinopril, and I need a refill. When can it be ready?"
+    },
+    {
+      "t": 72.43,
+      "speaker": "PGAI_AGENT",
+      "text": "I don't see any medications on your chart that I can refill right now. If you'd like, I can connect you to our patient support team for more help. Would you like to speak with someone?"
+    },
+    {
+      "t": 72.76,
+      "speaker": "PATIENT_BOT",
+      "text": "Could you double-check under my full name?"
+    },
+    {
+      "t": 90.48,
+      "speaker": "PGAI_AGENT",
+      "text": "I've checked your chart under your full name Tom Riley and there are no medications listed for refill. If you'd like, I can connect you to our patient support team to look into this further. Would you like to be connected?"
+    },
+    {
+      "t": 90.88,
+      "speaker": "PATIENT_BOT",
+      "text": "Yeah, let's do that, please. When would they be able to get back to me?"
+    },
+    {
+      "t": 97.19,
+      "speaker": "PGAI_AGENT",
+      "text": "I'm fine now, thank you."
+    }
+  ],
+  "events": [
+    {
+      "t": 18.02,
+      "kind": "opening_gate",
+      "detail": "office finished greeting"
+    },
+    {
+      "t": 97.27,
+      "kind": "bot_hung_up",
+      "detail": ""
+    },
+    {
+      "t": 105.78,
+      "kind": "call_ended_by_far_side",
+      "detail": ""
+    }
+  ],
+  "outcome": {}
+}

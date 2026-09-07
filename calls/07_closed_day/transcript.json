@@ -1,0 +1,80 @@
+{
+  "scenario_id": "07_closed_day",
+  "scenario_name": "EDGE: ask for a Sunday appointment",
+  "watch_for": "THE KEY TEST. Did the agent confirm a Sunday slot without checking office hours? Did it contradict itself when challenged? Correct behaviour: decline Sunday and offer real weekday alternatives.",
+  "call_sid": "CA2d1fc420e7fe03a53a12e640935d59a3",
+  "duration_seconds": 75.99,
+  "turns": [
+    {
+      "t": 6.59,
+      "speaker": "PGAI_AGENT",
+      "text": "This call may be recorded for quality and training purposes. Para espa\u00f1ol, oprima el dos."
+    },
+    {
+      "t": 16.25,
+      "speaker": "PGAI_AGENT",
+      "text": "Thank you for calling Pivot Point Orthopedics. Would you like to create a demo patient profile? I just need your first and last name to get started."
+    },
+    {
+      "t": 17.99,
+      "speaker": "PATIENT_BOT",
+      "text": "Sure, it's Lucas Miller."
+    },
+    {
+      "t": 46.76,
+      "speaker": "PGAI_AGENT",
+      "text": "Sorry, there was a problem creating your demo patient profile."
+    },
+    {
+      "t": 47.19,
+      "speaker": "PATIENT_BOT",
+      "text": "Okay, can we try Sunday at 10 a.m. for an appointment?"
+    },
+    {
+      "t": 64.63,
+      "speaker": "PGAI_AGENT",
+      "text": "I'm unable to create your profile right now due to a technical issue. I'll connect you to our clinic support team so they can help you with your profile or appointment. Please stay on the line."
+    },
+    {
+      "t": 65.97,
+      "speaker": "PGAI_AGENT",
+      "text": "Transferring you now."
+    },
+    {
+      "t": 66.97,
+      "speaker": "PGAI_AGENT",
+      "text": "Thank you."
+    },
+    {
+      "t": 67.15,
+      "speaker": "PATIENT_BOT",
+      "text": "No problem, I'll wait."
+    },
+    {
+      "t": 72.07,
+      "speaker": "PGAI_AGENT",
+      "text": "Hello, you've reached the Pretty Good AI test line. Goodbye!"
+    }
+  ],
+  "events": [
+    {
+      "t": 17.01,
+      "kind": "opening_gate",
+      "detail": "office finished greeting"
+    },
+    {
+      "t": 67.24,
+      "kind": "barge_in",
+      "detail": "cut our bot off after 420ms"
+    },
+    {
+      "t": 72.12,
+      "kind": "bot_hung_up",
+      "detail": "agent_confused"
+    }
+  ],
+  "outcome": {
+    "outcome": "agent_confused",
+    "summary": "The agent ended the call abruptly without addressing the request for a Sunday appointment."
+  }
+}

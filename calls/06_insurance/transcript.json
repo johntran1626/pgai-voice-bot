@@ -1,0 +1,80 @@
+{
+  "scenario_id": "06_insurance",
+  "scenario_name": "Insurance coverage and cash price",
+  "watch_for": "Did the agent state insurance acceptance confidently \u2014 and is that plausible or invented? Did it quote a price it shouldn't, or appropriately defer to billing? Vague non-answers repeated twice are themselves a finding.",
+  "call_sid": "CA26f24336c8dd792c2d4218ca7a646226",
+  "duration_seconds": 108.77,
+  "turns": [
+    {
+      "t": 6.49,
+      "speaker": "PGAI_AGENT",
+      "text": "This call may be recorded for quality and training purposes. Para espa\u00f1ol, oprima el dos."
+    },
+    {
+      "t": 16.34,
+      "speaker": "PGAI_AGENT",
+      "text": "Thank you for calling Pivot Point Orthopedics. Would you like to create a demo patient profile? I just need your first and last name to get started."
+    },
+    {
+      "t": 19.68,
+      "speaker": "PATIENT_BOT",
+      "text": "Oh, no, I'm just checking something first. Do you take Blue Cross Blue Shield PPO insurance?"
+    },
+    {
+      "t": 39.62,
+      "speaker": "PGAI_AGENT",
+      "text": "I do not have access to insurance plan details right now. For the most accurate information, please check with the clinic staff at the booth or visit the front desk. Is there anything else I can help you with?"
+    },
+    {
+      "t": 40.13,
+      "speaker": "PATIENT_BOT",
+      "text": "Okay, but can you give me a ballpark on what the first visit costs if I pay cash?"
+    },
+    {
+      "t": 62.88,
+      "speaker": "PGAI_AGENT",
+      "text": "I do not have exact pricing details for visits. For a ballpark estimate, please ask the clinic staff at the booth or the front desk. They can give you the most accurate information. Anything else I can help with?"
+    },
+    {
+      "t": 63.28,
+      "speaker": "PATIENT_BOT",
+      "text": "All right, but can you say if it's closer to a hundred or like four hundred?"
+    },
+    {
+      "t": 84.7,
+      "speaker": "PGAI_AGENT",
+      "text": "I do not have access to specific pricing, even rough estimates. The clinic staff at the booth can give you a better idea of the cost range. Would you like help with anything else?"
+    },
+    {
+      "t": 85.42,
+      "speaker": "PATIENT_BOT",
+      "text": "Okay, so can you tell me if you accept Blue Cross Blue Shield PPO or not?"
+    },
+    {
+      "t": 103.87,
+      "speaker": "PGAI_AGENT",
+      "text": "I'm unable to confirm insurance acceptance. Please check with the clinic staff at the booth or the front desk for details about Blue Cross Blue Shield PPO."
+    },
+    {
+      "t": 104.91,
+      "speaker": "PATIENT_BOT",
+      "text": "All right, doesn't sound like I can get what I need by phone. Thanks for your time, I'll figure it out in person."
+    }
+  ],
+  "events": [
+    {
+      "t": 18.02,
+      "kind": "opening_gate",
+      "detail": "office finished greeting"
+    },
+    {
+      "t": 105.45,
+      "kind": "bot_hung_up",
+      "detail": "goal_refused"
+    }
+  ],
+  "outcome": {
+    "summary": "Caller couldn't get insurance or cost information by phone and decided to figure it out in person.",
+    "outcome": "goal_refused"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "scenario_id": "11_misheard_name",
+  "scenario_name": "EDGE: hard-to-hear name, correct it twice",
+  "call_sid": "CAaa45f3a95c2e9c6809f2c7a8715f65ce",
+  "from_number": "+18053986093",
+  "to_number": "+18054398008",
+  "placed_at_utc": "2026-09-07T03:23:11.280260+00:00",
+  "twilio_status": "completed",
+  "duration_seconds": 197.97,
+  "turn_count": 21,
+  "outcome": {
+    "outcome": "goal_achieved",
+    "summary": "Rescheduled the appointment to Wednesday at 3:00 p.m. as no 3:30 p.m. slot was available."
+  },
+  "recording": "recording.mp3"
+}

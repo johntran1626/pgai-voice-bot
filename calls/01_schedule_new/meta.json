@@ -1,12 +1,16 @@
 {
   "scenario_id": "01_schedule_new",
   "scenario_name": "Book a routine appointment",
-  "call_sid": "CAb132f103c027a9a4e37ecc5f7944c529",
+  "call_sid": "CAd550a589cb2aef70e083d3d07730c742",
   "from_number": "+18053986093",
   "to_number": "+18054398008",
-  "placed_at_utc": "2026-09-07T02:31:39.606542+00:00",
+  "placed_at_utc": "2026-09-07T02:56:33.226415+00:00",
   "twilio_status": "completed",
-  "duration_seconds": 146.22,
-  "turn_count": 18,
+  "duration_seconds": 290.84,
+  "turn_count": 33,
+  "outcome": {
+    "outcome": "goal_achieved",
+    "summary": "Appointment booked for Wednesday, September 9th at 3:30 p.m. with Dr. Zbigniew Lukosky."
+  },
   "recording": "recording.mp3"
 }

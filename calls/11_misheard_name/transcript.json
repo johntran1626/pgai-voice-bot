@@ -1,0 +1,130 @@
+{
+  "scenario_id": "11_misheard_name",
+  "scenario_name": "EDGE: hard-to-hear name, correct it twice",
+  "watch_for": "Did the correction persist for the rest of the call, or did the agent revert? Did it confirm the spelling back? Did the wrong name end up in the final confirmation?",
+  "call_sid": "CAaa45f3a95c2e9c6809f2c7a8715f65ce",
+  "duration_seconds": 188.4,
+  "turns": [
+    {
+      "t": 6.5,
+      "speaker": "PGAI_AGENT",
+      "text": "This call may be recorded for quality and training purposes. Para espa\u00f1ol, oprima el dos."
+    },
+    {
+      "t": 15.54,
+      "speaker": "PGAI_AGENT",
+      "text": "Thank you for calling Pivot Point Orthopedics. Would you like to create a demo patient profile? I just need your first and last name to get started."
+    },
+    {
+      "t": 18.18,
+      "speaker": "PATIENT_BOT",
+      "text": "Yeah, I\u2019m looking to book a follow-up next Wednesday at 3:30."
+    },
+    {
+      "t": 31.57,
+      "speaker": "PGAI_AGENT",
+      "text": "Greg, I can help with that. First, can you please tell me your first and last name to create your demo patient profile?"
+    },
+    {
+      "t": 31.83,
+      "speaker": "PATIENT_BOT",
+      "text": "Sure, it\u2019s Siobhan McAllister."
+    },
+    {
+      "t": 46.81,
+      "speaker": "PGAI_AGENT",
+      "text": "Your demo patient profile is set up and your date of birth is July 4, 2000 for this demo. How may I help you today?"
+    },
+    {
+      "t": 47.42,
+      "speaker": "PATIENT_BOT",
+      "text": "I\u2019m after that follow-up appointment for next Wednesday at 3:30."
+    },
+    {
+      "t": 59.24,
+      "speaker": "PGAI_AGENT",
+      "text": "Just to confirm, you'd like to book a follow-up consultation, is that right?"
+    },
+    {
+      "t": 59.65,
+      "speaker": "PATIENT_BOT",
+      "text": "Yeah, that\u2019s right, next Wednesday at 3:30 in the afternoon."
+    },
+    {
+      "t": 79.69,
+      "speaker": "PGAI_AGENT",
+      "text": "You already have a follow-up appointment booked for Monday, September 14th at 10:00 AM. Would you like to keep this appointment, reschedule it to a different time, or cancel it? Let me know how you'd like to proceed."
+    },
+    {
+      "t": 80.09,
+      "speaker": "PATIENT_BOT",
+      "text": "No, that\u2019s not my appointment. I\u2019m talking about Wednesday at 3:30."
+    },
+    {
+      "t": 106.79,
+      "speaker": "PGAI_AGENT",
+      "text": "I see. Since there's already a follow-up appointment booked for you on Monday, September 14th at 10 AM, the system won't let me book another follow-up of the same type. Would you like to reschedule your current appointment to Wednesday at 3:30 PM instead?"
+    },
+    {
+      "t": 106.85,
+      "speaker": "PATIENT_BOT",
+      "text": "Yeah, let's reschedule it to Wednesday at 3:30."
+    },
+    {
+      "t": 145.85,
+      "speaker": "PGAI_AGENT",
+      "text": "You have a follow-up appointment scheduled for Monday, September 14 at 10 a.m. Would you like to move this appointment to a different day and time? If so, I'll look for openings on Wednesday at 3:30 p.m."
+    },
+    {
+      "t": 146.14,
+      "speaker": "PATIENT_BOT",
+      "text": "Yeah, exactly, please check for that Wednesday 3:30 slot."
+    },
+    {
+      "t": 159.86,
+      "speaker": "PGAI_AGENT",
+      "text": "The next available Wednesday afternoon slot is September 9th at 3 PM with Doogie Howser in Nashville."
+    },
+    {
+      "t": 162.12,
+      "speaker": "PGAI_AGENT",
+      "text": "Would you like to move your appointment to that time?"
+    },
+    {
+      "t": 164.79,
+      "speaker": "PGAI_AGENT",
+      "text": "Or would you like to hear the next available option?"
+    },
+    {
+      "t": 165.62,
+      "speaker": "PATIENT_BOT",
+      "text": "I need Wednesday at 3:30, can you double-check that time again?"
+    },
+    {
+      "t": 184.14,
+      "speaker": "PGAI_AGENT",
+      "text": "I checked, and the latest available slot on Wednesday is at 3 PM; there isn't a 3:30 PM slot open that day. Would you like to take the 3 PM slot, or should I look for other days or times for you?"
+    },
+    {
+      "t": 184.37,
+      "speaker": "PATIENT_BOT",
+      "text": "Okay, let's go with that 3 p.m. on Wednesday then."
+    }
+  ],
+  "events": [
+    {
+      "t": 17.01,
+      "kind": "opening_gate",
+      "detail": "office finished greeting"
+    },
+    {
+      "t": 185.07,
+      "kind": "bot_hung_up",
+      "detail": "goal_achieved"
+    }
+  ],
+  "outcome": {
+    "outcome": "goal_achieved",
+    "summary": "Rescheduled the appointment to Wednesday at 3:00 p.m. as no 3:30 p.m. slot was available."
+  }
+}

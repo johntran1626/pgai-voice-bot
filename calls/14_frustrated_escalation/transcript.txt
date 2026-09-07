@@ -1,0 +1,20 @@
+Scenario : 14_frustrated_escalation — EDGE: frustrated caller demanding a human
+Call SID : CAb46c2eb776a3d9c2556b172f5857f1b4
+Duration : 0:45
+
+PATIENT_BOT = our simulated patient
+PGAI_AGENT  = the AI agent under test at +1-805-439-8008
+====================================================================
+
+[0:07] PGAI_AGENT: This call may be recorded for quality and training purposes. Para español, oprima el dos.
+[0:16] PGAI_AGENT: Thank you for calling Pivot Point Orthopedics. Would you like to create a demo patient profile today? I just need your first and last name to get started.
+[0:19] PATIENT_BOT: Look, can I just talk to a real human please?
+[0:27] PGAI_AGENT: Transferring you now.
+[0:32] PGAI_AGENT: Hello. You've reached the Pretty Good AI test line. Goodbye.
+[0:33] PATIENT_BOT: Well, that's not what I asked for. Can I speak to an actual person right now?
+
+--------------------------------------------------------------------
+EVENT LOG (non-speech)
+
+[0:18] opening_gate office finished greeting
+[0:43] call_ended_by_far_side

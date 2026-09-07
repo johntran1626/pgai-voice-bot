@@ -66,6 +66,15 @@ OPENING_MAX_HOLD_S = 25   # never stay muted longer than this, whatever happens
 HANGUP_QUIET_S = 1.2      # they've been quiet this long = conversation over
 HANGUP_GRACE_MAX_S = 12   # but never hold the line open longer than this
 
+# --- Dead air in the middle of a call --------------------------------------
+# Call 08 sat in total silence for four and a half minutes before the hard
+# cap ended it: the agent had stopped responding, and our silence nudge only
+# ever fired when NOTHING had been said all call. Now we watch for the line
+# going quiet at any point, prod once, then give up rather than paying for
+# minutes of nothing.
+MID_CALL_SILENCE_S = 22   # nobody has spoken this long = something is wrong
+MID_CALL_GIVE_UP_S = 45   # still nothing after this = hang up
+
 
 class CallBridge:
     """Handles exactly one phone call, from answer to hang-up."""
@@ -106,6 +115,14 @@ class CallBridge:
         self.agent_quiet_since: float | None = None
         # The real turn-detection settings, held back until the gate opens.
         self.turn_detection: dict = {}
+
+        # --- dead-air detection -------------------------------------------
+        # Updated whenever EITHER side makes a sound.
+        self.last_voice_at = time.monotonic()
+        self.mid_call_prodded = False
+        # How much audio we have actually streamed for the current sentence,
+        # so a barge-in can't claim they heard more than we sent.
+        self.audio_sent_ms = 0.0
 
     # =====================================================================
     # Session setup
@@ -299,6 +316,7 @@ class CallBridge:
 
                 # ---- they started speaking: stop talking over them ---------
                 elif etype == "input_audio_buffer.speech_started":
+                    self.last_voice_at = time.monotonic()
                     self.agent_speaking = True
                     self.agent_has_spoken = True
                     self.agent_quiet_since = None
@@ -308,6 +326,7 @@ class CallBridge:
                 elif etype == "input_audio_buffer.speech_stopped":
                     self.agent_speaking = False
                     self.agent_quiet_since = time.monotonic()
+                    self.last_voice_at = time.monotonic()
 
                 # ---- our patient decided to hang up ------------------------
                 elif etype == "response.function_call_arguments.done":
@@ -346,8 +365,15 @@ class CallBridge:
         if item_id and item_id != self.last_assistant_item:
             self.last_assistant_item = item_id
             self.response_start_ts = self.latest_media_ts
+            self.audio_sent_ms = 0.0
         elif self.response_start_ts is None:
             self.response_start_ts = self.latest_media_ts
+
+        # Track how much of this sentence we have actually streamed. mu-law
+        # at 8kHz is 8 bytes per millisecond, so the decoded chunk length
+        # tells us its duration.
+        self.audio_sent_ms += len(base64.b64decode(evt["delta"])) / 8.0
+        self.last_voice_at = time.monotonic()
 
         # Ask Twilio to tell us when this chunk finishes playing.
         await self.send_twilio(
@@ -376,6 +402,10 @@ class CallBridge:
             return  # our bot wasn't talking; nothing to interrupt
 
         heard_ms = self.latest_media_ts - self.response_start_ts
+        # They cannot have heard more than we sent. Twilio's inbound clock
+        # runs slightly ahead of our outbound audio, which is what produced
+        # "Audio content of 4350ms is already shorter than 4540ms".
+        heard_ms = int(min(heard_ms, self.audio_sent_ms))
 
         if self.last_assistant_item:
             await self.send_openai(
@@ -495,6 +525,27 @@ class CallBridge:
                     await self.open_opening_gate("office finished greeting")
                 elif elapsed > OPENING_MAX_HOLD_S:
                     await self.open_opening_gate("timed out waiting for a greeting")
+
+            # Dead air mid-call: prod once, then stop paying for silence.
+            if self.opening_done and not self.finished.is_set():
+                quiet = time.monotonic() - self.last_voice_at
+                if quiet > MID_CALL_GIVE_UP_S:
+                    self.transcript.note(
+                        "dead_air", f"no speech for {int(quiet)}s — hanging up")
+                    print(f"  ▸ line went dead for {int(quiet)}s, hanging up")
+                    await self.hang_up()
+                    continue
+                if quiet > MID_CALL_SILENCE_S and not self.mid_call_prodded:
+                    self.mid_call_prodded = True
+                    self.transcript.note(
+                        "dead_air", f"no speech for {int(quiet)}s — prodding")
+                    await self.send_openai({
+                        "type": "response.create",
+                        "response": {"instructions": (
+                            "The line has gone quiet. Say a short, natural "
+                            "'Sorry, are you still there?' and nothing else."
+                        )},
+                    })
 
             if (
                 not self.nudged

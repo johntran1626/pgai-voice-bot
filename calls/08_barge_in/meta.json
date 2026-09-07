@@ -1,0 +1,13 @@
+{
+  "scenario_id": "08_barge_in",
+  "scenario_name": "EDGE: interrupt the agent mid-sentence",
+  "call_sid": "CA26f71dca937c8e120878abc0eba2f48f",
+  "from_number": "+18053986093",
+  "to_number": "+18054398008",
+  "placed_at_utc": "2026-09-07T03:15:11.934308+00:00",
+  "twilio_status": "completed",
+  "duration_seconds": 313.59,
+  "turn_count": 6,
+  "outcome": null,
+  "recording": "recording.mp3"
+}

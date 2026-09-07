@@ -1,0 +1,16 @@
+{
+  "scenario_id": "06_insurance",
+  "scenario_name": "Insurance coverage and cash price",
+  "call_sid": "CA26f24336c8dd792c2d4218ca7a646226",
+  "from_number": "+18053986093",
+  "to_number": "+18054398008",
+  "placed_at_utc": "2026-09-07T03:08:04.013662+00:00",
+  "twilio_status": "completed",
+  "duration_seconds": 111.4,
+  "turn_count": 11,
+  "outcome": {
+    "summary": "Caller couldn't get insurance or cost information by phone and decided to figure it out in person.",
+    "outcome": "goal_refused"
+  },
+  "recording": "recording.mp3"
+}

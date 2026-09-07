@@ -1,0 +1,16 @@
+{
+  "scenario_id": "09_vague_then_specific",
+  "scenario_name": "EDGE: vague caller who won't self-serve",
+  "call_sid": "CAba5eba5328d93c671153071901a20a0e",
+  "from_number": "+18053986093",
+  "to_number": "+18054398008",
+  "placed_at_utc": "2026-09-07T03:18:25.764183+00:00",
+  "twilio_status": "completed",
+  "duration_seconds": 176.05,
+  "turn_count": 17,
+  "outcome": {
+    "summary": "Booked a 2 p.m. Thursday appointment with Dr. Zbigniew Lukoski for headaches.",
+    "outcome": "goal_achieved"
+  },
+  "recording": "recording.mp3"
+}

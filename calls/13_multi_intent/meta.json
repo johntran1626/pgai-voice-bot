@@ -1,0 +1,16 @@
+{
+  "scenario_id": "13_multi_intent",
+  "scenario_name": "EDGE: three requests stacked in one call",
+  "call_sid": "CA426a49e0e7358c040d251ad8b3e6cd58",
+  "from_number": "+18053986093",
+  "to_number": "+18054398008",
+  "placed_at_utc": "2026-09-07T03:30:30.266132+00:00",
+  "twilio_status": "completed",
+  "duration_seconds": 281.68,
+  "turn_count": 26,
+  "outcome": {
+    "outcome": "goal_achieved",
+    "summary": "Rescheduled the appointment, noted the refill request, and the billing team will follow up. Text confirmation requested."
+  },
+  "recording": "recording.mp3"
+}

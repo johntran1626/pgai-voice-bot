@@ -1,0 +1,155 @@
+{
+  "scenario_id": "13_multi_intent",
+  "scenario_name": "EDGE: three requests stacked in one call",
+  "watch_for": "Did the agent acknowledge all three requests? Did it drop one silently? Did it triage sensibly (billing \u2192 billing dept) or try to do everything itself? Did it lose track after the first item?",
+  "call_sid": "CA426a49e0e7358c040d251ad8b3e6cd58",
+  "duration_seconds": 270.76,
+  "turns": [
+    {
+      "t": 6.63,
+      "speaker": "PGAI_AGENT",
+      "text": "This call may be recorded for quality and training purposes. Para espa\u00f1ol, oprima el dos."
+    },
+    {
+      "t": 18.98,
+      "speaker": "PGAI_AGENT",
+      "text": "Thank you for calling Pivot Point Orthopedics. Would you like to create a demo patient profile? I just need your first and last name to get started."
+    },
+    {
+      "t": 22.38,
+      "speaker": "PATIENT_BOT",
+      "text": "Oh, sorry, no, I actually need to move my Friday appointment, I need a refill on my inhaler, and I got a bill I don't understand."
+    },
+    {
+      "t": 45.06,
+      "speaker": "PGAI_AGENT",
+      "text": "No problem. If you'd like, you can scan the QR code at the booth later to create a profile. For now, I'm unable to help with your requests without a demo patient profile. Is there anything else I can help with today?"
+    },
+    {
+      "t": 45.16,
+      "speaker": "PATIENT_BOT",
+      "text": "Wait, what about the refill on my inhaler?"
+    },
+    {
+      "t": 63.55,
+      "speaker": "PGAI_AGENT",
+      "text": "To help with your inhaler refill, I'll need to create a demo patient profile for you first. Would you like to do that now? I just need your first and last name."
+    },
+    {
+      "t": 63.69,
+      "speaker": "PATIENT_BOT",
+      "text": "Yeah, okay, it's Rachel Kim."
+    },
+    {
+      "t": 82.24,
+      "speaker": "PGAI_AGENT",
+      "text": "Your patient profile is set up and your date of birth is July 4th, 2000 for demo purposes. How may I help you today?"
+    },
+    {
+      "t": 82.48,
+      "speaker": "PATIENT_BOT",
+      "text": "I still need to move that Friday appointment."
+    },
+    {
+      "t": 124.96,
+      "speaker": "PATIENT_BOT",
+      "text": "No, it\u2019s the Friday one I need to change."
+    },
+    {
+      "t": 125.18,
+      "speaker": "PGAI_AGENT",
+      "text": "Let me try again to check your upcoming appointment so I can help reschedule your Friday visit. You have two upcoming appointments. The soonest is Thursday, September 10 at 2:00 pm with Dr. Zbigniew Lukawski. Is this the one you want to move?"
+    },
+    {
+      "t": 143.36,
+      "speaker": "PGAI_AGENT",
+      "text": "I don't see a Friday appointment on your schedule. Your next appointments are Thursday, September 10th at 2 PM and Monday, September 14th at 10 AM. Would you like to reschedule one of these?"
+    },
+    {
+      "t": 143.68,
+      "speaker": "PATIENT_BOT",
+      "text": "Wait, could you double-check under my full name, Rachel Kim?"
+    },
+    {
+      "t": 163.23,
+      "speaker": "PGAI_AGENT",
+      "text": "I already have your profile as Rachel Kim, and these are the only upcoming appointments listed. Would you like to reschedule the Thursday or Monday appointment?"
+    },
+    {
+      "t": 163.72,
+      "speaker": "PATIENT_BOT",
+      "text": "Okay, no worries, let's move the Thursday one to next week."
+    },
+    {
+      "t": 179.79,
+      "speaker": "PGAI_AGENT",
+      "text": "To move your Thursday, September 10 appointment with Dr. Zbigniew Lukowski to next week, can you tell me the reason for rescheduling?"
+    },
+    {
+      "t": 179.88,
+      "speaker": "PATIENT_BOT",
+      "text": "Yeah, it\u2019s a conflict with my work schedule."
+    },
+    {
+      "t": 199.76,
+      "speaker": "PGAI_AGENT",
+      "text": "I have three openings next week with Dr. Zbigniew Lichowski at the Nashville location. The soonest is Monday, September 14 at 9:30 a.m. Would you like to move your appointment to that time?"
+    },
+    {
+      "t": 199.88,
+      "speaker": "PATIENT_BOT",
+      "text": "Could we do something in the afternoon instead?"
+    },
+    {
+      "t": 215.73,
+      "speaker": "PGAI_AGENT",
+      "text": "The next available afternoon slot is Monday, September 14th at 2:00 PM with Dr. Zbigniew Lukawski at the Nashville location."
+    },
+    {
+      "t": 217.9,
+      "speaker": "PGAI_AGENT",
+      "text": "Would you like to move your appointment to that time?"
+    },
+    {
+      "t": 218.42,
+      "speaker": "PATIENT_BOT",
+      "text": "Yeah, that works, go ahead and book that one."
+    },
+    {
+      "t": 238.8,
+      "speaker": "PGAI_AGENT",
+      "text": "Just to confirm, you'd like to move your Thursday, September 10 appointment with Dr. Zygmunt Lukaszewski to Monday, September 14 at 2 PM at the Nashville location?"
+    },
+    {
+      "t": 239.2,
+      "speaker": "PATIENT_BOT",
+      "text": "Yes, that's correct. And I still need help with that bill I mentioned."
+    },
+    {
+      "t": 266.42,
+      "speaker": "PGAI_AGENT",
+      "text": "Your appointment is now set for Monday, September 14th at 2pm with Dr. Zbigniew Lukawski. I've also let the clinic support team know about your billing question and they'll follow up with you as soon as they can. Would you like a text message with your new appointment details?"
+    },
+    {
+      "t": 266.54,
+      "speaker": "PATIENT_BOT",
+      "text": "Sure, a text confirmation would be great."
+    }
+  ],
+  "events": [
+    {
+      "t": 20.01,
+      "kind": "opening_gate",
+      "detail": "office finished greeting"
+    },
+    {
+      "t": 267.44,
+      "kind": "bot_hung_up",
+      "detail": "goal_achieved"
+    }
+  ],
+  "outcome": {
+    "outcome": "goal_achieved",
+    "summary": "Rescheduled the appointment, noted the refill request, and the billing team will follow up. Text confirmation requested."
+  }
+}

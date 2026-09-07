@@ -1,0 +1,27 @@
+Scenario : 04_refill — Prescription refill, overdue for a check-up
+Call SID : CAf40de68c16792088cd8fdca7ba8e8c28
+Duration : 1:55
+
+PATIENT_BOT = our simulated patient
+PGAI_AGENT  = the AI agent under test at +1-805-439-8008
+====================================================================
+
+[0:06] PGAI_AGENT: This call may be recorded for quality and training purposes.
+[0:16] PGAI_AGENT: Thank you for calling Pivot Point Orthopedics. Would you like to create a demo patient profile? I just need your first and last name to get started.
+[0:19] PATIENT_BOT: Oh, no, I'm actually trying to get a refill on my lisinopril prescription.
+[0:39] PGAI_AGENT: I can help with that. To request a refill, you'll need a demo patient profile. Would you like to create one now? I just need your first and last name.
+[0:39] PATIENT_BOT: Sure, it's Tom Reilly.
+[0:55] PGAI_AGENT: Your patient profile is set up and your date of birth is July 4, 2000 for demo purposes. How can I help you today?
+[0:55] PATIENT_BOT: I’m running low on my lisinopril, and I need a refill. When can it be ready?
+[1:12] PGAI_AGENT: I don't see any medications on your chart that I can refill right now. If you'd like, I can connect you to our patient support team for more help. Would you like to speak with someone?
+[1:12] PATIENT_BOT: Could you double-check under my full name?
+[1:30] PGAI_AGENT: I've checked your chart under your full name Tom Riley and there are no medications listed for refill. If you'd like, I can connect you to our patient support team to look into this further. Would you like to be connected?
+[1:30] PATIENT_BOT: Yeah, let's do that, please. When would they be able to get back to me?
+[1:37] PGAI_AGENT: I'm fine now, thank you.
+
+--------------------------------------------------------------------
+EVENT LOG (non-speech)
+
+[0:18] opening_gate office finished greeting
+[1:37] bot_hung_up
+[1:45] call_ended_by_far_side

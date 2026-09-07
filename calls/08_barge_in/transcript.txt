@@ -1,0 +1,20 @@
+Scenario : 08_barge_in — EDGE: interrupt the agent mid-sentence
+Call SID : CA26f71dca937c8e120878abc0eba2f48f
+Duration : 5:02
+
+PATIENT_BOT = our simulated patient
+PGAI_AGENT  = the AI agent under test at +1-805-439-8008
+====================================================================
+
+[0:03] PGAI_AGENT: This call may be recorded for quality and training purposes.
+[0:05] PGAI_AGENT: Para español, oprima el dos.
+[0:09] PGAI_AGENT: Thank you for calling Pivot Point Orthopedics.
+[0:12] PGAI_AGENT: Would you like to create a demo patient profile?
+[0:15] PGAI_AGENT: I just need your first and last name to get started.
+[0:18] PATIENT_BOT: Solo quiero saber si puedo ir hoy sin cita, ¿aceptan pacientes sin cita hoy?
+
+--------------------------------------------------------------------
+EVENT LOG (non-speech)
+
+[0:17] opening_gate office finished greeting
+[5:00] max_duration_reached

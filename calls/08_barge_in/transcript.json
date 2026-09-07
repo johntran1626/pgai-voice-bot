@@ -1,0 +1,52 @@
+{
+  "scenario_id": "08_barge_in",
+  "scenario_name": "EDGE: interrupt the agent mid-sentence",
+  "watch_for": "Did the agent stop talking when interrupted, or plough on? After an interruption, did it answer the NEW question or resume the old answer? Any double-talk, dropped audio, or long dead air?",
+  "call_sid": "CA26f71dca937c8e120878abc0eba2f48f",
+  "duration_seconds": 302.31,
+  "turns": [
+    {
+      "t": 3.43,
+      "speaker": "PGAI_AGENT",
+      "text": "This call may be recorded for quality and training purposes."
+    },
+    {
+      "t": 5.92,
+      "speaker": "PGAI_AGENT",
+      "text": "Para espa\u00f1ol, oprima el dos."
+    },
+    {
+      "t": 9.99,
+      "speaker": "PGAI_AGENT",
+      "text": "Thank you for calling Pivot Point Orthopedics."
+    },
+    {
+      "t": 12.57,
+      "speaker": "PGAI_AGENT",
+      "text": "Would you like to create a demo patient profile?"
+    },
+    {
+      "t": 15.21,
+      "speaker": "PGAI_AGENT",
+      "text": "I just need your first and last name to get started."
+    },
+    {
+      "t": 18.4,
+      "speaker": "PATIENT_BOT",
+      "text": "Solo quiero saber si puedo ir hoy sin cita, \u00bfaceptan pacientes sin cita hoy?"
+    }
+  ],
+  "events": [
+    {
+      "t": 17.01,
+      "kind": "opening_gate",
+      "detail": "office finished greeting"
+    },
+    {
+      "t": 300.23,
+      "kind": "max_duration_reached",
+      "detail": ""
+    }
+  ],
+  "outcome": null
+}

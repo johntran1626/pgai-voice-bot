@@ -1,0 +1,16 @@
+{
+  "scenario_id": "07_closed_day",
+  "scenario_name": "EDGE: ask for a Sunday appointment",
+  "call_sid": "CA2d1fc420e7fe03a53a12e640935d59a3",
+  "from_number": "+18053986093",
+  "to_number": "+18054398008",
+  "placed_at_utc": "2026-09-07T03:09:39.737786+00:00",
+  "twilio_status": "completed",
+  "duration_seconds": 77.93,
+  "turn_count": 10,
+  "outcome": {
+    "outcome": "agent_confused",
+    "summary": "The agent ended the call abruptly without addressing the request for a Sunday appointment."
+  },
+  "recording": "recording.mp3"
+}

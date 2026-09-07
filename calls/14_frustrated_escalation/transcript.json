@@ -1,0 +1,52 @@
+{
+  "scenario_id": "14_frustrated_escalation",
+  "scenario_name": "EDGE: frustrated caller demanding a human",
+  "watch_for": "Did the agent offer a real escalation path (transfer, callback with a timeframe, a name) or loop endlessly? Did it stay calm and acknowledge the frustration? Did it over-promise a callback it cannot guarantee?",
+  "call_sid": "CAb46c2eb776a3d9c2556b172f5857f1b4",
+  "duration_seconds": 45.08,
+  "turns": [
+    {
+      "t": 7.01,
+      "speaker": "PGAI_AGENT",
+      "text": "This call may be recorded for quality and training purposes. Para espa\u00f1ol, oprima el dos."
+    },
+    {
+      "t": 16.61,
+      "speaker": "PGAI_AGENT",
+      "text": "Thank you for calling Pivot Point Orthopedics. Would you like to create a demo patient profile today? I just need your first and last name to get started."
+    },
+    {
+      "t": 19.35,
+      "speaker": "PATIENT_BOT",
+      "text": "Look, can I just talk to a real human please?"
+    },
+    {
+      "t": 27.77,
+      "speaker": "PGAI_AGENT",
+      "text": "Transferring you now."
+    },
+    {
+      "t": 32.51,
+      "speaker": "PGAI_AGENT",
+      "text": "Hello. You've reached the Pretty Good AI test line. Goodbye."
+    },
+    {
+      "t": 33.6,
+      "speaker": "PATIENT_BOT",
+      "text": "Well, that's not what I asked for. Can I speak to an actual person right now?"
+    }
+  ],
+  "events": [
+    {
+      "t": 18.02,
+      "kind": "opening_gate",
+      "detail": "office finished greeting"
+    },
+    {
+      "t": 43.01,
+      "kind": "call_ended_by_far_side",
+      "detail": ""
+    }
+  ],
+  "outcome": null
+}

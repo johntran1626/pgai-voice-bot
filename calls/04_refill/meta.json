@@ -1,0 +1,13 @@
+{
+  "scenario_id": "04_refill",
+  "scenario_name": "Prescription refill, overdue for a check-up",
+  "call_sid": "CAf40de68c16792088cd8fdca7ba8e8c28",
+  "from_number": "+18053986093",
+  "to_number": "+18054398008",
+  "placed_at_utc": "2026-09-07T03:03:41.273739+00:00",
+  "twilio_status": "completed",
+  "duration_seconds": 118.31,
+  "turn_count": 12,
+  "outcome": {},
+  "recording": "recording.mp3"
+}

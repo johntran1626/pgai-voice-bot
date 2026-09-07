@@ -1,0 +1,13 @@
+{
+  "scenario_id": "14_frustrated_escalation",
+  "scenario_name": "EDGE: frustrated caller demanding a human",
+  "call_sid": "CAb46c2eb776a3d9c2556b172f5857f1b4",
+  "from_number": "+18053986093",
+  "to_number": "+18054398008",
+  "placed_at_utc": "2026-09-07T03:31:34.184402+00:00",
+  "twilio_status": "completed",
+  "duration_seconds": 46.42,
+  "turn_count": 6,
+  "outcome": null,
+  "recording": "recording.mp3"
+}

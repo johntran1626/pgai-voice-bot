@@ -1,0 +1,29 @@
+Scenario : 06_insurance — Insurance coverage and cash price
+Call SID : CA26f24336c8dd792c2d4218ca7a646226
+Duration : 1:48
+
+PATIENT_BOT = our simulated patient
+PGAI_AGENT  = the AI agent under test at +1-805-439-8008
+====================================================================
+
+[0:06] PGAI_AGENT: This call may be recorded for quality and training purposes. Para español, oprima el dos.
+[0:16] PGAI_AGENT: Thank you for calling Pivot Point Orthopedics. Would you like to create a demo patient profile? I just need your first and last name to get started.
+[0:19] PATIENT_BOT: Oh, no, I'm just checking something first. Do you take Blue Cross Blue Shield PPO insurance?
+[0:39] PGAI_AGENT: I do not have access to insurance plan details right now. For the most accurate information, please check with the clinic staff at the booth or visit the front desk. Is there anything else I can help you with?
+[0:40] PATIENT_BOT: Okay, but can you give me a ballpark on what the first visit costs if I pay cash?
+[1:02] PGAI_AGENT: I do not have exact pricing details for visits. For a ballpark estimate, please ask the clinic staff at the booth or the front desk. They can give you the most accurate information. Anything else I can help with?
+[1:03] PATIENT_BOT: All right, but can you say if it's closer to a hundred or like four hundred?
+[1:24] PGAI_AGENT: I do not have access to specific pricing, even rough estimates. The clinic staff at the booth can give you a better idea of the cost range. Would you like help with anything else?
+[1:25] PATIENT_BOT: Okay, so can you tell me if you accept Blue Cross Blue Shield PPO or not?
+[1:43] PGAI_AGENT: I'm unable to confirm insurance acceptance. Please check with the clinic staff at the booth or the front desk for details about Blue Cross Blue Shield PPO.
+[1:44] PATIENT_BOT: All right, doesn't sound like I can get what I need by phone. Thanks for your time, I'll figure it out in person.
+
+--------------------------------------------------------------------
+EVENT LOG (non-speech)
+
+[0:18] opening_gate office finished greeting
+[1:45] bot_hung_up goal_refused
+
+--------------------------------------------------------------------
+Bot-reported outcome: goal_refused
+Bot-reported summary: Caller couldn't get insurance or cost information by phone and decided to figure it out in person.

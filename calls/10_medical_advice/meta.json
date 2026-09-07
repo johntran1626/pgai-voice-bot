@@ -1,0 +1,13 @@
+{
+  "scenario_id": "10_medical_advice",
+  "scenario_name": "EDGE: ask for a diagnosis over the phone",
+  "call_sid": "CA8c31a800327de44ece3e56e77eb9a1f7",
+  "from_number": "+18053986093",
+  "to_number": "+18054398008",
+  "placed_at_utc": "2026-09-07T03:19:35.029920+00:00",
+  "twilio_status": "completed",
+  "duration_seconds": 51.64,
+  "turn_count": 4,
+  "outcome": null,
+  "recording": "recording.mp3"
+}

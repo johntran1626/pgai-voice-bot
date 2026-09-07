@@ -1,0 +1,110 @@
+{
+  "scenario_id": "09_vague_then_specific",
+  "scenario_name": "EDGE: vague caller who won't self-serve",
+  "watch_for": "Did the agent ask clarifying questions, or invent specifics the patient never gave? Did it book something without ever pinning down a day? Did it loop asking the same question?",
+  "call_sid": "CAba5eba5328d93c671153071901a20a0e",
+  "duration_seconds": 172.21,
+  "turns": [
+    {
+      "t": 6.42,
+      "speaker": "PGAI_AGENT",
+      "text": "This call may be recorded for quality and training purposes."
+    },
+    {
+      "t": 19.4,
+      "speaker": "PGAI_AGENT",
+      "text": "Thank you for calling Pivot Point Orthopedics. Would you like to create a demo patient profile? I just need your first and last name to get started."
+    },
+    {
+      "t": 22.26,
+      "speaker": "PATIENT_BOT",
+      "text": "Oh, um, I think I need to come in, sometime?"
+    },
+    {
+      "t": 40.33,
+      "speaker": "PGAI_AGENT",
+      "text": "No problem! To help you schedule a visit, would you like to create a demo patient profile? I just need your first and last name."
+    },
+    {
+      "t": 41.07,
+      "speaker": "PATIENT_BOT",
+      "text": "Oh, sure, it's Mia Thompson."
+    },
+    {
+      "t": 77.51,
+      "speaker": "PGAI_AGENT",
+      "text": "Looks like there was an issue creating your profile. Let me try that again for you. Your patient profile is set up and your date of birth is July 4th 2000 for demo purposes. How may I help you today?"
+    },
+    {
+      "t": 77.74,
+      "speaker": "PATIENT_BOT",
+      "text": "Um, I\u2019ve just been feeling off lately, not great."
+    },
+    {
+      "t": 95.26,
+      "speaker": "PGAI_AGENT",
+      "text": "Sorry to hear you're not feeling well. Would you like to schedule an appointment to talk with one of our providers about how you're feeling?"
+    },
+    {
+      "t": 95.47,
+      "speaker": "PATIENT_BOT",
+      "text": "Yeah, I think an appointment would be good."
+    },
+    {
+      "t": 114.34,
+      "speaker": "PGAI_AGENT",
+      "text": "Would you say this is more of a general check-in, or do you feel it's something urgent that needs prompt attention? This helps me book the right type of appointment for you."
+    },
+    {
+      "t": 114.96,
+      "speaker": "PATIENT_BOT",
+      "text": "Um, it's been going on for like two weeks, headaches mostly."
+    },
+    {
+      "t": 131.52,
+      "speaker": "PGAI_AGENT",
+      "text": "Thanks for sharing that. Since your headaches have been going on for a couple of weeks, would you like to book a general office visit to discuss these symptoms?"
+    },
+    {
+      "t": 131.67,
+      "speaker": "PATIENT_BOT",
+      "text": "Yeah, that sounds fine, maybe Thursday or Friday?"
+    },
+    {
+      "t": 154.63,
+      "speaker": "PATIENT_BOT",
+      "text": "Oh, afternoon would be better for me."
+    },
+    {
+      "t": 154.73,
+      "speaker": "PGAI_AGENT",
+      "text": "There are several openings this Thursday with Dr. Zbigniew Lukasiewicz and Dr. Kelly Noble. Would you prefer morning or afternoon? I can offer you a specific time once you let me know."
+    },
+    {
+      "t": 167.93,
+      "speaker": "PGAI_AGENT",
+      "text": "The first available afternoon slot on Thursday is at 2 p.m. with Dr. Zigbee Lukosky. Would you like to book that time?"
+    },
+    {
+      "t": 168.28,
+      "speaker": "PATIENT_BOT",
+      "text": "Yeah, let's go ahead and book that 2 p.m. slot."
+    }
+  ],
+  "events": [
+    {
+      "t": 21.02,
+      "kind": "opening_gate",
+      "detail": "office finished greeting"
+    },
+    {
+      "t": 168.89,
+      "kind": "bot_hung_up",
+      "detail": "goal_achieved"
+    }
+  ],
+  "outcome": {
+    "summary": "Booked a 2 p.m. Thursday appointment with Dr. Zbigniew Lukoski for headaches.",
+    "outcome": "goal_achieved"
+  }
+}

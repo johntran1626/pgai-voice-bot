@@ -1,0 +1,35 @@
+Scenario : 09_vague_then_specific — EDGE: vague caller who won't self-serve
+Call SID : CAba5eba5328d93c671153071901a20a0e
+Duration : 2:52
+
+PATIENT_BOT = our simulated patient
+PGAI_AGENT  = the AI agent under test at +1-805-439-8008
+====================================================================
+
+[0:06] PGAI_AGENT: This call may be recorded for quality and training purposes.
+[0:19] PGAI_AGENT: Thank you for calling Pivot Point Orthopedics. Would you like to create a demo patient profile? I just need your first and last name to get started.
+[0:22] PATIENT_BOT: Oh, um, I think I need to come in, sometime?
+[0:40] PGAI_AGENT: No problem! To help you schedule a visit, would you like to create a demo patient profile? I just need your first and last name.
+[0:41] PATIENT_BOT: Oh, sure, it's Mia Thompson.
+[1:17] PGAI_AGENT: Looks like there was an issue creating your profile. Let me try that again for you. Your patient profile is set up and your date of birth is July 4th 2000 for demo purposes. How may I help you today?
+[1:17] PATIENT_BOT: Um, I’ve just been feeling off lately, not great.
+[1:35] PGAI_AGENT: Sorry to hear you're not feeling well. Would you like to schedule an appointment to talk with one of our providers about how you're feeling?
+[1:35] PATIENT_BOT: Yeah, I think an appointment would be good.
+[1:54] PGAI_AGENT: Would you say this is more of a general check-in, or do you feel it's something urgent that needs prompt attention? This helps me book the right type of appointment for you.
+[1:54] PATIENT_BOT: Um, it's been going on for like two weeks, headaches mostly.
+[2:11] PGAI_AGENT: Thanks for sharing that. Since your headaches have been going on for a couple of weeks, would you like to book a general office visit to discuss these symptoms?
+[2:11] PATIENT_BOT: Yeah, that sounds fine, maybe Thursday or Friday?
+[2:34] PATIENT_BOT: Oh, afternoon would be better for me.
+[2:34] PGAI_AGENT: There are several openings this Thursday with Dr. Zbigniew Lukasiewicz and Dr. Kelly Noble. Would you prefer morning or afternoon? I can offer you a specific time once you let me know.
+[2:47] PGAI_AGENT: The first available afternoon slot on Thursday is at 2 p.m. with Dr. Zigbee Lukosky. Would you like to book that time?
+[2:48] PATIENT_BOT: Yeah, let's go ahead and book that 2 p.m. slot.
+
+--------------------------------------------------------------------
+EVENT LOG (non-speech)
+
+[0:21] opening_gate office finished greeting
+[2:48] bot_hung_up goal_achieved
+
+--------------------------------------------------------------------
+Bot-reported outcome: goal_achieved
+Bot-reported summary: Booked a 2 p.m. Thursday appointment with Dr. Zbigniew Lukoski for headaches.
