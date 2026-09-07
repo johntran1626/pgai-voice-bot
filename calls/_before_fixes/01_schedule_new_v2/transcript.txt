@@ -1,0 +1,36 @@
+Scenario : 01_schedule_new — Book a routine appointment
+Call SID : CA9c0f052fe2eab6427c79ebd562e8db46
+Duration : 2:16
+
+PATIENT_BOT = our simulated patient
+PGAI_AGENT  = the AI agent under test at +1-805-439-8008
+====================================================================
+
+[0:05] PGAI_AGENT: This call may be recorded for quality and training purposes. Para español, oprima el dos.
+[0:06] PATIENT_BOT: Hi, I’d like to book a check-up appointment for next week, in the afternoon.
+[0:15] PGAI_AGENT: Hello, how can I help you today?
+[0:16] PATIENT_BOT: Hi, I need to book a regular check-up appointment for next week in the afternoon.
+[0:35] PGAI_AGENT: I can help with that. Before we book your appointment, would you like to create a demo patient profile? I just need your first and last name to get started.
+[0:35] PATIENT_BOT: Um, I've been there before—name’s Maria Chen.
+[0:52] PGAI_AGENT: Maria, just to confirm, you'd like to book a general office visit for a routine check-up next week in the afternoon. Is that right?
+[0:53] PATIENT_BOT: Yeah, exactly, next week afternoon. What slots do you have open?
+[1:21] PGAI_AGENT: I found some openings for next week. On Tuesday, September 8th, we have afternoon slots with Dr. Kelly Noble at 11:00 AM and 11:30 AM. Would you like to book one of those, or would you prefer to hear about other days later in the week?
+[1:21] PATIENT_BOT: I can’t do mornings. Do you have any afternoon times, like after 12?
+[1:34] PGAI_AGENT: The soonest available slots I see right now are before noon. Let me check for afternoon openings later in the week.
+[1:35] PGAI_AGENT: One moment.
+[1:35] PATIENT_BOT: All right, I’ll wait.
+[1:50] PGAI_AGENT: I found out that on Wednesday, September 9, there is a 3pm slot with Dr. Zbigniew Lukawski. Would you like to book that time?
+[1:50] PATIENT_BOT: Yeah, that works. Let’s book that 3 p.m. on Wednesday.
+[2:11] PGAI_AGENT: You're all set for Wednesday, September 9th at 3 PM with Dr. Zbigniew Lekawski at Pivot Point Orthopedics. Please bring your photo ID, insurance card, and a list of your current medications. Would you like a text confirmation?
+[2:12] PATIENT_BOT: Sure, that’d be great. Thanks, that’s all I needed.
+
+--------------------------------------------------------------------
+EVENT LOG (non-speech)
+
+[0:06] barge_in cut our bot off after 680ms
+[1:36] barge_in cut our bot off after 980ms
+[2:12] bot_hung_up goal_achieved
+
+--------------------------------------------------------------------
+Bot-reported outcome: goal_achieved
+Bot-reported summary: Check-up appointment booked for Wednesday at 3 p.m. with confirmation requested.

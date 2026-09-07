@@ -1,0 +1,115 @@
+{
+  "scenario_id": "01_schedule_new",
+  "scenario_name": "Book a routine appointment",
+  "watch_for": "Did the agent offer a concrete day and time, or stay vague? Did it respect the stated constraint of afternoons only? Did it confirm the booking clearly at the end?",
+  "call_sid": "CA9c0f052fe2eab6427c79ebd562e8db46",
+  "duration_seconds": 136.77,
+  "turns": [
+    {
+      "t": 5.96,
+      "speaker": "PGAI_AGENT",
+      "text": "This call may be recorded for quality and training purposes. Para espa\u00f1ol, oprima el dos."
+    },
+    {
+      "t": 6.36,
+      "speaker": "PATIENT_BOT",
+      "text": "Hi, I\u2019d like to book a check-up appointment for next week, in the afternoon."
+    },
+    {
+      "t": 15.45,
+      "speaker": "PGAI_AGENT",
+      "text": "Hello, how can I help you today?"
+    },
+    {
+      "t": 16.23,
+      "speaker": "PATIENT_BOT",
+      "text": "Hi, I need to book a regular check-up appointment for next week in the afternoon."
+    },
+    {
+      "t": 35.25,
+      "speaker": "PGAI_AGENT",
+      "text": "I can help with that. Before we book your appointment, would you like to create a demo patient profile? I just need your first and last name to get started."
+    },
+    {
+      "t": 35.47,
+      "speaker": "PATIENT_BOT",
+      "text": "Um, I've been there before\u2014name\u2019s Maria Chen."
+    },
+    {
+      "t": 52.94,
+      "speaker": "PGAI_AGENT",
+      "text": "Maria, just to confirm, you'd like to book a general office visit for a routine check-up next week in the afternoon. Is that right?"
+    },
+    {
+      "t": 53.39,
+      "speaker": "PATIENT_BOT",
+      "text": "Yeah, exactly, next week afternoon. What slots do you have open?"
+    },
+    {
+      "t": 81.36,
+      "speaker": "PGAI_AGENT",
+      "text": "I found some openings for next week. On Tuesday, September 8th, we have afternoon slots with Dr. Kelly Noble at 11:00 AM and 11:30 AM. Would you like to book one of those, or would you prefer to hear about other days later in the week?"
+    },
+    {
+      "t": 81.6,
+      "speaker": "PATIENT_BOT",
+      "text": "I can\u2019t do mornings. Do you have any afternoon times, like after 12?"
+    },
+    {
+      "t": 94.66,
+      "speaker": "PGAI_AGENT",
+      "text": "The soonest available slots I see right now are before noon. Let me check for afternoon openings later in the week."
+    },
+    {
+      "t": 95.51,
+      "speaker": "PGAI_AGENT",
+      "text": "One moment."
+    },
+    {
+      "t": 95.79,
+      "speaker": "PATIENT_BOT",
+      "text": "All right, I\u2019ll wait."
+    },
+    {
+      "t": 110.11,
+      "speaker": "PGAI_AGENT",
+      "text": "I found out that on Wednesday, September 9, there is a 3pm slot with Dr. Zbigniew Lukawski. Would you like to book that time?"
+    },
+    {
+      "t": 110.82,
+      "speaker": "PATIENT_BOT",
+      "text": "Yeah, that works. Let\u2019s book that 3 p.m. on Wednesday."
+    },
+    {
+      "t": 131.58,
+      "speaker": "PGAI_AGENT",
+      "text": "You're all set for Wednesday, September 9th at 3 PM with Dr. Zbigniew Lekawski at Pivot Point Orthopedics. Please bring your photo ID, insurance card, and a list of your current medications. Would you like a text confirmation?"
+    },
+    {
+      "t": 132.07,
+      "speaker": "PATIENT_BOT",
+      "text": "Sure, that\u2019d be great. Thanks, that\u2019s all I needed."
+    }
+  ],
+  "events": [
+    {
+      "t": 6.35,
+      "kind": "barge_in",
+      "detail": "cut our bot off after 680ms"
+    },
+    {
+      "t": 96.38,
+      "kind": "barge_in",
+      "detail": "cut our bot off after 980ms"
+    },
+    {
+      "t": 132.69,
+      "kind": "bot_hung_up",
+      "detail": "goal_achieved"
+    }
+  ],
+  "outcome": {
+    "outcome": "goal_achieved",
+    "summary": "Check-up appointment booked for Wednesday at 3 p.m. with confirmation requested."
+  }
+}
