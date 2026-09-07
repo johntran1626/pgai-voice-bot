@@ -1,0 +1,222 @@
+{
+  "scenario_id": "01_schedule_new",
+  "scenario_name": "Book a routine appointment",
+  "watch_for": "Did the agent offer a concrete day and time, or stay vague? Did it respect the stated constraint of afternoons only? Did it confirm the booking clearly at the end?",
+  "call_sid": "CAda7fc30955c02e5aec5f1b2aabf844c5",
+  "duration_seconds": 242.27,
+  "turns": [
+    {
+      "t": 6.7,
+      "speaker": "PGAI_AGENT",
+      "text": "This call may be recorded for quality and training purposes. Para espa\u00f1ol, oprima el dos."
+    },
+    {
+      "t": 7.01,
+      "speaker": "PATIENT_BOT",
+      "text": "Hi, yeah, I'd like to book a check-up appointment for next week, in the afternoon."
+    },
+    {
+      "t": 20.36,
+      "speaker": "PGAI_AGENT",
+      "text": "How can I help you today?"
+    },
+    {
+      "t": 20.92,
+      "speaker": "PATIENT_BOT",
+      "text": "Hi, I'm looking to book a regular check-up appointment for next week, in the afternoon."
+    },
+    {
+      "t": 22.48,
+      "speaker": "PGAI_AGENT",
+      "text": "Hi there!"
+    },
+    {
+      "t": 23.1,
+      "speaker": "PATIENT_BOT",
+      "text": "Hi! I'm calling to set up a check-up appointment, hopefully for next week."
+    },
+    {
+      "t": 24.49,
+      "speaker": "PGAI_AGENT",
+      "text": "Hi"
+    },
+    {
+      "t": 25.23,
+      "speaker": "PATIENT_BOT",
+      "text": "Hi, I\u2019m calling to book a check-up appointment for next week."
+    },
+    {
+      "t": 38.63,
+      "speaker": "PGAI_AGENT",
+      "text": "I can help with that! Would you like to create a demo patient profile first? I just need your first and last name to get started."
+    },
+    {
+      "t": 38.88,
+      "speaker": "PATIENT_BOT",
+      "text": "Oh, I\u2019m already a patient there. My name\u2019s Maria Chen."
+    },
+    {
+      "t": 63.47,
+      "speaker": "PGAI_AGENT",
+      "text": "Thanks for letting me know, Maria. I don\u2019t see a profile for you yet, would you like to create a demo patient profile now? I just need your first and last name."
+    },
+    {
+      "t": 63.72,
+      "speaker": "PATIENT_BOT",
+      "text": "Um, I\u2019ve definitely been there before. Are you sure you checked under Maria Chen,"
+    },
+    {
+      "t": 65.25,
+      "speaker": "PGAI_AGENT",
+      "text": "Thanks Maria"
+    },
+    {
+      "t": 65.91,
+      "speaker": "PATIENT_BOT",
+      "text": "My date of birth is April 12th, 1988."
+    },
+    {
+      "t": 83.02,
+      "speaker": "PGAI_AGENT",
+      "text": "Thank you for sharing that. I still need to create a demo patient profile for you before booking your appointment. Can I go ahead and set that up using the name Maria Chen?"
+    },
+    {
+      "t": 83.75,
+      "speaker": "PATIENT_BOT",
+      "text": "Yeah, sure, go ahead and set it up with Maria Chen, that\u2019s C-H-E-N."
+    },
+    {
+      "t": 110.31,
+      "speaker": "PGAI_AGENT",
+      "text": "Looks like there was a problem creating your profile"
+    },
+    {
+      "t": 110.63,
+      "speaker": "PATIENT_BOT",
+      "text": "All right, can we go ahead and book an afternoon appointment next week anyway?"
+    },
+    {
+      "t": 127.56,
+      "speaker": "PGAI_AGENT",
+      "text": "Your patient profile has been created successfully and your date of birth is set as July 4th, 2000 for demo purposes. How may I help you today?"
+    },
+    {
+      "t": 128.11,
+      "speaker": "PATIENT_BOT",
+      "text": "Actually, my date of birth is April 12th, 1988. Could you fix that first?"
+    },
+    {
+      "t": 160.73,
+      "speaker": "PGAI_AGENT",
+      "text": "I've documented your request to update your date of birth to April 12, 1988. The clinic support team will update your record and get back to you as soon as they can. Would you still like to book your checkup appointment for next week?"
+    },
+    {
+      "t": 160.92,
+      "speaker": "PATIENT_BOT",
+      "text": "Yeah, let"
+    },
+    {
+      "t": 180.78,
+      "speaker": "PGAI_AGENT",
+      "text": "I let the clinic support team know to update your date of birth to April 12th, 1988. They will take care of it and follow up with you soon. Would you like to continue booking your checkup appointment for next week?"
+    },
+    {
+      "t": 181.0,
+      "speaker": "PATIENT_BOT",
+      "text": "Yes, please. I need an afternoon slot if possible."
+    },
+    {
+      "t": 183.17,
+      "speaker": "PGAI_AGENT",
+      "text": "Are you still?"
+    },
+    {
+      "t": 183.92,
+      "speaker": "PATIENT_BOT",
+      "text": "Yeah, let's get that check-up booked. What afternoon slots do you have open next week?"
+    },
+    {
+      "t": 207.46,
+      "speaker": "PGAI_AGENT",
+      "text": "Next week, we have check-up appointments on Tuesday, September 8th. Would you prefer a morning or late morning time? I can offer you a 10:30 am slot with Dr. Zygmunt Lukaszewski."
+    },
+    {
+      "t": 207.99,
+      "speaker": "PATIENT_BOT",
+      "text": "I can\u2019t do mornings, only afternoon. Do you have something after 12 p.m. on Tuesday?"
+    },
+    {
+      "t": 219.49,
+      "speaker": "PGAI_AGENT",
+      "text": "There are no afternoon slots available on Tuesday, September 8."
+    },
+    {
+      "t": 224.51,
+      "speaker": "PGAI_AGENT",
+      "text": "Would you like to hear about afternoon openings later in the week, like Wednesday or Thursday?"
+    },
+    {
+      "t": 225.36,
+      "speaker": "PATIENT_BOT",
+      "text": "Sure, let's check Wednesday afternoon."
+    }
+  ],
+  "events": [
+    {
+      "t": 7.0,
+      "kind": "barge_in",
+      "detail": "cut our bot off after 580ms"
+    },
+    {
+      "t": 20.9,
+      "kind": "barge_in",
+      "detail": "cut our bot off after 660ms"
+    },
+    {
+      "t": 23.08,
+      "kind": "barge_in",
+      "detail": "cut our bot off after 740ms"
+    },
+    {
+      "t": 63.69,
+      "kind": "barge_in",
+      "detail": "cut our bot off after 39200ms"
+    },
+    {
+      "t": 63.77,
+      "kind": "openai_error",
+      "detail": "Audio content of 3100ms is already shorter than 39200ms"
+    },
+    {
+      "t": 110.61,
+      "kind": "barge_in",
+      "detail": "cut our bot off after 45400ms"
+    },
+    {
+      "t": 110.69,
+      "kind": "openai_error",
+      "detail": "Audio content of 2600ms is already shorter than 45400ms"
+    },
+    {
+      "t": 160.89,
+      "kind": "barge_in",
+      "detail": "cut our bot off after 33700ms"
+    },
+    {
+      "t": 160.96,
+      "kind": "openai_error",
+      "detail": "Audio content of 750ms is already shorter than 33700ms"
+    },
+    {
+      "t": 181.04,
+      "kind": "barge_in",
+      "detail": "cut our bot off after 620ms"
+    },
+    {
+      "t": 240.19,
+      "kind": "max_duration_reached",
+      "detail": ""
+    }
+  ],
+  "outcome": null
+}

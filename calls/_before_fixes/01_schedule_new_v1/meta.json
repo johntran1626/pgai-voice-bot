@@ -1,0 +1,12 @@
+{
+  "scenario_id": "01_schedule_new",
+  "scenario_name": "Book a routine appointment",
+  "call_sid": "CAda7fc30955c02e5aec5f1b2aabf844c5",
+  "from_number": "+18053986093",
+  "to_number": "+18054398008",
+  "placed_at_utc": "2026-09-07T01:31:12.665201+00:00",
+  "twilio_status": "completed",
+  "duration_seconds": 252.77,
+  "turn_count": 31,
+  "recording": "recording.mp3"
+}
