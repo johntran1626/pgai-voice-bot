@@ -227,6 +227,7 @@ async def run_one(scenario: dict, public_host: str) -> bool:
                 "twilio_status": status,
                 "duration_seconds": round(transcript.elapsed(), 2),
                 "turn_count": len(transcript.turns),
+                "outcome": transcript.outcome,
                 "recording": os.path.basename(mp3) if mp3 else None,
             },
             f,
