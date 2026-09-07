@@ -174,7 +174,7 @@ Listen to the first recording before running the rest. Symptoms and fixes:
 
 | Symptom | Cause | Fix |
 |---|---|---|
-| The bots talk over each other | Our VAD jumps in too fast | In `bridge.py`, `session_config()`: `eagerness` `low` → `"very_low"` |
+| The bots talk over each other | Our VAD jumps in too fast | `low` is already the most patient value the API accepts (`low`/`medium`/`high`/`auto` — there is no `very_low`). Fix it in the prompt instead: tell the patient to sit through recorded greetings and never restate a request |
 | Long dead air after they finish | Our VAD waits too long | `eagerness` `low` → `"medium"` |
 | Our bot monologues | Persona drift | Tighten the turn-length rule in `VOICE_DISCIPLINE` |
 | Our bot sounds like an assistant | Same | Strengthen the "you are the caller" rules |

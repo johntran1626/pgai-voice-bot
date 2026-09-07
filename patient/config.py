@@ -58,7 +58,7 @@ TUNNEL_PROVIDER = os.environ.get("TUNNEL_PROVIDER", "auto").strip().lower()
 NGROK_AUTHTOKEN = os.environ.get("NGROK_AUTHTOKEN", "")
 PUBLIC_HOST = os.environ.get("PUBLIC_HOST", "").strip()
 
-MAX_CALL_SECONDS = int(os.environ.get("MAX_CALL_SECONDS", "240"))
+MAX_CALL_SECONDS = int(os.environ.get("MAX_CALL_SECONDS", "300"))
 
 # Where every call's transcript, recording and metadata gets written.
 CALLS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "calls")

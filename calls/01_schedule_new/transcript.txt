@@ -1,0 +1,54 @@
+Scenario : 01_schedule_new — Book a routine appointment
+Call SID : CAda7fc30955c02e5aec5f1b2aabf844c5
+Duration : 4:02
+
+PATIENT_BOT = our simulated patient
+PGAI_AGENT  = the AI agent under test at +1-805-439-8008
+====================================================================
+
+[0:06] PGAI_AGENT: This call may be recorded for quality and training purposes. Para español, oprima el dos.
+[0:07] PATIENT_BOT: Hi, yeah, I'd like to book a check-up appointment for next week, in the afternoon.
+[0:20] PGAI_AGENT: How can I help you today?
+[0:20] PATIENT_BOT: Hi, I'm looking to book a regular check-up appointment for next week, in the afternoon.
+[0:22] PGAI_AGENT: Hi there!
+[0:23] PATIENT_BOT: Hi! I'm calling to set up a check-up appointment, hopefully for next week.
+[0:24] PGAI_AGENT: Hi
+[0:25] PATIENT_BOT: Hi, I’m calling to book a check-up appointment for next week.
+[0:38] PGAI_AGENT: I can help with that! Would you like to create a demo patient profile first? I just need your first and last name to get started.
+[0:38] PATIENT_BOT: Oh, I’m already a patient there. My name’s Maria Chen.
+[1:03] PGAI_AGENT: Thanks for letting me know, Maria. I don’t see a profile for you yet, would you like to create a demo patient profile now? I just need your first and last name.
+[1:03] PATIENT_BOT: Um, I’ve definitely been there before. Are you sure you checked under Maria Chen,
+[1:05] PGAI_AGENT: Thanks Maria
+[1:05] PATIENT_BOT: My date of birth is April 12th, 1988.
+[1:23] PGAI_AGENT: Thank you for sharing that. I still need to create a demo patient profile for you before booking your appointment. Can I go ahead and set that up using the name Maria Chen?
+[1:23] PATIENT_BOT: Yeah, sure, go ahead and set it up with Maria Chen, that’s C-H-E-N.
+[1:50] PGAI_AGENT: Looks like there was a problem creating your profile
+[1:50] PATIENT_BOT: All right, can we go ahead and book an afternoon appointment next week anyway?
+[2:07] PGAI_AGENT: Your patient profile has been created successfully and your date of birth is set as July 4th, 2000 for demo purposes. How may I help you today?
+[2:08] PATIENT_BOT: Actually, my date of birth is April 12th, 1988. Could you fix that first?
+[2:40] PGAI_AGENT: I've documented your request to update your date of birth to April 12, 1988. The clinic support team will update your record and get back to you as soon as they can. Would you still like to book your checkup appointment for next week?
+[2:40] PATIENT_BOT: Yeah, let
+[3:00] PGAI_AGENT: I let the clinic support team know to update your date of birth to April 12th, 1988. They will take care of it and follow up with you soon. Would you like to continue booking your checkup appointment for next week?
+[3:01] PATIENT_BOT: Yes, please. I need an afternoon slot if possible.
+[3:03] PGAI_AGENT: Are you still?
+[3:03] PATIENT_BOT: Yeah, let's get that check-up booked. What afternoon slots do you have open next week?
+[3:27] PGAI_AGENT: Next week, we have check-up appointments on Tuesday, September 8th. Would you prefer a morning or late morning time? I can offer you a 10:30 am slot with Dr. Zygmunt Lukaszewski.
+[3:27] PATIENT_BOT: I can’t do mornings, only afternoon. Do you have something after 12 p.m. on Tuesday?
+[3:39] PGAI_AGENT: There are no afternoon slots available on Tuesday, September 8.
+[3:44] PGAI_AGENT: Would you like to hear about afternoon openings later in the week, like Wednesday or Thursday?
+[3:45] PATIENT_BOT: Sure, let's check Wednesday afternoon.
+
+--------------------------------------------------------------------
+EVENT LOG (non-speech)
+
+[0:07] barge_in cut our bot off after 580ms
+[0:20] barge_in cut our bot off after 660ms
+[0:23] barge_in cut our bot off after 740ms
+[1:03] barge_in cut our bot off after 39200ms
+[1:03] openai_error Audio content of 3100ms is already shorter than 39200ms
+[1:50] barge_in cut our bot off after 45400ms
+[1:50] openai_error Audio content of 2600ms is already shorter than 45400ms
+[2:40] barge_in cut our bot off after 33700ms
+[2:40] openai_error Audio content of 750ms is already shorter than 33700ms
+[3:01] barge_in cut our bot off after 620ms
+[4:00] max_duration_reached

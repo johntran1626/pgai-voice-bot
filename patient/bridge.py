@@ -278,10 +278,20 @@ class CallBridge:
 
         # Note when this sentence began, so that if we get interrupted we can
         # work out how much of it was actually heard.
-        if self.response_start_ts is None:
+        #
+        # The clock has to restart on every NEW sentence. Each response gets a
+        # fresh item_id, so a changed id means a new sentence. Without this
+        # check response_start_ts stays pinned to the first reply of the whole
+        # call: a barge-in twenty seconds later then computes "they heard
+        # 39200ms" of a three-second sentence, OpenAI rejects the truncate
+        # ("Audio content of 3100ms is already shorter than 39200ms"), and our
+        # bot's memory quietly desynchronises from what was actually heard.
+        item_id = evt.get("item_id")
+        if item_id and item_id != self.last_assistant_item:
+            self.last_assistant_item = item_id
             self.response_start_ts = self.latest_media_ts
-        if evt.get("item_id"):
-            self.last_assistant_item = evt["item_id"]
+        elif self.response_start_ts is None:
+            self.response_start_ts = self.latest_media_ts
 
         # Ask Twilio to tell us when this chunk finishes playing.
         await self.send_twilio(

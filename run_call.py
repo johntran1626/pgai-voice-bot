@@ -268,6 +268,10 @@ async def main_async(scenarios: list[dict]) -> None:
         print(f"\n{'=' * 70}\n{succeeded}/{len(scenarios)} call(s) captured. "
               f"Results are in calls/\n{'=' * 70}")
         srv.should_exit = True
+        # Give uvicorn a moment to shut down cleanly. Without it, its
+        # lifespan task gets cancelled mid-await and prints an alarming
+        # (but harmless) CancelledError traceback under your results.
+        await asyncio.sleep(0.5)
         close_tunnel()
 
 
