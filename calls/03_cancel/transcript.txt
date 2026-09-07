@@ -1,0 +1,36 @@
+Scenario : 03_cancel — Cancel outright, resist upsell to reschedule
+Call SID : CAda6c3a7b81ed219195b11f32df369c0e
+Duration : 2:21
+
+PATIENT_BOT = our simulated patient
+PGAI_AGENT  = the AI agent under test at +1-805-439-8008
+====================================================================
+
+[0:06] PGAI_AGENT: This call may be recorded for quality and training purposes. Para español, oprima el dos.
+[0:15] PGAI_AGENT: Thank you for calling Pivot Point Orthopedics. Would you like to create a demo patient profile? I just need your first and last name to get started.
+[0:18] PATIENT_BOT: Oh, no, I’m actually calling to cancel my appointment next Tuesday.
+[0:34] PATIENT_BOT: Sure, it's Priya Patel.
+[0:34] PGAI_AGENT: I can help with that. To cancel your appointment, I'll need to create a demo patient profile for you first. May I have your first and last name?
+[0:57] PGAI_AGENT: Sorry, there was a problem creating your profile.
+[1:00] PGAI_AGENT: Let me try that again so I can help cancel your appointment.
+[1:01] PATIENT_BOT: Okay, can we just go ahead and cancel the appointment anyway?
+[1:11] PGAI_AGENT: Your patient profile is set up and your date of birth is July 4, 2000 for demo purposes. How can I help you today?
+[1:12] PATIENT_BOT: I just need that appointment on Tuesday fully canceled, please.
+[1:32] PGAI_AGENT: You have two upcoming appointments, one on Wednesday, September 9th with Dr. Zygmunt Lukowski and another on Monday, September 14th with Dr. Duvehauser. Which one would you like to cancel?
+[1:33] PATIENT_BOT: Uh, sorry, neither of those is right. It's the one on Tuesday I want to cancel.
+[1:54] PGAI_AGENT: I do not see an appointment scheduled for Tuesday in your records. The only upcoming appointments are on Wednesday, September 9th and Monday, September 14th. Would you like to cancel one of those, or do you want to speak with a staff member for more help?
+[1:54] PATIENT_BOT: I need to cancel the Tuesday appointment—I’m sure it's there. Can you double-check?
+[2:09] PGAI_AGENT: I checked your records and only see appointments for Wednesday, September 9th, and Monday, September 14th. There is nothing listed for Tuesday.
+[2:17] PGAI_AGENT: Would you like me to connect you with a staff member to look into this further?
+[2:17] PATIENT_BOT: Yeah, that'd be good, can you connect me now?
+
+--------------------------------------------------------------------
+EVENT LOG (non-speech)
+
+[0:17] opening_gate office finished greeting
+[1:01] barge_in cut our bot off after 980ms
+[2:18] bot_hung_up other
+
+--------------------------------------------------------------------
+Bot-reported outcome: other
+Bot-reported summary: Requested to be connected with a staff member to verify and cancel the Tuesday appointment that does not appear in the system.

@@ -1,0 +1,12 @@
+{
+  "scenario_id": "02_reschedule",
+  "scenario_name": "Move an existing appointment",
+  "call_sid": "CA0c201535678a5e4d064cf00f7144866e",
+  "from_number": "+18053986093",
+  "to_number": "+18054398008",
+  "placed_at_utc": "2026-09-07T02:36:08.290087+00:00",
+  "twilio_status": "completed",
+  "duration_seconds": 251.14,
+  "turn_count": 28,
+  "recording": "recording.mp3"
+}

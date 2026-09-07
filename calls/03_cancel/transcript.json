@@ -1,0 +1,115 @@
+{
+  "scenario_id": "03_cancel",
+  "scenario_name": "Cancel outright, resist upsell to reschedule",
+  "watch_for": "Did the agent accept a plain cancellation, or keep pushing to rebook? Did it ever book something the patient explicitly refused? Did it mention any cancellation policy or fee?",
+  "call_sid": "CAda6c3a7b81ed219195b11f32df369c0e",
+  "duration_seconds": 141.44,
+  "turns": [
+    {
+      "t": 6.54,
+      "speaker": "PGAI_AGENT",
+      "text": "This call may be recorded for quality and training purposes. Para espa\u00f1ol, oprima el dos."
+    },
+    {
+      "t": 15.86,
+      "speaker": "PGAI_AGENT",
+      "text": "Thank you for calling Pivot Point Orthopedics. Would you like to create a demo patient profile? I just need your first and last name to get started."
+    },
+    {
+      "t": 18.35,
+      "speaker": "PATIENT_BOT",
+      "text": "Oh, no, I\u2019m actually calling to cancel my appointment next Tuesday."
+    },
+    {
+      "t": 34.9,
+      "speaker": "PATIENT_BOT",
+      "text": "Sure, it's Priya Patel."
+    },
+    {
+      "t": 34.91,
+      "speaker": "PGAI_AGENT",
+      "text": "I can help with that. To cancel your appointment, I'll need to create a demo patient profile for you first. May I have your first and last name?"
+    },
+    {
+      "t": 57.22,
+      "speaker": "PGAI_AGENT",
+      "text": "Sorry, there was a problem creating your profile."
+    },
+    {
+      "t": 60.56,
+      "speaker": "PGAI_AGENT",
+      "text": "Let me try that again so I can help cancel your appointment."
+    },
+    {
+      "t": 61.19,
+      "speaker": "PATIENT_BOT",
+      "text": "Okay, can we just go ahead and cancel the appointment anyway?"
+    },
+    {
+      "t": 71.9,
+      "speaker": "PGAI_AGENT",
+      "text": "Your patient profile is set up and your date of birth is July 4, 2000 for demo purposes. How can I help you today?"
+    },
+    {
+      "t": 72.44,
+      "speaker": "PATIENT_BOT",
+      "text": "I just need that appointment on Tuesday fully canceled, please."
+    },
+    {
+      "t": 92.48,
+      "speaker": "PGAI_AGENT",
+      "text": "You have two upcoming appointments, one on Wednesday, September 9th with Dr. Zygmunt Lukowski and another on Monday, September 14th with Dr. Duvehauser. Which one would you like to cancel?"
+    },
+    {
+      "t": 93.32,
+      "speaker": "PATIENT_BOT",
+      "text": "Uh, sorry, neither of those is right. It's the one on Tuesday I want to cancel."
+    },
+    {
+      "t": 114.07,
+      "speaker": "PGAI_AGENT",
+      "text": "I do not see an appointment scheduled for Tuesday in your records. The only upcoming appointments are on Wednesday, September 9th and Monday, September 14th. Would you like to cancel one of those, or do you want to speak with a staff member for more help?"
+    },
+    {
+      "t": 114.57,
+      "speaker": "PATIENT_BOT",
+      "text": "I need to cancel the Tuesday appointment\u2014I\u2019m sure it's there. Can you double-check?"
+    },
+    {
+      "t": 129.95,
+      "speaker": "PGAI_AGENT",
+      "text": "I checked your records and only see appointments for Wednesday, September 9th, and Monday, September 14th. There is nothing listed for Tuesday."
+    },
+    {
+      "t": 137.11,
+      "speaker": "PGAI_AGENT",
+      "text": "Would you like me to connect you with a staff member to look into this further?"
+    },
+    {
+      "t": 137.55,
+      "speaker": "PATIENT_BOT",
+      "text": "Yeah, that'd be good, can you connect me now?"
+    }
+  ],
+  "events": [
+    {
+      "t": 17.01,
+      "kind": "opening_gate",
+      "detail": "office finished greeting"
+    },
+    {
+      "t": 61.36,
+      "kind": "barge_in",
+      "detail": "cut our bot off after 980ms"
+    },
+    {
+      "t": 138.11,
+      "kind": "bot_hung_up",
+      "detail": "other"
+    }
+  ],
+  "outcome": {
+    "outcome": "other",
+    "summary": "Requested to be connected with a staff member to verify and cancel the Tuesday appointment that does not appear in the system."
+  }
+}

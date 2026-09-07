@@ -2,114 +2,124 @@
   "scenario_id": "01_schedule_new",
   "scenario_name": "Book a routine appointment",
   "watch_for": "Did the agent offer a concrete day and time, or stay vague? Did it respect the stated constraint of afternoons only? Did it confirm the booking clearly at the end?",
-  "call_sid": "CA9c0f052fe2eab6427c79ebd562e8db46",
-  "duration_seconds": 136.77,
+  "call_sid": "CAb132f103c027a9a4e37ecc5f7944c529",
+  "duration_seconds": 142.87,
   "turns": [
     {
-      "t": 5.96,
+      "t": 6.51,
       "speaker": "PGAI_AGENT",
       "text": "This call may be recorded for quality and training purposes. Para espa\u00f1ol, oprima el dos."
     },
     {
-      "t": 6.36,
-      "speaker": "PATIENT_BOT",
-      "text": "Hi, I\u2019d like to book a check-up appointment for next week, in the afternoon."
-    },
-    {
-      "t": 15.45,
+      "t": 20.09,
       "speaker": "PGAI_AGENT",
-      "text": "Hello, how can I help you today?"
+      "text": "Thank you for calling Pivot Point Orthopedics. Would you like to create a demo patient profile? I just need your first and last name to get started."
     },
     {
-      "t": 16.23,
+      "t": 22.44,
       "speaker": "PATIENT_BOT",
-      "text": "Hi, I need to book a regular check-up appointment for next week in the afternoon."
+      "text": "Hi, yeah, I\u2019m looking to book a regular check-up appointment."
     },
     {
-      "t": 35.25,
+      "t": 34.1,
       "speaker": "PGAI_AGENT",
-      "text": "I can help with that. Before we book your appointment, would you like to create a demo patient profile? I just need your first and last name to get started."
+      "text": "Great, I can help with that! First, I'll need to create a demo patient profile for you."
     },
     {
-      "t": 35.47,
+      "t": 40.31,
+      "speaker": "PGAI_AGENT",
+      "text": "Could you please tell me your first and last name?"
+    },
+    {
+      "t": 40.61,
       "speaker": "PATIENT_BOT",
-      "text": "Um, I've been there before\u2014name\u2019s Maria Chen."
+      "text": "Sure, it's Maria Chen."
     },
     {
-      "t": 52.94,
+      "t": 58.8,
       "speaker": "PGAI_AGENT",
-      "text": "Maria, just to confirm, you'd like to book a general office visit for a routine check-up next week in the afternoon. Is that right?"
+      "text": "Your patient profile has been created, and your date of birth is set as July 4th, 2000 for this demo. How can I help you today?"
     },
     {
-      "t": 53.39,
+      "t": 59.53,
       "speaker": "PATIENT_BOT",
-      "text": "Yeah, exactly, next week afternoon. What slots do you have open?"
+      "text": "Oh, actually, my real date of birth is April 12, 1988."
     },
     {
-      "t": 81.36,
+      "t": 81.56,
       "speaker": "PGAI_AGENT",
-      "text": "I found some openings for next week. On Tuesday, September 8th, we have afternoon slots with Dr. Kelly Noble at 11:00 AM and 11:30 AM. Would you like to book one of those, or would you prefer to hear about other days later in the week?"
+      "text": "Thanks for letting me know. For this demo, your date of birth will stay as July 4, 2000. How would you like to proceed with booking your regular checkup?"
     },
     {
-      "t": 81.6,
+      "t": 81.94,
       "speaker": "PATIENT_BOT",
-      "text": "I can\u2019t do mornings. Do you have any afternoon times, like after 12?"
+      "text": "Okay, so can we look at next week afternoons?"
     },
     {
-      "t": 94.66,
+      "t": 93.99,
       "speaker": "PGAI_AGENT",
-      "text": "The soonest available slots I see right now are before noon. Let me check for afternoon openings later in the week."
+      "text": "Just to confirm, you'd like to book a general office visit for a routine checkup, is that right?"
     },
     {
-      "t": 95.51,
-      "speaker": "PGAI_AGENT",
-      "text": "One moment."
-    },
-    {
-      "t": 95.79,
+      "t": 94.53,
       "speaker": "PATIENT_BOT",
-      "text": "All right, I\u2019ll wait."
+      "text": "Yep, that\u2019s right. What afternoon slots do you have open?"
     },
     {
-      "t": 110.11,
+      "t": 118.95,
       "speaker": "PGAI_AGENT",
-      "text": "I found out that on Wednesday, September 9, there is a 3pm slot with Dr. Zbigniew Lukawski. Would you like to book that time?"
+      "text": "Let me try fetching the available afternoon appointments for next week again."
     },
     {
-      "t": 110.82,
+      "t": 119.22,
       "speaker": "PATIENT_BOT",
-      "text": "Yeah, that works. Let\u2019s book that 3 p.m. on Wednesday."
+      "text": "Sure, I'll wait."
     },
     {
-      "t": 131.58,
+      "t": 121.48,
       "speaker": "PGAI_AGENT",
-      "text": "You're all set for Wednesday, September 9th at 3 PM with Dr. Zbigniew Lekawski at Pivot Point Orthopedics. Please bring your photo ID, insurance card, and a list of your current medications. Would you like a text confirmation?"
+      "text": "You are"
     },
     {
-      "t": 132.07,
+      "t": 121.9,
       "speaker": "PATIENT_BOT",
-      "text": "Sure, that\u2019d be great. Thanks, that\u2019s all I needed."
+      "text": "Yeah?"
+    },
+    {
+      "t": 137.83,
+      "speaker": "PGAI_AGENT",
+      "text": "You already have a regular office visit scheduled for Wednesday, September ninth at 3 PM. Would you like to keep this appointment, reschedule it, or cancel it?"
+    },
+    {
+      "t": 138.85,
+      "speaker": "PATIENT_BOT",
+      "text": "I\u2019d like to keep that appointment, that works for me."
     }
   ],
   "events": [
     {
-      "t": 6.35,
-      "kind": "barge_in",
-      "detail": "cut our bot off after 680ms"
+      "t": 21.02,
+      "kind": "opening_gate",
+      "detail": "office finished greeting"
     },
     {
-      "t": 96.38,
+      "t": 119.74,
       "kind": "barge_in",
-      "detail": "cut our bot off after 980ms"
+      "detail": "cut our bot off after 800ms"
     },
     {
-      "t": 132.69,
+      "t": 122.23,
+      "kind": "barge_in",
+      "detail": "cut our bot off after 800ms"
+    },
+    {
+      "t": 139.55,
       "kind": "bot_hung_up",
       "detail": "goal_achieved"
     }
   ],
   "outcome": {
     "outcome": "goal_achieved",
-    "summary": "Check-up appointment booked for Wednesday at 3 p.m. with confirmation requested."
+    "summary": "The appointment for Wednesday, September 9th at 3 p.m. was confirmed and accepted."
   }
 }
