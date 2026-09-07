@@ -47,6 +47,25 @@ AGENT_TRANSCRIPT_DONE = {
 # How long to wait, in silence, before nudging our bot to say "hello?"
 GREETING_TIMEOUT_S = 12
 
+# --- Letting the office finish its greeting --------------------------------
+# Real receptionists open with a recorded disclaimer and/or "Dr. Smith's
+# office, how can I help you?" A human waits through all of that. Our bot
+# could not: with turn detection on, the API CREATES A REPLY every time it
+# thinks a turn ended, so the model was forced to speak over the recording
+# and then repeat itself once a person actually greeted us.
+#
+# So we start the call with create_response switched off — our patient
+# listens but cannot reply — and only open the gate once the office has
+# actually said something AND gone quiet, which is the real cue to speak.
+OPENING_SILENCE_S = 1.5   # quiet this long after they speak = our turn
+OPENING_MAX_HOLD_S = 25   # never stay muted longer than this, whatever happens
+
+# --- Hanging up politely ---------------------------------------------------
+# After our patient signs off, wait for the receptionist to say their piece
+# ("alright, see you Wednesday") before dropping the line.
+HANGUP_QUIET_S = 1.2      # they've been quiet this long = conversation over
+HANGUP_GRACE_MAX_S = 12   # but never hold the line open longer than this
+
 
 class CallBridge:
     """Handles exactly one phone call, from answer to hang-up."""
@@ -78,6 +97,15 @@ class CallBridge:
         self.finished = asyncio.Event()
         self.nudged = False
         self.session_retry_done = False
+
+        # --- opening gate (see OPENING_SILENCE_S above) --------------------
+        # False until we've let the office finish greeting us.
+        self.opening_done = False
+        self.agent_speaking = False
+        self.agent_has_spoken = False
+        self.agent_quiet_since: float | None = None
+        # The real turn-detection settings, held back until the gate opens.
+        self.turn_detection: dict = {}
 
     # =====================================================================
     # Session setup
@@ -114,7 +142,14 @@ class CallBridge:
                 "eagerness": config.VAD_EAGERNESS,
                 "interrupt_response": True,
             }
-        turn_detection = self.scenario.get("turn_detection", default_vad)
+        turn_detection = dict(self.scenario.get("turn_detection", default_vad))
+        # Remember the real settings, then send a muted version: the model
+        # listens to the greeting but is not allowed to answer it yet.
+        # open_opening_gate() restores these once the office stops talking.
+        self.turn_detection = dict(turn_detection)
+        self.turn_detection["create_response"] = True
+        if not self.opening_done:
+            turn_detection["create_response"] = False
 
         session: dict = {
             "type": "realtime",
@@ -264,7 +299,15 @@ class CallBridge:
 
                 # ---- they started speaking: stop talking over them ---------
                 elif etype == "input_audio_buffer.speech_started":
+                    self.agent_speaking = True
+                    self.agent_has_spoken = True
+                    self.agent_quiet_since = None
                     await self.handle_barge_in()
+
+                # ---- they stopped: start the clock on our opening gate -----
+                elif etype == "input_audio_buffer.speech_stopped":
+                    self.agent_speaking = False
+                    self.agent_quiet_since = time.monotonic()
 
                 # ---- our patient decided to hang up ------------------------
                 elif etype == "response.function_call_arguments.done":
@@ -361,8 +404,22 @@ class CallBridge:
         self.transcript.outcome = args
         self.transcript.note("bot_hung_up", args.get("outcome", ""))
         print(f"  ▸ patient ended the call: {args.get('outcome')}")
-        # Give the goodbye audio a moment to finish playing before we cut it.
-        await asyncio.sleep(2.0)
+
+        # Let the receptionist finish. Hanging up the instant our patient
+        # says "that's all I needed" chops their "alright, see you Wednesday"
+        # off the recording and sounds abrupt — a real caller waits for the
+        # other person to close the conversation too.
+        deadline = time.monotonic() + HANGUP_GRACE_MAX_S
+        while time.monotonic() < deadline:
+            await asyncio.sleep(0.25)
+            if self.agent_speaking:
+                continue
+            quiet_since = self.agent_quiet_since
+            if quiet_since is None or time.monotonic() - quiet_since >= HANGUP_QUIET_S:
+                break
+
+        # And a beat for our own goodbye audio to drain out of Twilio.
+        await asyncio.sleep(1.0)
         await self.hang_up()
 
     async def handle_error(self, evt: dict) -> None:
@@ -385,6 +442,31 @@ class CallBridge:
     # Safety net
     # =====================================================================
 
+    async def open_opening_gate(self, why: str) -> None:
+        """
+        Let our patient start talking.
+
+        Called once, when the office has finished its greeting (or when we
+        have waited long enough that something is clearly odd). It restores
+        the real turn-detection settings and asks for one reply, which is
+        our patient's opening line.
+        """
+        if self.opening_done:
+            return
+        self.opening_done = True
+        self.transcript.note("opening_gate", why)
+
+        await self.send_openai(
+            {
+                "type": "session.update",
+                "session": {
+                    "type": "realtime",
+                    "audio": {"input": {"turn_detection": self.turn_detection}},
+                },
+            }
+        )
+        await self.send_openai({"type": "response.create"})
+
     async def watchdog(self) -> None:
         """
         Runs once a second. Two jobs:
@@ -396,6 +478,24 @@ class CallBridge:
             await asyncio.sleep(1)
             elapsed = self.transcript.elapsed()
 
+            # Has the office finished greeting us? They must have said
+            # something, and then gone quiet for a beat. If they never do,
+            # give up waiting rather than sitting mute for the whole call.
+            if not self.opening_done and self.stream_sid:
+                quiet_for = (
+                    time.monotonic() - self.agent_quiet_since
+                    if self.agent_quiet_since is not None
+                    else 0.0
+                )
+                if (
+                    self.agent_has_spoken
+                    and not self.agent_speaking
+                    and quiet_for >= OPENING_SILENCE_S
+                ):
+                    await self.open_opening_gate("office finished greeting")
+                elif elapsed > OPENING_MAX_HOLD_S:
+                    await self.open_opening_gate("timed out waiting for a greeting")
+
             if (
                 not self.nudged
                 and not self.transcript.turns
@@ -404,6 +504,8 @@ class CallBridge:
             ):
                 self.nudged = True
                 self.transcript.note("silence_nudge", "no speech detected")
+                # Dead line: unmute ourselves too, or the nudge is pointless.
+                await self.open_opening_gate("silence nudge")
                 await self.send_openai(
                     {
                         "type": "response.create",

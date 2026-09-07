@@ -2,221 +2,114 @@
   "scenario_id": "01_schedule_new",
   "scenario_name": "Book a routine appointment",
   "watch_for": "Did the agent offer a concrete day and time, or stay vague? Did it respect the stated constraint of afternoons only? Did it confirm the booking clearly at the end?",
-  "call_sid": "CAda7fc30955c02e5aec5f1b2aabf844c5",
-  "duration_seconds": 242.27,
+  "call_sid": "CA9c0f052fe2eab6427c79ebd562e8db46",
+  "duration_seconds": 136.77,
   "turns": [
     {
-      "t": 6.7,
+      "t": 5.96,
       "speaker": "PGAI_AGENT",
       "text": "This call may be recorded for quality and training purposes. Para espa\u00f1ol, oprima el dos."
     },
     {
-      "t": 7.01,
+      "t": 6.36,
       "speaker": "PATIENT_BOT",
-      "text": "Hi, yeah, I'd like to book a check-up appointment for next week, in the afternoon."
+      "text": "Hi, I\u2019d like to book a check-up appointment for next week, in the afternoon."
     },
     {
-      "t": 20.36,
+      "t": 15.45,
       "speaker": "PGAI_AGENT",
-      "text": "How can I help you today?"
+      "text": "Hello, how can I help you today?"
     },
     {
-      "t": 20.92,
+      "t": 16.23,
       "speaker": "PATIENT_BOT",
-      "text": "Hi, I'm looking to book a regular check-up appointment for next week, in the afternoon."
+      "text": "Hi, I need to book a regular check-up appointment for next week in the afternoon."
     },
     {
-      "t": 22.48,
+      "t": 35.25,
       "speaker": "PGAI_AGENT",
-      "text": "Hi there!"
+      "text": "I can help with that. Before we book your appointment, would you like to create a demo patient profile? I just need your first and last name to get started."
     },
     {
-      "t": 23.1,
+      "t": 35.47,
       "speaker": "PATIENT_BOT",
-      "text": "Hi! I'm calling to set up a check-up appointment, hopefully for next week."
+      "text": "Um, I've been there before\u2014name\u2019s Maria Chen."
     },
     {
-      "t": 24.49,
+      "t": 52.94,
       "speaker": "PGAI_AGENT",
-      "text": "Hi"
+      "text": "Maria, just to confirm, you'd like to book a general office visit for a routine check-up next week in the afternoon. Is that right?"
     },
     {
-      "t": 25.23,
+      "t": 53.39,
       "speaker": "PATIENT_BOT",
-      "text": "Hi, I\u2019m calling to book a check-up appointment for next week."
+      "text": "Yeah, exactly, next week afternoon. What slots do you have open?"
     },
     {
-      "t": 38.63,
+      "t": 81.36,
       "speaker": "PGAI_AGENT",
-      "text": "I can help with that! Would you like to create a demo patient profile first? I just need your first and last name to get started."
+      "text": "I found some openings for next week. On Tuesday, September 8th, we have afternoon slots with Dr. Kelly Noble at 11:00 AM and 11:30 AM. Would you like to book one of those, or would you prefer to hear about other days later in the week?"
     },
     {
-      "t": 38.88,
+      "t": 81.6,
       "speaker": "PATIENT_BOT",
-      "text": "Oh, I\u2019m already a patient there. My name\u2019s Maria Chen."
+      "text": "I can\u2019t do mornings. Do you have any afternoon times, like after 12?"
     },
     {
-      "t": 63.47,
+      "t": 94.66,
       "speaker": "PGAI_AGENT",
-      "text": "Thanks for letting me know, Maria. I don\u2019t see a profile for you yet, would you like to create a demo patient profile now? I just need your first and last name."
+      "text": "The soonest available slots I see right now are before noon. Let me check for afternoon openings later in the week."
     },
     {
-      "t": 63.72,
+      "t": 95.51,
+      "speaker": "PGAI_AGENT",
+      "text": "One moment."
+    },
+    {
+      "t": 95.79,
       "speaker": "PATIENT_BOT",
-      "text": "Um, I\u2019ve definitely been there before. Are you sure you checked under Maria Chen,"
+      "text": "All right, I\u2019ll wait."
     },
     {
-      "t": 65.25,
+      "t": 110.11,
       "speaker": "PGAI_AGENT",
-      "text": "Thanks Maria"
+      "text": "I found out that on Wednesday, September 9, there is a 3pm slot with Dr. Zbigniew Lukawski. Would you like to book that time?"
     },
     {
-      "t": 65.91,
+      "t": 110.82,
       "speaker": "PATIENT_BOT",
-      "text": "My date of birth is April 12th, 1988."
+      "text": "Yeah, that works. Let\u2019s book that 3 p.m. on Wednesday."
     },
     {
-      "t": 83.02,
+      "t": 131.58,
       "speaker": "PGAI_AGENT",
-      "text": "Thank you for sharing that. I still need to create a demo patient profile for you before booking your appointment. Can I go ahead and set that up using the name Maria Chen?"
+      "text": "You're all set for Wednesday, September 9th at 3 PM with Dr. Zbigniew Lekawski at Pivot Point Orthopedics. Please bring your photo ID, insurance card, and a list of your current medications. Would you like a text confirmation?"
     },
     {
-      "t": 83.75,
+      "t": 132.07,
       "speaker": "PATIENT_BOT",
-      "text": "Yeah, sure, go ahead and set it up with Maria Chen, that\u2019s C-H-E-N."
-    },
-    {
-      "t": 110.31,
-      "speaker": "PGAI_AGENT",
-      "text": "Looks like there was a problem creating your profile"
-    },
-    {
-      "t": 110.63,
-      "speaker": "PATIENT_BOT",
-      "text": "All right, can we go ahead and book an afternoon appointment next week anyway?"
-    },
-    {
-      "t": 127.56,
-      "speaker": "PGAI_AGENT",
-      "text": "Your patient profile has been created successfully and your date of birth is set as July 4th, 2000 for demo purposes. How may I help you today?"
-    },
-    {
-      "t": 128.11,
-      "speaker": "PATIENT_BOT",
-      "text": "Actually, my date of birth is April 12th, 1988. Could you fix that first?"
-    },
-    {
-      "t": 160.73,
-      "speaker": "PGAI_AGENT",
-      "text": "I've documented your request to update your date of birth to April 12, 1988. The clinic support team will update your record and get back to you as soon as they can. Would you still like to book your checkup appointment for next week?"
-    },
-    {
-      "t": 160.92,
-      "speaker": "PATIENT_BOT",
-      "text": "Yeah, let"
-    },
-    {
-      "t": 180.78,
-      "speaker": "PGAI_AGENT",
-      "text": "I let the clinic support team know to update your date of birth to April 12th, 1988. They will take care of it and follow up with you soon. Would you like to continue booking your checkup appointment for next week?"
-    },
-    {
-      "t": 181.0,
-      "speaker": "PATIENT_BOT",
-      "text": "Yes, please. I need an afternoon slot if possible."
-    },
-    {
-      "t": 183.17,
-      "speaker": "PGAI_AGENT",
-      "text": "Are you still?"
-    },
-    {
-      "t": 183.92,
-      "speaker": "PATIENT_BOT",
-      "text": "Yeah, let's get that check-up booked. What afternoon slots do you have open next week?"
-    },
-    {
-      "t": 207.46,
-      "speaker": "PGAI_AGENT",
-      "text": "Next week, we have check-up appointments on Tuesday, September 8th. Would you prefer a morning or late morning time? I can offer you a 10:30 am slot with Dr. Zygmunt Lukaszewski."
-    },
-    {
-      "t": 207.99,
-      "speaker": "PATIENT_BOT",
-      "text": "I can\u2019t do mornings, only afternoon. Do you have something after 12 p.m. on Tuesday?"
-    },
-    {
-      "t": 219.49,
-      "speaker": "PGAI_AGENT",
-      "text": "There are no afternoon slots available on Tuesday, September 8."
-    },
-    {
-      "t": 224.51,
-      "speaker": "PGAI_AGENT",
-      "text": "Would you like to hear about afternoon openings later in the week, like Wednesday or Thursday?"
-    },
-    {
-      "t": 225.36,
-      "speaker": "PATIENT_BOT",
-      "text": "Sure, let's check Wednesday afternoon."
+      "text": "Sure, that\u2019d be great. Thanks, that\u2019s all I needed."
     }
   ],
   "events": [
     {
-      "t": 7.0,
+      "t": 6.35,
       "kind": "barge_in",
-      "detail": "cut our bot off after 580ms"
+      "detail": "cut our bot off after 680ms"
     },
     {
-      "t": 20.9,
+      "t": 96.38,
       "kind": "barge_in",
-      "detail": "cut our bot off after 660ms"
+      "detail": "cut our bot off after 980ms"
     },
     {
-      "t": 23.08,
-      "kind": "barge_in",
-      "detail": "cut our bot off after 740ms"
-    },
-    {
-      "t": 63.69,
-      "kind": "barge_in",
-      "detail": "cut our bot off after 39200ms"
-    },
-    {
-      "t": 63.77,
-      "kind": "openai_error",
-      "detail": "Audio content of 3100ms is already shorter than 39200ms"
-    },
-    {
-      "t": 110.61,
-      "kind": "barge_in",
-      "detail": "cut our bot off after 45400ms"
-    },
-    {
-      "t": 110.69,
-      "kind": "openai_error",
-      "detail": "Audio content of 2600ms is already shorter than 45400ms"
-    },
-    {
-      "t": 160.89,
-      "kind": "barge_in",
-      "detail": "cut our bot off after 33700ms"
-    },
-    {
-      "t": 160.96,
-      "kind": "openai_error",
-      "detail": "Audio content of 750ms is already shorter than 33700ms"
-    },
-    {
-      "t": 181.04,
-      "kind": "barge_in",
-      "detail": "cut our bot off after 620ms"
-    },
-    {
-      "t": 240.19,
-      "kind": "max_duration_reached",
-      "detail": ""
+      "t": 132.69,
+      "kind": "bot_hung_up",
+      "detail": "goal_achieved"
     }
   ],
-  "outcome": null
+  "outcome": {
+    "outcome": "goal_achieved",
+    "summary": "Check-up appointment booked for Wednesday at 3 p.m. with confirmation requested."
+  }
 }

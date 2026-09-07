@@ -1,54 +1,36 @@
 Scenario : 01_schedule_new — Book a routine appointment
-Call SID : CAda7fc30955c02e5aec5f1b2aabf844c5
-Duration : 4:02
+Call SID : CA9c0f052fe2eab6427c79ebd562e8db46
+Duration : 2:16
 
 PATIENT_BOT = our simulated patient
 PGAI_AGENT  = the AI agent under test at +1-805-439-8008
 ====================================================================
 
-[0:06] PGAI_AGENT: This call may be recorded for quality and training purposes. Para español, oprima el dos.
-[0:07] PATIENT_BOT: Hi, yeah, I'd like to book a check-up appointment for next week, in the afternoon.
-[0:20] PGAI_AGENT: How can I help you today?
-[0:20] PATIENT_BOT: Hi, I'm looking to book a regular check-up appointment for next week, in the afternoon.
-[0:22] PGAI_AGENT: Hi there!
-[0:23] PATIENT_BOT: Hi! I'm calling to set up a check-up appointment, hopefully for next week.
-[0:24] PGAI_AGENT: Hi
-[0:25] PATIENT_BOT: Hi, I’m calling to book a check-up appointment for next week.
-[0:38] PGAI_AGENT: I can help with that! Would you like to create a demo patient profile first? I just need your first and last name to get started.
-[0:38] PATIENT_BOT: Oh, I’m already a patient there. My name’s Maria Chen.
-[1:03] PGAI_AGENT: Thanks for letting me know, Maria. I don’t see a profile for you yet, would you like to create a demo patient profile now? I just need your first and last name.
-[1:03] PATIENT_BOT: Um, I’ve definitely been there before. Are you sure you checked under Maria Chen,
-[1:05] PGAI_AGENT: Thanks Maria
-[1:05] PATIENT_BOT: My date of birth is April 12th, 1988.
-[1:23] PGAI_AGENT: Thank you for sharing that. I still need to create a demo patient profile for you before booking your appointment. Can I go ahead and set that up using the name Maria Chen?
-[1:23] PATIENT_BOT: Yeah, sure, go ahead and set it up with Maria Chen, that’s C-H-E-N.
-[1:50] PGAI_AGENT: Looks like there was a problem creating your profile
-[1:50] PATIENT_BOT: All right, can we go ahead and book an afternoon appointment next week anyway?
-[2:07] PGAI_AGENT: Your patient profile has been created successfully and your date of birth is set as July 4th, 2000 for demo purposes. How may I help you today?
-[2:08] PATIENT_BOT: Actually, my date of birth is April 12th, 1988. Could you fix that first?
-[2:40] PGAI_AGENT: I've documented your request to update your date of birth to April 12, 1988. The clinic support team will update your record and get back to you as soon as they can. Would you still like to book your checkup appointment for next week?
-[2:40] PATIENT_BOT: Yeah, let
-[3:00] PGAI_AGENT: I let the clinic support team know to update your date of birth to April 12th, 1988. They will take care of it and follow up with you soon. Would you like to continue booking your checkup appointment for next week?
-[3:01] PATIENT_BOT: Yes, please. I need an afternoon slot if possible.
-[3:03] PGAI_AGENT: Are you still?
-[3:03] PATIENT_BOT: Yeah, let's get that check-up booked. What afternoon slots do you have open next week?
-[3:27] PGAI_AGENT: Next week, we have check-up appointments on Tuesday, September 8th. Would you prefer a morning or late morning time? I can offer you a 10:30 am slot with Dr. Zygmunt Lukaszewski.
-[3:27] PATIENT_BOT: I can’t do mornings, only afternoon. Do you have something after 12 p.m. on Tuesday?
-[3:39] PGAI_AGENT: There are no afternoon slots available on Tuesday, September 8.
-[3:44] PGAI_AGENT: Would you like to hear about afternoon openings later in the week, like Wednesday or Thursday?
-[3:45] PATIENT_BOT: Sure, let's check Wednesday afternoon.
+[0:05] PGAI_AGENT: This call may be recorded for quality and training purposes. Para español, oprima el dos.
+[0:06] PATIENT_BOT: Hi, I’d like to book a check-up appointment for next week, in the afternoon.
+[0:15] PGAI_AGENT: Hello, how can I help you today?
+[0:16] PATIENT_BOT: Hi, I need to book a regular check-up appointment for next week in the afternoon.
+[0:35] PGAI_AGENT: I can help with that. Before we book your appointment, would you like to create a demo patient profile? I just need your first and last name to get started.
+[0:35] PATIENT_BOT: Um, I've been there before—name’s Maria Chen.
+[0:52] PGAI_AGENT: Maria, just to confirm, you'd like to book a general office visit for a routine check-up next week in the afternoon. Is that right?
+[0:53] PATIENT_BOT: Yeah, exactly, next week afternoon. What slots do you have open?
+[1:21] PGAI_AGENT: I found some openings for next week. On Tuesday, September 8th, we have afternoon slots with Dr. Kelly Noble at 11:00 AM and 11:30 AM. Would you like to book one of those, or would you prefer to hear about other days later in the week?
+[1:21] PATIENT_BOT: I can’t do mornings. Do you have any afternoon times, like after 12?
+[1:34] PGAI_AGENT: The soonest available slots I see right now are before noon. Let me check for afternoon openings later in the week.
+[1:35] PGAI_AGENT: One moment.
+[1:35] PATIENT_BOT: All right, I’ll wait.
+[1:50] PGAI_AGENT: I found out that on Wednesday, September 9, there is a 3pm slot with Dr. Zbigniew Lukawski. Would you like to book that time?
+[1:50] PATIENT_BOT: Yeah, that works. Let’s book that 3 p.m. on Wednesday.
+[2:11] PGAI_AGENT: You're all set for Wednesday, September 9th at 3 PM with Dr. Zbigniew Lekawski at Pivot Point Orthopedics. Please bring your photo ID, insurance card, and a list of your current medications. Would you like a text confirmation?
+[2:12] PATIENT_BOT: Sure, that’d be great. Thanks, that’s all I needed.
 
 --------------------------------------------------------------------
 EVENT LOG (non-speech)
 
-[0:07] barge_in cut our bot off after 580ms
-[0:20] barge_in cut our bot off after 660ms
-[0:23] barge_in cut our bot off after 740ms
-[1:03] barge_in cut our bot off after 39200ms
-[1:03] openai_error Audio content of 3100ms is already shorter than 39200ms
-[1:50] barge_in cut our bot off after 45400ms
-[1:50] openai_error Audio content of 2600ms is already shorter than 45400ms
-[2:40] barge_in cut our bot off after 33700ms
-[2:40] openai_error Audio content of 750ms is already shorter than 33700ms
-[3:01] barge_in cut our bot off after 620ms
-[4:00] max_duration_reached
+[0:06] barge_in cut our bot off after 680ms
+[1:36] barge_in cut our bot off after 980ms
+[2:12] bot_hung_up goal_achieved
+
+--------------------------------------------------------------------
+Bot-reported outcome: goal_achieved
+Bot-reported summary: Check-up appointment booked for Wednesday at 3 p.m. with confirmation requested.

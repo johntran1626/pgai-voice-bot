@@ -43,11 +43,18 @@ async def fake_openai(ws):
     received_from_bridge.append(first)
     await ws.send(json.dumps({"type": "session.updated"}))
 
-    # 2. Pretend the PGAI agent greeted us (this is *input* transcription).
+    # 2. Pretend the PGAI agent greets us: it starts talking, says its
+    #    line, then goes quiet. That silence is what should open our
+    #    "opening gate" and let our patient speak for the first time.
+    await ws.send(json.dumps({"type": "input_audio_buffer.speech_started"}))
     await ws.send(json.dumps({
         "type": "conversation.item.input_audio_transcription.completed",
         "transcript": "Thanks for calling Riverside Family Medicine.",
     }))
+    await ws.send(json.dumps({"type": "input_audio_buffer.speech_stopped"}))
+
+    # Wait past OPENING_SILENCE_S plus a watchdog tick.
+    await asyncio.sleep(3.0)
 
     # 3. Pretend our patient replies with two chunks of speech.
     for _ in range(2):
@@ -116,7 +123,7 @@ def main() -> int:
                 "event": "media",
                 "media": {"timestamp": str(i * 20), "payload": SILENCE},
             }))
-        time.sleep(1.2)
+        time.sleep(4.5)
 
         # Drain whatever the bridge sent back toward Twilio.
         deadline = time.time() + 2
@@ -174,6 +181,23 @@ def main() -> int:
     if not truncate:
         problems.append("barge-in did not truncate the assistant item")
 
+    # The opening gate: our patient must start MUTED (create_response off),
+    # then be un-muted once the office stops talking. Without this the model
+    # is forced to answer the recorded disclaimer and then repeat itself.
+    updates = [m for m in received_from_bridge if m.get("type") == "session.update"]
+    if updates:
+        first_td = updates[0]["session"]["audio"]["input"]["turn_detection"]
+        if first_td.get("create_response") is not False:
+            problems.append("opening gate: first session.update was not muted")
+    reopened = [
+        m for m in updates[1:]
+        if m["session"]["audio"]["input"]["turn_detection"].get("create_response") is True
+    ]
+    if not reopened:
+        problems.append("opening gate: never un-muted after the office went quiet")
+    if not any(m.get("type") == "response.create" for m in received_from_bridge):
+        problems.append("opening gate: never asked for an opening line")
+
     if transcript is None:
         problems.append("no transcript object was produced")
     else:
@@ -200,6 +224,8 @@ def main() -> int:
     print(f"  ✓ {len(media_out)} audio chunks brain → phone")
     print(f"  ✓ barge-in: truncated at "
           f"{truncate[0]['audio_end_ms']}ms and cleared Twilio's buffer")
+    print(f"  ✓ opening gate: started muted, un-muted after "
+          f"{len(updates)} session update(s) once the office went quiet")
     print(f"  ✓ transcript captured {len(transcript.turns)} turns, both sides")
     for t in transcript.turns:
         print(f"       {t['speaker']}: {t['text']}")

@@ -177,6 +177,8 @@ Listen to the first recording before running the rest. Symptoms and fixes:
 | The bots talk over each other | Our VAD jumps in too fast | `.env`: `VAD_EAGERNESS=low` (the most patient value the API accepts — `low`/`medium`/`high`/`auto`; there is no `very_low`) |
 | Our patient is slow to reply | Semantic VAD is deliberating | `.env`: `VAD_EAGERNESS=high`, or `VAD_MODE=server` + `VAD_SILENCE_MS=600` for a plain, snappy silence timer |
 | Our patient talks into the silence after asking a question | Prompt, not VAD | The "STOP AND WAIT" rule in `prompts.py`; the watchdog only nudges when *nothing* has been said all call |
+| Our patient answers the recorded disclaimer, then repeats itself | Turn detection *forces* a reply on every detected turn end, so no prompt can stop it | The opening gate in `bridge.py`: the call starts with `create_response: false`, and `open_opening_gate()` restores it once the office has spoken and gone quiet for `OPENING_SILENCE_S` |
+| Our patient hangs up on the receptionist's goodbye | `end_call` fired immediately | `handle_tool_call()` waits for `HANGUP_QUIET_S` of silence (capped at `HANGUP_GRACE_MAX_S`) before dropping the line |
 | Long dead air after they finish | Our VAD waits too long | `eagerness` `low` → `"medium"` |
 | Our bot monologues | Persona drift | Tighten the turn-length rule in `VOICE_DISCIPLINE` |
 | Our bot sounds like an assistant | Same | Strengthen the "you are the caller" rules |
