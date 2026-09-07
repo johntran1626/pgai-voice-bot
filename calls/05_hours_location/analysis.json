@@ -1,0 +1,35 @@
+{
+  "call_summary": "Caller asked for hours, address, and parking. The agent gave specific hours and address, correctly disclaimed knowledge of parking, and then transferred to the clinic support team, but with long response latencies and a couple of confusing/system-leak utterances.",
+  "findings": [
+    {
+      "title": "Fix repeated multi-second dead air before each answer",
+      "severity": "Medium",
+      "timestamp": "0:18",
+      "quote": "No problem. Pivot Point Orthopedics is open Monday through Friday from 8:00 AM to 5:00 PM.",
+      "what_happened": "The caller asked about hours at 0:18 and got a reply at 0:37 (~19s of silence). The same pattern repeated for the address (0:37 \\u2192 0:52) and the parking question (0:55 \\u2192 1:12).",
+      "why_it_matters": "15-19 seconds of silence on simple FAQ answers reads as a dropped call and drives callers to hang up or barge in, which is exactly what the event log shows.",
+      "expected": "Answer static FAQ items (hours, address) within a second or two, or emit a brief holding phrase if lookup latency is unavoidable.",
+      "scenario_id": "05_hours_location"
+    },
+    {
+      "title": "Remove internal/system phrase leaking to the caller",
+      "severity": "Low",
+      "timestamp": "1:38",
+      "quote": "Transcribing now, thank you.",
+      "what_happened": "Immediately after announcing the transfer, the agent said \"Transcribing now, thank you,\" which is meaningless to a caller and appears to be internal state leaking into speech.",
+      "why_it_matters": "Nonsensical system chatter undermines caller trust and can confuse callers about whether the transfer is actually happening.",
+      "expected": "Speak only caller-facing language; suppress internal status strings from TTS output.",
+      "scenario_id": "05_hours_location"
+    },
+    {
+      "title": "Reconcile contradictory handling of the parking request (callback vs. live transfer)",
+      "severity": "Low",
+      "timestamp": "1:27",
+      "quote": "I'll let our clinic support team know about your parking question. They'll get back to you as soon as they can. One moment while I document your request.",
+      "what_happened": "The agent first committed to logging a callback request, then seconds later said it would transfer the caller live to the same team, without clarifying whether the callback ticket still stood.",
+      "why_it_matters": "The caller cannot tell whether to expect a callback or to resolve it on this call, and duplicate tickets create unnecessary staff work.",
+      "expected": "Pick one path and state it clearly, e.g. 'Let me transfer you now so they can answer directly \\u2014 I won't log a separate callback.'",
+      "scenario_id": "05_hours_location"
+    }
+  ]
+}

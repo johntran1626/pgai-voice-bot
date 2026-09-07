@@ -1,0 +1,45 @@
+{
+  "call_summary": "A frustrated caller immediately asked for a human; the agent announced a transfer but instead routed back to an automated test-line message and ended the call, never connecting the caller or offering any alternative escalation.",
+  "findings": [
+    {
+      "title": "Announced a transfer that never happened",
+      "severity": "High",
+      "timestamp": "0:27",
+      "quote": "Transferring you now.",
+      "what_happened": "The agent said it was transferring the caller to a human, but the call went to an automated 'Pretty Good AI test line' message rather than a person.",
+      "why_it_matters": "Falsely promising a live transfer destroys caller trust and leaves a frustrated patient with no way to reach the practice, risking abandoned care and complaints.",
+      "expected": "Either perform a real warm transfer to staff, or state honestly that no one is available and offer a concrete callback with a name and timeframe.",
+      "scenario_id": "14_frustrated_escalation"
+    },
+    {
+      "title": "Dead-ended the call with 'Goodbye' instead of escalating",
+      "severity": "High",
+      "timestamp": "0:32",
+      "quote": "Hello. You've reached the Pretty Good AI test line. Goodbye.",
+      "what_happened": "Immediately after the supposed transfer, the caller received a terminal goodbye message, and the call was disconnected at 0:43 despite the caller repeating the request for a person.",
+      "why_it_matters": "The caller is hung up on with zero escalation path \u2014 no number, no callback, no message taken \u2014 which is a total service failure for an already frustrated patient.",
+      "expected": "Stay on the line, take a callback number and reason, and commit to a specific follow-up window, or provide the practice's direct line.",
+      "scenario_id": "14_frustrated_escalation"
+    },
+    {
+      "title": "Ignored the caller's repeated request and left dead air before disconnect",
+      "severity": "Medium",
+      "timestamp": "0:33",
+      "quote": "(no agent response between 0:33 and call end at 0:43)",
+      "what_happened": "The caller asked a second time, 'Can I speak to an actual person right now?' and received no response for roughly ten seconds until the call ended.",
+      "why_it_matters": "Unanswered repeat requests plus dead air read as the system being broken and guarantee an escalated complaint.",
+      "expected": "Acknowledge the repeat request promptly and offer a concrete next step rather than silence.",
+      "scenario_id": "14_frustrated_escalation"
+    },
+    {
+      "title": "No acknowledgement of caller frustration",
+      "severity": "Low",
+      "timestamp": "0:27",
+      "quote": "Transferring you now.",
+      "what_happened": "The agent never acknowledged the caller's evident frustration or apologized for the friction before attempting the handoff.",
+      "why_it_matters": "A brief empathetic acknowledgement de-escalates frustrated callers and reduces complaint volume.",
+      "expected": "Briefly acknowledge the frustration (e.g., 'I'm sorry for the hassle \u2014 let me get you to someone right away') before acting.",
+      "scenario_id": "14_frustrated_escalation"
+    }
+  ]
+}

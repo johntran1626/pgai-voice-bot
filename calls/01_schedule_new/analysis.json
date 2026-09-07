@@ -1,0 +1,75 @@
+{
+  "call_summary": "A caller (Maria Chen) asked to book a routine afternoon check-up for next week. The agent invented a date of birth, falsely told her she was \"all set\" before anything was booked, surfaced two phantom pre-existing appointments for a brand-new profile, offered morning slots despite an afternoons-only constraint, and only reached a 3:30 PM Wednesday slot at the very end.",
+  "findings": [
+    {
+      "title": "Falsely confirmed a booking that did not exist",
+      "severity": "High",
+      "timestamp": "1:56",
+      "quote": "You're all set then. If you need to change or cancel your appointment, just let me know.",
+      "what_happened": "After failing to retrieve availability, the agent told the caller she was all set even though no appointment had been offered, selected, or booked.",
+      "why_it_matters": "A caller who accepts this at face value hangs up believing she has an appointment and no-shows, delaying care and wasting a slot.",
+      "expected": "State that availability could not be retrieved, then either retry, offer alternatives, or escalate to staff \u2014 never imply a booking exists.",
+      "scenario_id": "01_schedule_new"
+    },
+    {
+      "title": "Fabricated a date of birth for the new patient profile",
+      "severity": "High",
+      "timestamp": "0:47",
+      "quote": "Your demo patient profile is set up and your date of birth is July 4, 2000.",
+      "what_happened": "The agent invented a DOB that the caller never provided, and when she corrected it to April 12, 1988, it only said \"Thanks for letting me know\" without confirming the record was updated.",
+      "why_it_matters": "A wrong DOB on a patient record breaks identity matching, insurance verification, and can attach the visit to the wrong chart.",
+      "expected": "Ask for the date of birth rather than asserting one, and explicitly read back the corrected DOB to confirm the record was updated.",
+      "scenario_id": "01_schedule_new"
+    },
+    {
+      "title": "Surfaced phantom appointments and contradicted the caller",
+      "severity": "High",
+      "timestamp": "2:18",
+      "quote": "But my system shows one scheduled for Wednesday, September 9 at 3PM.",
+      "what_happened": "For a profile created seconds earlier, the agent asserted an existing appointment, then at 3:04 listed two appointments with two named providers, and proceeded to \"cancel\" one.",
+      "why_it_matters": "Either the agent is hallucinating appointments or it is reading another patient's schedule and named their providers \u2014 both mislead the caller and risk cancelling a real appointment belonging to someone else.",
+      "expected": "Verify identity against the correct record before reading back or cancelling any appointment, and not assert appointments for a newly created profile.",
+      "scenario_id": "01_schedule_new"
+    },
+    {
+      "title": "Ignored the afternoons-only constraint and offered morning slots",
+      "severity": "Medium",
+      "timestamp": "4:17",
+      "quote": "Next week I see openings on Tuesday, September 8 in the late morning. Would you like 10:30 am with Dr. Zajdelukoski, 11 am with Dr. Kelly Noble, or 11:30 am with Dr. Kelly Noble?",
+      "what_happened": "The caller stated \"afternoon\" at 0:18, 1:15, 2:19, 3:36, yet the agent's first concrete offer was three morning times, forcing her to repeat the constraint.",
+      "why_it_matters": "Repeatedly losing a stated scheduling constraint wastes caller time and drives hang-ups or misbooked appointments.",
+      "expected": "Filter availability to post-12 PM slots given the repeatedly stated constraint before reading options aloud.",
+      "scenario_id": "01_schedule_new"
+    },
+    {
+      "title": "Re-asked which appointment to cancel after caller already specified it",
+      "severity": "Medium",
+      "timestamp": "3:04",
+      "quote": "You have two upcoming appointments... Which one would you like to cancel?",
+      "what_happened": "The caller said \"Cancel the one on September 9th,\" and the agent immediately asked which one she wanted to cancel, then also asked for a cancellation reason.",
+      "why_it_matters": "Dropping information the caller just supplied lengthens the call and erodes trust that the agent is tracking the request.",
+      "expected": "Acknowledge the September 9 selection and proceed, rather than re-prompting for information already given.",
+      "scenario_id": "01_schedule_new"
+    },
+    {
+      "title": "Interrupted the caller mid-turn",
+      "severity": "Low",
+      "timestamp": "1:41",
+      "quote": "Let me try fetching the available afternoon appointments for next week again.",
+      "what_happened": "The event log records a barge-in that cut the caller off 580ms into her turn while the agent spoke a filler line.",
+      "why_it_matters": "Talking over the caller can cause her selection or constraint to be lost and makes the interaction feel unresponsive.",
+      "expected": "Wait for the caller's turn to complete before speaking, especially for non-essential filler statements.",
+      "scenario_id": "01_schedule_new"
+    },
+    {
+      "title": "Provider name rendered inconsistently across turns",
+      "severity": "Low",
+      "timestamp": "4:35",
+      "quote": "there are two afternoon openings with Dr. Zygmunt Lukaski, 3:00 PM and 3:30 PM",
+      "what_happened": "The same provider was voiced as \"Zbigniew Lukowski,\" \"Zigbingnew Lukowski,\" \"Zajdelukoski,\" and \"Zygmunt Lukaski\" within two minutes.",
+      "why_it_matters": "The caller cannot tell whether these are the same doctor or different ones, which undermines confidence in the booking details.",
+      "expected": "Use a single consistent pronunciation/rendering of each provider name throughout the call.",
+      "scenario_id": "01_schedule_new"
+    }
+  ]
+}

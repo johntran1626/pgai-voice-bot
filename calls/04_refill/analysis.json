@@ -1,0 +1,45 @@
+{
+  "call_summary": "Caller Tom Reilly requested a refill of lisinopril; the agent created a demo profile, invented a date of birth, found no medications on file, offered a transfer to patient support, and then answered the caller's follow-up question with an unrelated non-sequitur before the call ended without any transfer.",
+  "findings": [
+    {
+      "title": "Non-sequitur reply and dead-end instead of completing the promised transfer",
+      "severity": "High",
+      "timestamp": "1:37",
+      "quote": "I'm fine now, thank you.",
+      "what_happened": "After the caller accepted the transfer and asked when patient support would get back to him, the agent replied with an unrelated phrase and the call ended with no transfer and no answer.",
+      "why_it_matters": "A patient running low on a blood-pressure medication is left with no refill, no callback expectation, and no escalation path \u2014 a real risk of a medication lapse.",
+      "expected": "Acknowledge the accepted transfer, state a realistic callback/handoff timeframe, and actually connect the caller to the patient support team or take a callback message.",
+      "scenario_id": "04_refill"
+    },
+    {
+      "title": "Fabricated a date of birth instead of verifying identity",
+      "severity": "High",
+      "timestamp": "0:55",
+      "quote": "Your patient profile is set up and your date of birth is July 4, 2000 for demo purposes.",
+      "what_happened": "The agent asserted a date of birth the caller never provided and used it to establish a patient profile, then proceeded to look up medication records under that identity.",
+      "why_it_matters": "Inventing identifying data and skipping verification before accessing or discussing chart/medication information risks misidentifying patients and disclosing or altering the wrong record.",
+      "expected": "Ask the caller for their date of birth and confirm it against the record before accessing any medication or chart information.",
+      "scenario_id": "04_refill"
+    },
+    {
+      "title": "Dropped the caller's timeframe question",
+      "severity": "Medium",
+      "timestamp": "1:37",
+      "quote": "I'm fine now, thank you.",
+      "what_happened": "The caller explicitly asked 'When would they be able to get back to me?' and the agent never addressed it.",
+      "why_it_matters": "Without a timeframe the patient cannot judge whether to seek the medication elsewhere before running out.",
+      "expected": "Provide the standard callback window for refill requests, or say it will confirm with the support team, rather than ignoring the question.",
+      "scenario_id": "04_refill"
+    },
+    {
+      "title": "Never explained refill process or that a lapsed check-up may be required",
+      "severity": "Medium",
+      "timestamp": "1:12",
+      "quote": "I don't see any medications on your chart that I can refill right now.",
+      "what_happened": "The agent stated no medications were on file but never explained that refills require provider authorization or that an overdue check-up could be blocking the refill.",
+      "why_it_matters": "The caller leaves without understanding why the refill isn't available or what action (e.g., scheduling an overdue visit) would move it forward.",
+      "expected": "Clarify that refill authorization is up to the provider/nurse, note that an outstanding check-up may need to be scheduled first, and offer to book that appointment.",
+      "scenario_id": "04_refill"
+    }
+  ]
+}

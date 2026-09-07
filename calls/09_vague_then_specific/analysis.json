@@ -1,0 +1,65 @@
+{
+  "call_summary": "A vague caller reached Pivot Point Orthopedics, was set up with a demo profile, described two weeks of headaches, and was booked into a 2 p.m. Thursday general office visit. The agent did ask clarifying questions and pinned down a day/time, but it fabricated a date of birth, ignored the caller's Friday option, and had turn-taking/dead-air problems.",
+  "findings": [
+    {
+      "title": "Fabricated the patient's date of birth",
+      "severity": "High",
+      "timestamp": "1:17",
+      "quote": "Your patient profile is set up and your date of birth is July 4th 2000 for demo purposes.",
+      "what_happened": "The caller only gave her name. The agent invented and stated a date of birth she never provided and presented it as her profile data.",
+      "why_it_matters": "Inventing identity data creates a false record that can be used later for identity verification or matched to the wrong chart, and it teaches callers to accept fabricated details as accurate.",
+      "expected": "Ask the caller for her date of birth, or explicitly state that no DOB is on file and it will be collected at check-in \u2014 never assert an invented value.",
+      "scenario_id": "09_vague_then_specific"
+    },
+    {
+      "title": "Asked a question the caller had just answered",
+      "severity": "Medium",
+      "timestamp": "2:34",
+      "quote": "Would you prefer morning or afternoon? I can offer you a specific time once you let me know.",
+      "what_happened": "The caller said \"afternoon would be better for me\" at the same moment the agent asked whether she preferred morning or afternoon, indicating the agent was not listening/barge-in aware.",
+      "why_it_matters": "Re-asking answered questions makes the caller repeat herself and signals the agent may be talking over callers rather than processing their input.",
+      "expected": "Detect the caller's overlapping answer and proceed directly to offering afternoon Thursday times without re-asking.",
+      "scenario_id": "09_vague_then_specific"
+    },
+    {
+      "title": "Silently dropped the caller's Friday option",
+      "severity": "Medium",
+      "timestamp": "2:34",
+      "quote": "There are several openings this Thursday with Dr. Zbigniew Lukasiewicz and Dr. Kelly Noble.",
+      "what_happened": "The caller offered \"Thursday or Friday.\" The agent only ever discussed Thursday and never mentioned Friday availability or explained why it was excluded.",
+      "why_it_matters": "The caller may have preferred Friday and was steered into Thursday without knowing her stated alternative was ignored.",
+      "expected": "Acknowledge both days and offer afternoon options for Thursday and Friday, or state that Friday has no afternoon availability.",
+      "scenario_id": "09_vague_then_specific"
+    },
+    {
+      "title": "Long dead air during profile creation and slot lookup",
+      "severity": "Medium",
+      "timestamp": "0:41",
+      "quote": "Looks like there was an issue creating your profile. Let me try that again for you.",
+      "what_happened": "There was roughly 36 seconds of silence between the caller giving her name (0:41) and the agent's next words (1:17), and another ~23 seconds of silence after she proposed Thursday or Friday (2:11 to 2:34).",
+      "why_it_matters": "Extended silence on a phone line reads as a dropped call and causes callers to hang up mid-booking.",
+      "expected": "Provide a hold/progress message within a few seconds and keep the caller informed while backend lookups run.",
+      "scenario_id": "09_vague_then_specific"
+    },
+    {
+      "title": "Inconsistent provider name in the booking offer",
+      "severity": "Low",
+      "timestamp": "2:47",
+      "quote": "The first available afternoon slot on Thursday is at 2 p.m. with Dr. Zigbee Lukosky.",
+      "what_happened": "The agent named the provider \"Dr. Zbigniew Lukasiewicz\" one turn earlier and then \"Dr. Zigbee Lukosky\" when confirming the slot.",
+      "why_it_matters": "The caller cannot tell whether these are the same provider, which undermines confidence in the booking she just agreed to.",
+      "expected": "Use one consistent rendering of the provider's name throughout the call.",
+      "scenario_id": "09_vague_then_specific"
+    },
+    {
+      "title": "Booked headache symptoms at an orthopedic practice without flagging scope",
+      "severity": "Low",
+      "timestamp": "2:11",
+      "quote": "Since your headaches have been going on for a couple of weeks, would you like to book a general office visit to discuss these symptoms?",
+      "what_happened": "The caller described two weeks of headaches; the agent booked a general office visit at an orthopedics practice without noting that this complaint may be outside the practice's specialty.",
+      "why_it_matters": "The caller may attend an appointment that cannot address her concern, wasting a visit and delaying appropriate care.",
+      "expected": "Note that the practice specializes in orthopedics, confirm the complaint is something they treat, or offer to route the caller to staff to determine the right provider.",
+      "scenario_id": "09_vague_then_specific"
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "call_summary": "Caller wanted to reschedule a Thursday 2 PM appointment; the agent could only find a Monday 9/14 10 AM appointment, never located the Thursday slot, and ended the call with the existing Monday appointment unchanged and no new booking made. Along the way the agent invented a date of birth, ignored the caller's correction to it, and disclosed appointment details without any identity verification.",
+  "findings": [
+    {
+      "title": "Fabricated the patient's date of birth",
+      "severity": "High",
+      "timestamp": "0:50",
+      "quote": "Your demo patient profile is set up, and your date of birth is July 4, 2000.",
+      "what_happened": "The caller only provided a first and last name, yet the agent asserted a specific date of birth it had never been given or confirmed.",
+      "why_it_matters": "Stating unverified demographic data as fact can attach the wrong DOB to a chart, cause mismatched records, and undermine any downstream identity checks.",
+      "expected": "Ask the caller for their date of birth and read it back for confirmation rather than asserting one.",
+      "scenario_id": "02_reschedule"
+    },
+    {
+      "title": "Lost the caller's correction to their date of birth",
+      "severity": "High",
+      "timestamp": "1:15",
+      "quote": "I see you have a follow-up appointment scheduled for Monday, September 14th at 10:00 AM with Doogie Howser",
+      "what_happened": "The caller explicitly corrected the DOB to July 9, 1975, and the agent never acknowledged, confirmed, or updated it \u2014 it moved straight to appointment lookup.",
+      "why_it_matters": "An uncorrected DOB stays wrong in the record and may have caused the agent to search the wrong patient chart, which could explain the missing Thursday appointment.",
+      "expected": "Acknowledge the correction, confirm the new DOB back to the caller, update the profile, and re-run the appointment lookup against the corrected identity.",
+      "scenario_id": "02_reschedule"
+    },
+    {
+      "title": "Disclosed appointment details without identity verification",
+      "severity": "High",
+      "timestamp": "1:15",
+      "quote": "I see you have a follow-up appointment scheduled for Monday, September 14th at 10:00 AM with Doogie Howser at Nashville 220 Athens Way.",
+      "what_happened": "On the strength of a self-reported first and last name alone \u2014 with an unverified, agent-invented DOB on file \u2014 the agent read out provider, date, time, and clinic location.",
+      "why_it_matters": "Anyone who knows a patient's name could obtain their appointment and provider details; this is a PHI disclosure risk.",
+      "expected": "Verify at least two identifiers (e.g., DOB and phone number or address) against the record before revealing or changing any appointment.",
+      "scenario_id": "02_reschedule"
+    },
+    {
+      "title": "Dropped the caller's request to book a new Monday morning appointment",
+      "severity": "Medium",
+      "timestamp": "2:46",
+      "quote": "Let me try searching for Monday morning appointments again. You already have a follow-up appointment booked for Monday, September 14 at 10:00 a.m. Would you like to keep this appointment, reschedule it, or cancel it?",
+      "what_happened": "The caller asked to book a new follow-up for Monday morning and supplied the visit type; instead of returning availability, the agent pivoted back to the existing appointment and never offered any open slots.",
+      "why_it_matters": "The caller's actual booking request went unfulfilled and the call ended with no new appointment, so the reschedule scenario was never completed.",
+      "expected": "Search and present actual Monday morning availability for a follow-up, and separately clarify whether the caller wants that in addition to or instead of the existing 9/14 slot.",
+      "scenario_id": "02_reschedule"
+    },
+    {
+      "title": "Dead-ended the missing-appointment problem with no escalation path",
+      "severity": "Medium",
+      "timestamp": "3:03",
+      "quote": "I don't see any Thursday appointment in your records. So there's nothing to cancel for that day.",
+      "what_happened": "After repeated failed lookups for the Thursday 2 PM appointment, the agent simply concluded nothing existed and closed out without offering a staff callback or transfer.",
+      "why_it_matters": "If the Thursday appointment does exist under a variant record, the caller becomes a no-show and the slot is wasted; the caller left believing it was handled.",
+      "expected": "Offer to transfer to or take a message for front-desk staff to manually search for the Thursday booking before asserting it doesn't exist.",
+      "scenario_id": "02_reschedule"
+    },
+    {
+      "title": "Ignored the caller's stated reason for calling and repeated the profile prompt",
+      "severity": "Low",
+      "timestamp": "0:29",
+      "quote": "I can help with that. Would you like to create a demo patient profile first? I just need your first and last name to get started.",
+      "what_happened": "The caller stated they had a Thursday appointment to reschedule; the agent acknowledged generically and re-asked the same profile-creation question it had just asked.",
+      "why_it_matters": "Restating the scripted prompt instead of engaging with the request makes the agent feel unresponsive and lengthens the call.",
+      "expected": "Acknowledge the reschedule request specifically and explain that a name is needed to pull up the existing appointment.",
+      "scenario_id": "02_reschedule"
+    }
+  ]
+}

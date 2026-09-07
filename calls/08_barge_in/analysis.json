@@ -1,0 +1,85 @@
+{
+  "call_summary": "Caller asked whether the practice takes walk-ins today and what time it closes; the agent repeatedly pushed profile creation, talked over the caller in fragments, invented a date of birth, ignored the caller's correction, and only revealed the clinic was closed (Sunday) after roughly 40 seconds of the caller repeating the question.",
+  "findings": [
+    {
+      "title": "Ignore caller's question and loop on profile creation",
+      "severity": "High",
+      "timestamp": "0:26",
+      "quote": "Would you like to create a demo patient profile first?",
+      "what_happened": "The caller asked four times between 0:17 and 0:45 whether walk-ins were accepted today; the agent kept restating its request for a name instead of answering.",
+      "why_it_matters": "The caller wasted a minute of the call and nearly hung up without the simple availability answer they needed; forcing enrollment ahead of a public-information question is a poor and frustrating flow.",
+      "expected": "Answer the walk-in/hours question immediately (it requires no patient record), then optionally offer to create a profile.",
+      "scenario_id": "08_barge_in"
+    },
+    {
+      "title": "Fabricate an unverified date of birth and ignore the caller's correction",
+      "severity": "High",
+      "timestamp": "1:10",
+      "quote": "And your date of birth is July 4th, 2000 for demo purposes.",
+      "what_happened": "The agent asserted a DOB that was never provided; when the caller said \"No, that's not right,\" the agent never acknowledged or corrected it and moved on to \"How may I help you today?\"",
+      "why_it_matters": "Writing invented identity data into a patient record and then discarding an explicit correction can attach wrong demographics to a chart and break later identity verification.",
+      "expected": "Ask for the DOB rather than asserting one, and when corrected, acknowledge and update the record before proceeding.",
+      "scenario_id": "08_barge_in"
+    },
+    {
+      "title": "Create profile without resolving conflicting names",
+      "severity": "Medium",
+      "timestamp": "1:05",
+      "quote": "Your demo patient profile is set up.",
+      "what_happened": "The caller gave two different names seconds apart (\"Dan Miller\" then \"Sam Parker\") and the agent silently created a profile without confirming which name was correct.",
+      "why_it_matters": "An unconfirmed identity risks creating a duplicate or misattributed patient record.",
+      "expected": "Read back the name and ask the caller to confirm before creating the record.",
+      "scenario_id": "08_barge_in"
+    },
+    {
+      "title": "Withhold the closure fact while answering the walk-in question",
+      "severity": "High",
+      "timestamp": "1:30",
+      "quote": "We don't offer walk-in visits.",
+      "what_happened": "The agent answered the walk-in question without mentioning that the clinic was closed that day; it only disclosed \"Today is Sunday. And the clinic is closed\" at 1:48 after the caller asked about closing time four separate times.",
+      "why_it_matters": "A caller asking if they can \"head over now\" could have driven to a closed clinic; the most material fact was buried behind repeated prompting.",
+      "expected": "State immediately that the clinic is closed today (Sunday) and offer the next available appointment.",
+      "scenario_id": "08_barge_in"
+    },
+    {
+      "title": "Drop the repeated closing-time question",
+      "severity": "Medium",
+      "timestamp": "1:37",
+      "quote": "If you'd / You like? / I can check the next.",
+      "what_happened": "The caller asked \"what time do you close today?\" at 1:15, 1:31, 1:37 and 1:39; the agent instead repeated the walk-in policy and started offering to check next availability.",
+      "why_it_matters": "Repeatedly failing to answer a direct, simple question erodes trust and lengthens the call.",
+      "expected": "Directly answer the hours question the first time it was asked.",
+      "scenario_id": "08_barge_in"
+    },
+    {
+      "title": "Talk over the caller and emit fragmented, self-interrupting speech",
+      "severity": "Medium",
+      "timestamp": "1:33",
+      "quote": "All appointments at Pivot Point Orthopedics / We do not accept walk-ins.",
+      "what_happened": "Multiple turns show the agent starting sentences, being cut off, and restarting mid-phrase (\"Pivot point\", \"If you'd\", \"You like?\"), and repeating the walk-in policy twice in four seconds while the caller was speaking.",
+      "why_it_matters": "Double-talk and clipped fragments make the agent hard to understand and signal broken barge-in handling.",
+      "expected": "Stop cleanly on barge-in and respond to the caller's newest question rather than resuming or restarting the prior utterance.",
+      "scenario_id": "08_barge_in"
+    },
+    {
+      "title": "Long dead air during profile creation and before hours answer",
+      "severity": "Low",
+      "timestamp": "0:47",
+      "quote": "Your demo patient profile is set up.",
+      "what_happened": "There is an ~18 second silence between 0:47 and 1:05, and a further ~9 second gap between 1:39 and 1:48 before the closure answer.",
+      "why_it_matters": "Extended silence makes callers think the line dropped and prompts hang-ups.",
+      "expected": "Provide a hold/processing message or fill the gap while performing lookups.",
+      "scenario_id": "08_barge_in"
+    },
+    {
+      "title": "Reset the conversation with a generic re-greeting mid-call",
+      "severity": "Low",
+      "timestamp": "1:15",
+      "quote": "How may I help you today?",
+      "what_happened": "After the caller had already stated their need several times and issued a correction, the agent restarted with a generic opening prompt.",
+      "why_it_matters": "Context loss forces the caller to repeat themselves and suggests the dialogue state was discarded.",
+      "expected": "Carry the stated intent (walk-in availability and closing time) forward rather than re-greeting.",
+      "scenario_id": "08_barge_in"
+    }
+  ]
+}

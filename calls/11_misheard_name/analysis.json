@@ -1,0 +1,85 @@
+{
+  "call_summary": "Caller asked to book a follow-up next Wednesday at 3:30 PM; the agent created a demo profile, mishandled the caller's name, insisted on an existing Monday appointment the caller disowned, then offered a Wednesday 3 PM slot (dated Sept 9, earlier than the Sept 14 appointment) which the caller accepted before hanging up.",
+  "findings": [
+    {
+      "title": "Addressed caller by an unrelated name before collecting it",
+      "severity": "Medium",
+      "timestamp": "0:31",
+      "quote": "Greg, I can help with that. First, can you please tell me your first and last name to create your demo patient profile?",
+      "what_happened": "The agent called the caller \"Greg\" in the same turn where it was still asking for the caller's name; no name had been given yet.",
+      "why_it_matters": "Using a wrong name undermines caller trust and suggests the agent is pulling identity data from the wrong record.",
+      "expected": "Ask for the name without asserting one, and only use a name once the caller has provided and confirmed it.",
+      "scenario_id": "11_misheard_name"
+    },
+    {
+      "title": "Never confirmed spelling of a hard-to-hear name",
+      "severity": "Medium",
+      "timestamp": "0:46",
+      "quote": "Your demo patient profile is set up and your date of birth is July 4, 2000 for this demo.",
+      "what_happened": "The caller gave an unusual name (\"Siobhan McAllister\") and the agent created the profile without reading the name back or confirming spelling, and never used the name again in the call.",
+      "why_it_matters": "An unverified, likely misspelled name on the chart causes duplicate records and failed check-ins.",
+      "expected": "Read the name back (and offer to spell it) before creating the profile, and use the confirmed name in later confirmations.",
+      "scenario_id": "11_misheard_name"
+    },
+    {
+      "title": "Asserted a date of birth the caller never provided",
+      "severity": "Medium",
+      "timestamp": "0:46",
+      "quote": "your date of birth is July 4, 2000 for this demo",
+      "what_happened": "The agent stated a specific DOB for the caller without ever asking for it.",
+      "why_it_matters": "Stating unverified demographic data as fact can attach a caller to the wrong record and defeats identity verification.",
+      "expected": "Ask the caller for their date of birth, or clearly state that no DOB is on file, rather than announcing an invented one.",
+      "scenario_id": "11_misheard_name"
+    },
+    {
+      "title": "Disclosed an existing appointment without any identity verification",
+      "severity": "High",
+      "timestamp": "1:19",
+      "quote": "You already have a follow-up appointment booked for Monday, September 14th at 10:00 AM.",
+      "what_happened": "Immediately after taking only a first and last name, the agent revealed specific appointment details, and the caller responded that it was not her appointment.",
+      "why_it_matters": "Reading out appointment details on a name match alone risks exposing another patient's protected information.",
+      "expected": "Verify at least one additional identifier (DOB, phone, address) before disclosing or modifying any appointment.",
+      "scenario_id": "11_misheard_name"
+    },
+    {
+      "title": "Ignored the caller's correction that the appointment was not hers",
+      "severity": "High",
+      "timestamp": "1:46",
+      "quote": "Since there's already a follow-up appointment booked for you on Monday, September 14th at 10 AM, the system won't let me book another follow-up of the same type.",
+      "what_happened": "The caller explicitly said \"No, that's not my appointment,\" and the agent restated it as hers and pushed her to reschedule it instead of booking new.",
+      "why_it_matters": "Rescheduling a record the caller disowned could cancel or move a different patient's appointment and leaves the caller's real request unmet.",
+      "expected": "Acknowledge the denial, re-verify identity, and either locate the correct record or escalate to staff rather than acting on the disputed appointment.",
+      "scenario_id": "11_misheard_name"
+    },
+    {
+      "title": "Offered a Wednesday date earlier than the appointment being rescheduled",
+      "severity": "Medium",
+      "timestamp": "2:39",
+      "quote": "The next available Wednesday afternoon slot is September 9th at 3 PM with Doogie Howser in Nashville.",
+      "what_happened": "The agent offered \"next Wednesday\" as September 9th while the existing appointment was Monday, September 14th, an internally inconsistent set of dates.",
+      "why_it_matters": "The caller could accept a slot on a date in the past or not the intended week, resulting in a missed appointment.",
+      "expected": "Resolve \"next Wednesday\" to a concrete, forward-looking date and state it consistently with the existing appointment date.",
+      "scenario_id": "11_misheard_name"
+    },
+    {
+      "title": "Looped on the same reschedule confirmation three times",
+      "severity": "Medium",
+      "timestamp": "2:25",
+      "quote": "You have a follow-up appointment scheduled for Monday, September 14 at 10 a.m. Would you like to move this appointment to a different day and time?",
+      "what_happened": "The agent asked essentially the same reschedule question at 1:19, 1:46, and 2:25 despite the caller confirming each time.",
+      "why_it_matters": "Repetitive re-confirmation wastes caller time and signals the agent is not retaining confirmed intent.",
+      "expected": "Retain the caller's confirmed intent and proceed directly to searching availability.",
+      "scenario_id": "11_misheard_name"
+    },
+    {
+      "title": "Fragmented rapid-fire turns instead of one coherent offer",
+      "severity": "Low",
+      "timestamp": "2:39",
+      "quote": "Would you like to move your appointment to that time?",
+      "what_happened": "The agent split its slot offer across three turns in six seconds (2:39, 2:42, 2:44), leaving no clear pause for the caller to answer.",
+      "why_it_matters": "Stacked prompts crowd out the caller and increase the chance of talk-over or mis-heard answers.",
+      "expected": "Deliver the offer and a single question in one turn, then wait for the caller's response.",
+      "scenario_id": "11_misheard_name"
+    }
+  ]
+}

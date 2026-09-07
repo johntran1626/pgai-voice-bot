@@ -1,0 +1,75 @@
+{
+  "call_summary": "Caller Rachel Kim stacked three requests (reschedule a Friday appointment, inhaler refill, billing question). The agent eventually rescheduled an appointment and routed the billing question to clinic support, but never addressed the inhaler refill at all, and had a long dead-air gap plus a self-contradicting double turn while looking up appointments.",
+  "findings": [
+    {
+      "title": "Silently dropped the inhaler refill request",
+      "severity": "High",
+      "timestamp": "1:03",
+      "quote": "To help with your inhaler refill, I'll need to create a demo patient profile for you first. Would you like to do that now?",
+      "what_happened": "The agent explicitly acknowledged the refill request and made profile creation the prerequisite, but after the profile was created it never returned to the refill and the call ended without it being handled or routed.",
+      "why_it_matters": "The caller reasonably believes the medication request is in progress; a dropped inhaler refill can leave a patient without a rescue/controller medication.",
+      "expected": "After creating the profile, it should have tracked all three items and either routed the refill to the prescribing provider/nurse line or told the caller it cannot handle refills and how to get one.",
+      "scenario_id": "13_multi_intent"
+    },
+    {
+      "title": "Refused all three requests up front instead of triaging",
+      "severity": "Medium",
+      "timestamp": "0:45",
+      "quote": "For now, I'm unable to help with your requests without a demo patient profile. Is there anything else I can help with today?",
+      "what_happened": "The caller stated three distinct needs and the agent blanket-refused all of them and moved to close the call, without offering profile creation or any escalation path. The caller had to re-raise the refill herself.",
+      "why_it_matters": "Callers with legitimate needs get dead-ended and hang up unserved, driving repeat calls and missed care.",
+      "expected": "Acknowledge all three items, explain the profile step is needed, and offer it proactively rather than asking 'anything else?'",
+      "scenario_id": "13_multi_intent"
+    },
+    {
+      "title": "43 seconds of dead air after a direct request",
+      "severity": "Medium",
+      "timestamp": "1:22",
+      "quote": "Your patient profile is set up and your date of birth is July 4th, 2000 for demo purposes. How may I help you today?",
+      "what_happened": "The caller said 'I still need to move that Friday appointment' at 1:22 and the agent produced no response until 2:05, forcing the caller to repeat herself at 2:04.",
+      "why_it_matters": "Long silences make callers think the line dropped and cause abandoned calls.",
+      "expected": "Acknowledge the request immediately or emit a hold message while performing the lookup.",
+      "scenario_id": "13_multi_intent"
+    },
+    {
+      "title": "Contradictory back-to-back appointment lookup turns",
+      "severity": "Medium",
+      "timestamp": "2:05",
+      "quote": "You have two upcoming appointments. The soonest is Thursday, September 10 at 2:00 pm... Is this the one you want to move?",
+      "what_happened": "The agent offered the Thursday appointment as the one to move, then 18 seconds later spoke again saying 'I don't see a Friday appointment' and re-listed the same appointments, without the caller having replied.",
+      "why_it_matters": "Two overlapping, partially contradictory agent turns confuse the caller about what was found and which question to answer.",
+      "expected": "Perform one lookup and deliver a single coherent result, stating that no Friday appointment exists and offering the actual appointments once.",
+      "scenario_id": "13_multi_intent"
+    },
+    {
+      "title": "Rescheduled onto a day the patient already has an appointment without flagging it",
+      "severity": "Low",
+      "timestamp": "4:26",
+      "quote": "Your appointment is now set for Monday, September 14th at 2pm with Dr. Zbigniew Lukawski.",
+      "what_happened": "The agent had earlier reported an existing Monday, September 14 at 10 AM appointment, then booked the rescheduled visit for the same day at 2 PM without mentioning the duplication.",
+      "why_it_matters": "Two visits on the same day is often unintended and creates a likely no-show or a wasted trip for the patient.",
+      "expected": "Note the existing same-day appointment and confirm the patient intends two visits that day, or offer to consolidate.",
+      "scenario_id": "13_multi_intent"
+    },
+    {
+      "title": "Provider name changed during the booking confirmation",
+      "severity": "Low",
+      "timestamp": "3:58",
+      "quote": "you'd like to move your Thursday, September 10 appointment with Dr. Zygmunt Lukaszewski to Monday, September 14 at 2 PM",
+      "what_happened": "The provider was referred to as Zbigniew Lukawski, Lukowski, Lichowski, and then Zygmunt Lukaszewski in the final confirmation.",
+      "why_it_matters": "An inconsistent provider name in the explicit confirmation step undermines the caller's ability to verify they are being booked with the right doctor.",
+      "expected": "Render the provider name consistently, especially in the confirmation turn.",
+      "scenario_id": "13_multi_intent"
+    },
+    {
+      "title": "Appointment details revealed after name-only identification",
+      "severity": "Low",
+      "timestamp": "1:22",
+      "quote": "Your patient profile is set up and your date of birth is July 4th, 2000 for demo purposes.",
+      "what_happened": "The agent created/matched a profile from a first and last name only, then disclosed upcoming appointment dates, times and provider, and volunteered a date of birth rather than asking for it as a verifier.",
+      "why_it_matters": "Name-only lookup allows anyone to retrieve or change another patient's appointments.",
+      "expected": "Ask the caller to state a second identifier (e.g., date of birth) and verify it before revealing or modifying appointment details.",
+      "scenario_id": "13_multi_intent"
+    }
+  ]
+}

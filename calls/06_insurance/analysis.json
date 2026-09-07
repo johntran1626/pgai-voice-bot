@@ -1,0 +1,35 @@
+{
+  "call_summary": "A prospective patient called Pivot Point Orthopedics to ask whether the practice accepts Blue Cross Blue Shield PPO and what a cash-pay first visit costs. The agent declined to answer either question three separate times, repeatedly redirecting to 'the clinic staff at the booth' with no transfer, callback, or billing contact offered, and the caller hung up unsatisfied.",
+  "findings": [
+    {
+      "title": "Repeated non-answer on insurance acceptance with no escalation path",
+      "severity": "High",
+      "timestamp": "1:43",
+      "quote": "I'm unable to confirm insurance acceptance. Please check with the clinic staff at the booth or the front desk for details about Blue Cross Blue Shield PPO.",
+      "what_happened": "The caller asked twice whether the practice takes BCBS PPO. Both times the agent said it could not confirm and offered no transfer, no billing phone number, no callback, and no hours to reach a human.",
+      "why_it_matters": "Insurance acceptance is a basic front-desk question; a dead-end answer with no route to a human loses a prospective patient outright, which is exactly what happened here.",
+      "expected": "Either state the accepted plans from practice data, or explicitly offer to transfer to billing / take a callback number / provide the billing line hours.",
+      "scenario_id": "06_insurance"
+    },
+    {
+      "title": "Directs phone caller to an in-person 'booth' rather than a reachable contact",
+      "severity": "Medium",
+      "timestamp": "0:39",
+      "quote": "please check with the clinic staff at the booth or visit the front desk",
+      "what_happened": "The agent repeatedly told a telephone caller to go to a physical 'booth' or front desk, which is not actionable over the phone and appears to be leaked demo/kiosk language.",
+      "why_it_matters": "Telling someone calling by phone to walk up to a booth is unusable guidance and signals the agent is misconfigured for the channel it is deployed on.",
+      "expected": "Offer a phone-reachable resolution: warm transfer, billing department number, or a message taken for staff callback.",
+      "scenario_id": "06_insurance"
+    },
+    {
+      "title": "Same vague deflection repeated three times without variation or escalation",
+      "severity": "Medium",
+      "timestamp": "1:24",
+      "quote": "I do not have access to specific pricing, even rough estimates. The clinic staff at the booth can give you a better idea of the cost range. Would you like help with anything else?",
+      "what_happened": "Across three consecutive turns the agent gave functionally identical refusals to pricing questions, including a narrowed question ($100 vs $400), never changing strategy or escalating.",
+      "why_it_matters": "Looping identical non-answers frustrates callers and drives abandonment; the caller explicitly gave up saying she could not get what she needed by phone.",
+      "expected": "After the first inability to answer, proactively escalate \u2014 offer transfer to billing, take a callback, or state when self-pay pricing information is available.",
+      "scenario_id": "06_insurance"
+    }
+  ]
+}

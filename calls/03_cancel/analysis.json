@@ -1,0 +1,45 @@
+{
+  "call_summary": "Caller Priya Patel asked to cancel her Tuesday appointment; the agent repeatedly pushed a \"demo patient profile\" instead of handling the cancellation, then ended the call as the caller asked whether the appointment was actually cancelled. The cancellation was never performed or confirmed, and no real escalation path was offered.",
+  "findings": [
+    {
+      "title": "Hung up while caller was still asking a question",
+      "severity": "High",
+      "timestamp": "1:13",
+      "quote": "If you need more help, the clinic staff can assist you in person. Have a great day.",
+      "what_happened": "The agent closed the call with a sign-off, and the call ended immediately while the patient was asking \"can you confirm if my Tuesday appointment is actually cancelled or not?\" \u2014 the question was never answered.",
+      "why_it_matters": "The caller leaves with no idea whether her appointment stands, risking a no-show fee or a wasted clinic slot.",
+      "expected": "Stay on the line, answer the confirmation question directly, and only end the call after the caller's request is resolved or handed off.",
+      "scenario_id": "03_cancel"
+    },
+    {
+      "title": "Failed to complete or confirm the requested cancellation",
+      "severity": "High",
+      "timestamp": "1:13",
+      "quote": "Since I can't access your record without a profile, you can scan the QR code at the booth later to manage your appointments.",
+      "what_happened": "The patient made a clear, simple cancellation request three times and the agent never cancelled it, never took a message, and never confirmed the appointment's status.",
+      "why_it_matters": "An uncancelled appointment means the slot is held, the clinic loses capacity, and the patient may be charged for a no-show.",
+      "expected": "Verify identity with the practice's normal identifiers (name, DOB, phone), cancel the appointment, and state explicit confirmation \u2014 or take a callback message for staff to action.",
+      "scenario_id": "03_cancel"
+    },
+    {
+      "title": "Looped on the demo-profile prompt after caller declined twice",
+      "severity": "Medium",
+      "timestamp": "0:53",
+      "quote": "Since I don't have access to your patient record yet, would you like to create a demo patient profile now? I just need your first and last name.",
+      "what_happened": "The agent asked the same profile-creation question three consecutive times despite the caller explicitly saying she was an existing patient and declining twice.",
+      "why_it_matters": "Repeating a rejected prompt ignores the caller's stated intent, wastes the call, and reads as unresponsive to real patients.",
+      "expected": "Accept the decline after the first refusal and pivot to the actual task (cancellation) or transfer to a human.",
+      "scenario_id": "03_cancel"
+    },
+    {
+      "title": "No real escalation path offered",
+      "severity": "Medium",
+      "timestamp": "1:13",
+      "quote": "you can scan the QR code at the booth later to manage your appointments. If you need more help, the clinic staff can assist you in person.",
+      "what_happened": "When the agent could not handle the cancellation, its only fallback was for the patient to come in person or scan a QR code later; no transfer, callback, or message-taking was offered.",
+      "why_it_matters": "A time-sensitive cancellation cannot wait for an in-person visit; the patient is dead-ended with an unresolved request.",
+      "expected": "Offer to transfer to front-desk staff or take a message with callback details so the cancellation is actioned before the appointment date.",
+      "scenario_id": "03_cancel"
+    }
+  ]
+}
