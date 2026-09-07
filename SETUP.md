@@ -212,7 +212,8 @@ Common failures and what they mean:
 | `could not open a Realtime session` (403) | No credit on the OpenAI account | Add $10 in billing (Step 2) |
 | `TWILIO_FROM_NUMBER not found on this account` | Typo, or you didn't buy a number | Re-copy it in `+1...` format |
 | `credentials rejected` | Auth Token copied wrong | Re-copy from console.twilio.com |
-| `tunnel check failed` | Bad ngrok token | Re-copy from the ngrok dashboard |
+| `tunnel check failed` + `your network is blocking ngrok` | Your router/ISP filters ngrok as "high risk" — **not** an ngrok or token problem | Turn off the security/web-filter feature in your ISP app or router admin, or run over a phone hotspot |
+| `tunnel not configured` | No `NGROK_AUTHTOKEN` and no `PUBLIC_HOST` | Paste your token from the ngrok dashboard |
 
 You can also test the audio engine itself with no keys and no cost:
 

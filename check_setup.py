@@ -167,6 +167,59 @@ def check_anthropic() -> None:
                              "add credit at console.anthropic.com")
 
 
+def diagnose_tunnel_failure(host: str) -> None:
+    """
+    Work out *why* the tunnel is unreachable, so the user gets a sentence
+    instead of a stack trace.
+
+    The common cause is not a bug in this project: home routers and ISPs
+    increasingly classify ngrok tunnels as "high risk" and block them. Over
+    plain HTTP the filter is chatty — it serves its own block page — so we
+    ask over HTTP and read what comes back. Over HTTPS it can't inject a
+    page, so it garbles the connection instead, which is what surfaces as an
+    SSL error.
+    """
+    import requests
+
+    if not host:
+        return
+
+    blocked_words = ("blocked", "threat", "not allowed", "restricted",
+                     "security", "content filter", "denied")
+    try:
+        body = requests.get(f"http://{host}/health", timeout=15).text.lower()
+    except Exception:
+        report(WARN, "could not reach the tunnel over plain HTTP either",
+               "looks like a general network problem, not a filter")
+        return
+
+    if any(word in body for word in blocked_words) and "{" not in body[:200]:
+        report(WARN, "your network is blocking ngrok",
+               "a filter answered instead of your laptop — see the note below")
+        print("""
+      Something between this Mac and the internet (usually the router, the
+      ISP, or a VPN / "Advanced Security" style feature) treats ngrok
+      tunnels as risky and blocks them. Nothing is wrong with your keys or
+      your code — every other check above passed.
+
+      Fastest test: turn on your phone's hotspot, connect this Mac to it,
+      and run this script again. If it goes green, the block is your home
+      network.
+
+      Real fixes, cheapest first:
+        1. Turn off the security/web-filter feature in your ISP's app or
+           your router's admin page, then reconnect.
+        2. Run the calls over the phone hotspot instead.
+
+      Worth knowing: Twilio reaches your tunnel from Twilio's servers, not
+      from this laptop, so calls may actually work even while this check
+      fails. But don't guess — clear the block so this check is honest.
+""")
+    else:
+        report(WARN, "the tunnel edge answered, but not with our /health",
+               f"got: {body[:100]!r}")
+
+
 async def check_tunnel() -> None:
     """Start the real server + tunnel and prove the internet can reach it."""
     import requests
@@ -182,6 +235,7 @@ async def check_tunnel() -> None:
         return
 
     started_ngrok = False
+    host = ""
     try:
         host, started_ngrok = await open_tunnel()
         report(OK, "tunnel open", f"https://{host}")
@@ -195,15 +249,20 @@ async def check_tunnel() -> None:
     except SystemExit:
         report(BAD, "tunnel not configured")
     except Exception as exc:
-        report(BAD, "tunnel check failed", str(exc)[:200])
+        report(BAD, "tunnel check failed", str(exc)[:160])
+        diagnose_tunnel_failure(host)
     finally:
         srv.should_exit = True
+        # Let uvicorn finish shutting down before we leave the event loop.
+        # Without this pause its lifespan task gets cancelled mid-await and
+        # prints an alarming (but harmless) traceback under the results.
+        await asyncio.sleep(0.5)
         if started_ngrok:
             from pyngrok import ngrok
             ngrok.kill()
 
 
-async def main() -> None:
+async def main() -> int:
     print("=" * 66)
     print("PGAI voice bot — setup check (no calls are placed)")
     print("=" * 66)
@@ -220,10 +279,14 @@ async def main() -> None:
     print("\n" + "=" * 66)
     if failures:
         print(f"{failures} problem(s) above. Fix those before calling.")
-        sys.exit(1)
-    print("All good. Try:  python run_call.py 01_schedule_new")
+    else:
+        print("All good. Try:  python run_call.py 01_schedule_new")
     print("=" * 66)
+    # Return the exit code rather than calling sys.exit() here: raising
+    # SystemExit inside a running event loop tears down the still-live
+    # server task and buries the results under a traceback.
+    return 1 if failures else 0
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    sys.exit(asyncio.run(main()))
