@@ -38,6 +38,7 @@ def check_python_and_deps() -> None:
 
     for mod, pkg in [
         ("fastapi", "fastapi"),
+        ("anthropic", "anthropic"),
         ("uvicorn", "uvicorn"),
         ("websockets", "websockets"),
         ("twilio", "twilio"),
@@ -73,6 +74,16 @@ def check_env() -> None:
     else:
         report(BAD, "TARGET_NUMBER",
                f"is {config.TARGET_NUMBER}, must be {config.ALLOWED_TARGET}")
+
+    provider = config.analysis_provider()
+    if provider == "anthropic":
+        if config.ANTHROPIC_API_KEY:
+            report(OK, "bug analysis", f"Anthropic {config.ANTHROPIC_ANALYSIS_MODEL}")
+        else:
+            report(BAD, "bug analysis", "ANALYSIS_PROVIDER=anthropic but "
+                                        "ANTHROPIC_API_KEY is blank")
+    else:
+        report(OK, "bug analysis", f"OpenAI {config.ANALYSIS_MODEL}")
 
     if config.NGROK_AUTHTOKEN or config.PUBLIC_HOST:
         report(OK, "public URL source",
@@ -129,6 +140,33 @@ async def check_openai_realtime() -> None:
                              "Realtime access, or REALTIME_MODEL is misspelled")
 
 
+def check_anthropic() -> None:
+    """Only runs if you've chosen Anthropic for the analysis pass."""
+    from patient import config
+
+    if config.analysis_provider() != "anthropic":
+        return
+    print("\nAnthropic (bug analysis only)")
+    if not config.ANTHROPIC_API_KEY:
+        report(WARN, "skipped", "ANTHROPIC_API_KEY missing")
+        return
+    try:
+        from anthropic import Anthropic
+
+        client = Anthropic(api_key=config.ANTHROPIC_API_KEY)
+        # One-token request: proves the key works and has credit, costs ~nothing.
+        client.messages.create(
+            model=config.ANTHROPIC_ANALYSIS_MODEL,
+            max_tokens=1,
+            messages=[{"role": "user", "content": "hi"}],
+        )
+        report(OK, f"key valid for '{config.ANTHROPIC_ANALYSIS_MODEL}'")
+    except Exception as exc:
+        report(BAD, "Anthropic call failed", str(exc)[:200])
+        report(WARN, "hint", "a Claude Pro/Max subscription is not API credit — "
+                             "add credit at console.anthropic.com")
+
+
 async def check_tunnel() -> None:
     """Start the real server + tunnel and prove the internet can reach it."""
     import requests
@@ -176,6 +214,7 @@ async def main() -> None:
     check_env()
     check_twilio()
     await check_openai_realtime()
+    check_anthropic()
     await check_tunnel()
 
     print("\n" + "=" * 66)

@@ -22,7 +22,23 @@ ALLOWED_TARGET = "+18054398008"
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
 REALTIME_MODEL = os.environ.get("REALTIME_MODEL", "gpt-realtime")
 PATIENT_VOICE = os.environ.get("PATIENT_VOICE", "coral")
+# --- The bug-analysis pass (text only; separate from the live call) --------
+# You can run this on Anthropic OR OpenAI credits. "auto" prefers Anthropic
+# when an Anthropic key is present, since the live call already requires
+# OpenAI and this lets you spend a different balance on the analysis.
+ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
+ANALYSIS_PROVIDER = os.environ.get("ANALYSIS_PROVIDER", "auto").strip().lower()
 ANALYSIS_MODEL = os.environ.get("ANALYSIS_MODEL", "gpt-5")
+ANTHROPIC_ANALYSIS_MODEL = os.environ.get(
+    "ANTHROPIC_ANALYSIS_MODEL", "claude-opus-5"
+)
+
+
+def analysis_provider() -> str:
+    """Return 'anthropic' or 'openai' for the transcript-analysis pass."""
+    if ANALYSIS_PROVIDER in ("anthropic", "openai"):
+        return ANALYSIS_PROVIDER
+    return "anthropic" if ANTHROPIC_API_KEY else "openai"
 
 TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID", "")
 TWILIO_AUTH_TOKEN = os.environ.get("TWILIO_AUTH_TOKEN", "")

@@ -103,7 +103,10 @@ The transcript looks like this:
 ## Requirements
 
 - **Python 3.10 or newer** (`python3 --version`)
-- Three free accounts: OpenAI, Twilio, ngrok — see [SETUP.md](SETUP.md)
+- Three accounts: OpenAI, Twilio, ngrok — see [SETUP.md](SETUP.md)
+- Optional: an Anthropic key. The **live call requires OpenAI** (Anthropic has
+  no realtime speech-to-speech API), but the **bug analysis is plain text** and
+  runs on either. Set `ANTHROPIC_API_KEY` and `analyze.py` uses Claude instead.
 - No `ffmpeg`, no database, no deployment. Twilio hands us `.mp3` directly.
 
 ## Cost

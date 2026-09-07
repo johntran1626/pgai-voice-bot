@@ -146,6 +146,15 @@ sides separated is the difference between "I think they overlapped" and
 "they overlapped for 800ms". It also arrives as `.mp3`, which is a required
 submission format, with no `ffmpeg` dependency.
 
+### Two providers, split by what each can actually do
+
+The live call runs on OpenAI because that leg needs realtime speech-to-speech
+and Anthropic has no such API — its surface is text, vision and documents, and
+Claude's own voice mode is a turn-based pipeline over an external TTS provider.
+The analysis pass has no such constraint: it reads text, so it runs on either,
+and defaults to Claude when an Anthropic key is present. The seam is one
+function (`make_analyzer()`), so nothing downstream knows which ran.
+
 ### Two-layer prompts
 
 `prompts.py` holds `VOICE_DISCIPLINE`, which is identical for all 14 calls,

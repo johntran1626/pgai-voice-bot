@@ -13,6 +13,10 @@ twilio>=9.3.0
 # (The live call talks to OpenAI over a raw WebSocket, not through this.)
 openai>=1.50.0
 
+# Anthropic's official library — the alternative brain for that same
+# analysis pass, so you can spend Claude credits instead of OpenAI ones.
+anthropic>=1.0.0
+
 # Reads your secret keys out of the .env file.
 python-dotenv>=1.0.0
 

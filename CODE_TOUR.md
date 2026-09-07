@@ -424,7 +424,21 @@ build the tool that tells you which one, before the expensive step.
 ## `analyze.py` — a first draft, not an answer
 
 Sends each transcript to a text model with the scenario's `watch_for`, and
-asks for structured JSON findings. `response_format={"type": "json_object"}`
+asks for structured JSON findings.
+
+**This is the one part that can run on either Anthropic or OpenAI.** Worth
+understanding why: the live phone call needs a model that takes audio in and
+gives audio back over a live connection, and Anthropic doesn't offer that.
+Reading a transcript is ordinary text work, so both providers can do it.
+`make_analyzer()` picks one and returns a function; the rest of the file
+doesn't know or care which ran. That's a useful shape to copy — isolate the
+provider-specific bit behind one function, and the surrounding code stays
+provider-agnostic.
+
+The two backends differ in how they guarantee valid JSON. Claude is given a
+JSON schema via `output_config`, which the server enforces. OpenAI is asked
+for a JSON object. Either way `parse_json()` tolerates a stray code fence,
+because a malformed reply shouldn't lose you 14 calls' worth of analysis. `response_format={"type": "json_object"}`
 forces valid JSON out, so we can parse it instead of scraping prose.
 
 The system prompt spends as many words on what **not** to report as what to

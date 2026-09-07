@@ -73,6 +73,24 @@ pip install -r requirements.txt
 
 ---
 
+### Optional: use Anthropic credit for the bug analysis
+
+If you already have Anthropic API credit, you can spend it on the analysis
+step instead of OpenAI's.
+
+The live call **cannot** run on Anthropic — the phone leg needs a realtime
+speech-to-speech API, and Anthropic doesn't have one. But `analyze.py` just
+reads text transcripts, so either provider works there.
+
+Grab a key at **https://console.anthropic.com/settings/keys** and put it in
+`.env` as `ANTHROPIC_API_KEY`. That's it — `ANALYSIS_PROVIDER=auto` picks
+Claude automatically whenever that key is present.
+
+> A Claude Pro or Max subscription is **not** API credit. They're separate
+> balances; this needs credit on console.anthropic.com.
+
+---
+
 ## Step 3 — Twilio account (the actual phone line)
 
 Twilio is the company that owns real phone numbers and connects real calls.
