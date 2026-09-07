@@ -2,11 +2,11 @@
   "scenario_id": "08_barge_in",
   "scenario_name": "EDGE: interrupt the agent mid-sentence",
   "watch_for": "Did the agent stop talking when interrupted, or plough on? After an interruption, did it answer the NEW question or resume the old answer? Any double-talk, dropped audio, or long dead air?",
-  "call_sid": "CA26f71dca937c8e120878abc0eba2f48f",
-  "duration_seconds": 302.31,
+  "call_sid": "CA3f9002ef8edff9abbca1dc56f8938245",
+  "duration_seconds": 137.02,
   "turns": [
     {
-      "t": 3.43,
+      "t": 3.5,
       "speaker": "PGAI_AGENT",
       "text": "This call may be recorded for quality and training purposes."
     },
@@ -16,37 +16,285 @@
       "text": "Para espa\u00f1ol, oprima el dos."
     },
     {
-      "t": 9.99,
+      "t": 9.49,
       "speaker": "PGAI_AGENT",
       "text": "Thank you for calling Pivot Point Orthopedics."
     },
     {
-      "t": 12.57,
+      "t": 12.34,
       "speaker": "PGAI_AGENT",
       "text": "Would you like to create a demo patient profile?"
     },
     {
-      "t": 15.21,
+      "t": 15.03,
       "speaker": "PGAI_AGENT",
       "text": "I just need your first and last name to get started."
     },
     {
-      "t": 18.4,
+      "t": 17.18,
       "speaker": "PATIENT_BOT",
-      "text": "Solo quiero saber si puedo ir hoy sin cita, \u00bfaceptan pacientes sin cita hoy?"
+      "text": "Oh, actually I\u2019m calling to check if you take walk-ins today."
+    },
+    {
+      "t": 23.76,
+      "speaker": "PGAI_AGENT",
+      "text": "I can help with that."
+    },
+    {
+      "t": 26.53,
+      "speaker": "PGAI_AGENT",
+      "text": "Would you like to create a demo patient profile first?"
+    },
+    {
+      "t": 30.11,
+      "speaker": "PATIENT_BOT",
+      "text": "Hang on\u2014can I just walk in today"
+    },
+    {
+      "t": 30.28,
+      "speaker": "PGAI_AGENT",
+      "text": "This will let me check availability and answer your questions more accurately."
+    },
+    {
+      "t": 32.31,
+      "speaker": "PGAI_AGENT",
+      "text": "I just need your first and last name."
+    },
+    {
+      "t": 32.63,
+      "speaker": "PATIENT_BOT",
+      "text": "Yeah, but can I just walk in right now or what?"
+    },
+    {
+      "t": 40.43,
+      "speaker": "PATIENT_BOT",
+      "text": "Sure,"
+    },
+    {
+      "t": 40.74,
+      "speaker": "PGAI_AGENT",
+      "text": "I'll need to check today's walk-in policy for you."
+    },
+    {
+      "t": 41.74,
+      "speaker": "PGAI_AGENT",
+      "text": "To do that,"
+    },
+    {
+      "t": 45.32,
+      "speaker": "PATIENT_BOT",
+      "text": "It's Dan Miller."
+    },
+    {
+      "t": 45.56,
+      "speaker": "PGAI_AGENT",
+      "text": "I'll need your first and last name to create a demo patient profile."
+    },
+    {
+      "t": 47.26,
+      "speaker": "PGAI_AGENT",
+      "text": "Can you please provide those?"
+    },
+    {
+      "t": 47.42,
+      "speaker": "PATIENT_BOT",
+      "text": "Yeah, it\u2019s Sam Parker."
+    },
+    {
+      "t": 65.48,
+      "speaker": "PGAI_AGENT",
+      "text": "Your demo patient profile is set up."
+    },
+    {
+      "t": 67.57,
+      "speaker": "PATIENT_BOT",
+      "text": "So, do you take walk-ins today or not?"
+    },
+    {
+      "t": 70.72,
+      "speaker": "PGAI_AGENT",
+      "text": "And your date of birth is July 4th, 2000 for demo purposes."
+    },
+    {
+      "t": 73.23,
+      "speaker": "PATIENT_BOT",
+      "text": "No, that\u2019s not right\u2014look, I just need to know if I can head over now."
+    },
+    {
+      "t": 75.56,
+      "speaker": "PATIENT_BOT",
+      "text": "What time do you close today?"
+    },
+    {
+      "t": 75.56,
+      "speaker": "PGAI_AGENT",
+      "text": "How may I help you today?"
+    },
+    {
+      "t": 82.2,
+      "speaker": "PGAI_AGENT",
+      "text": "Would you like to check walk-in availability or schedule an appointment?"
+    },
+    {
+      "t": 83.26,
+      "speaker": "PATIENT_BOT",
+      "text": "Walk-in availability, that\u2019s all I need."
+    },
+    {
+      "t": 87.47,
+      "speaker": "PGAI_AGENT",
+      "text": "Pivot point"
+    },
+    {
+      "t": 87.73,
+      "speaker": "PATIENT_BOT",
+      "text": "Yeah, so can I just show up this afternoon or not?"
+    },
+    {
+      "t": 90.62,
+      "speaker": "PGAI_AGENT",
+      "text": "We don't offer walk-in visits."
+    },
+    {
+      "t": 91.09,
+      "speaker": "PATIENT_BOT",
+      "text": "Okay, got it. So what time do you close today?"
+    },
+    {
+      "t": 93.69,
+      "speaker": "PATIENT_BOT",
+      "text": "Yeah, yeah, but what"
+    },
+    {
+      "t": 93.69,
+      "speaker": "PGAI_AGENT",
+      "text": "All appointments at Pivot Point Orthopedics"
+    },
+    {
+      "t": 94.97,
+      "speaker": "PGAI_AGENT",
+      "text": "We do not accept walk-ins."
+    },
+    {
+      "t": 97.01,
+      "speaker": "PATIENT_BOT",
+      "text": "I got that, but I need to know what time you close today."
+    },
+    {
+      "t": 97.01,
+      "speaker": "PGAI_AGENT",
+      "text": "If you'd"
+    },
+    {
+      "t": 97.01,
+      "speaker": "PGAI_AGENT",
+      "text": "You like?"
+    },
+    {
+      "t": 97.47,
+      "speaker": "PGAI_AGENT",
+      "text": "I can check the next."
+    },
+    {
+      "t": 99.21,
+      "speaker": "PATIENT_BOT",
+      "text": "No, just tell me when you close today."
+    },
+    {
+      "t": 108.17,
+      "speaker": "PATIENT_BOT",
+      "text": "Sorry, I"
+    },
+    {
+      "t": 108.55,
+      "speaker": "PGAI_AGENT",
+      "text": "Today is Sunday."
+    },
+    {
+      "t": 110.28,
+      "speaker": "PGAI_AGENT",
+      "text": "And the clinic is closed."
+    },
+    {
+      "t": 118.22,
+      "speaker": "PGAI_AGENT",
+      "text": "Regular hours are Monday through Friday."
+    },
+    {
+      "t": 124.9,
+      "speaker": "PGAI_AGENT",
+      "text": "Would you like details on our weekly schedule?"
+    },
+    {
+      "t": 125.67,
+      "speaker": "PATIENT_BOT",
+      "text": "No, that's fine. Thanks for letting me know. I'll sort it out another time. Take care."
     }
   ],
   "events": [
     {
-      "t": 17.01,
+      "t": 16.01,
       "kind": "opening_gate",
       "detail": "office finished greeting"
     },
     {
-      "t": 300.23,
-      "kind": "max_duration_reached",
-      "detail": ""
+      "t": 30.09,
+      "kind": "barge_in",
+      "detail": "cut our bot off after 160ms"
+    },
+    {
+      "t": 45.3,
+      "kind": "barge_in",
+      "detail": "cut our bot off after 20ms"
+    },
+    {
+      "t": 67.58,
+      "kind": "barge_in",
+      "detail": "cut our bot off after 2400ms"
+    },
+    {
+      "t": 73.36,
+      "kind": "barge_in",
+      "detail": "cut our bot off after 3480ms"
+    },
+    {
+      "t": 75.56,
+      "kind": "barge_in",
+      "detail": "cut our bot off after 740ms"
+    },
+    {
+      "t": 88.33,
+      "kind": "barge_in",
+      "detail": "cut our bot off after 1040ms"
+    },
+    {
+      "t": 90.81,
+      "kind": "barge_in",
+      "detail": "cut our bot off after 360ms"
+    },
+    {
+      "t": 93.69,
+      "kind": "barge_in",
+      "detail": "cut our bot off after 100ms"
+    },
+    {
+      "t": 97.01,
+      "kind": "barge_in",
+      "detail": "cut our bot off after 2320ms"
+    },
+    {
+      "t": 108.16,
+      "kind": "barge_in",
+      "detail": "cut our bot off after 0ms"
+    },
+    {
+      "t": 125.76,
+      "kind": "bot_hung_up",
+      "detail": "goal_achieved"
     }
   ],
-  "outcome": null
+  "outcome": {
+    "outcome": "goal_achieved",
+    "summary": "Confirmed the clinic does not accept walk-ins and is closed today."
+  }
 }

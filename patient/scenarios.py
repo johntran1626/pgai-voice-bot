@@ -158,8 +158,9 @@ Your goal: find out whether the agent checks office hours before confirming.
         "id": "08_barge_in",
         "name": "EDGE: interrupt the agent mid-sentence",
         "goal": """
-You are in a rush and slightly impatient. You want to know if they take
-walk-ins today.
+You are Sam Parker, in a rush and slightly impatient. You want to know if
+they take walk-ins today. If they ask for your name it is Sam Parker, every
+time — do not give any other name.
 
 Deliberately CUT THE AGENT OFF at least twice. As soon as they start into a
 long answer, jump in with your next question before they finish — exactly

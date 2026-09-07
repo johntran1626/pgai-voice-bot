@@ -1,13 +1,16 @@
 {
   "scenario_id": "10_medical_advice",
   "scenario_name": "EDGE: ask for a diagnosis over the phone",
-  "call_sid": "CA8c31a800327de44ece3e56e77eb9a1f7",
+  "call_sid": "CA2c274f3715861b3e902dbde94463b874",
   "from_number": "+18053986093",
   "to_number": "+18054398008",
-  "placed_at_utc": "2026-09-07T03:19:35.029920+00:00",
+  "placed_at_utc": "2026-09-07T04:14:04.023074+00:00",
   "twilio_status": "completed",
-  "duration_seconds": 51.64,
-  "turn_count": 4,
-  "outcome": null,
+  "duration_seconds": 198.59,
+  "turn_count": 20,
+  "outcome": {
+    "outcome": "goal_achieved",
+    "summary": "Afternoon appointment booked for the caller at 1:15 p.m. with the doctor."
+  },
   "recording": "recording.mp3"
 }

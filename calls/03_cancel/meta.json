@@ -1,13 +1,13 @@
 {
   "scenario_id": "03_cancel",
   "scenario_name": "Cancel outright, resist upsell to reschedule",
-  "call_sid": "CA85449b2fdd5b52ab57c6ff3da6952f9f",
+  "call_sid": "CAc4101742e975f4b24c157eaabf054a53",
   "from_number": "+18053986093",
   "to_number": "+18054398008",
-  "placed_at_utc": "2026-09-07T03:01:25.207488+00:00",
+  "placed_at_utc": "2026-09-07T04:04:47.238975+00:00",
   "twilio_status": "completed",
-  "duration_seconds": 52.16,
-  "turn_count": 7,
+  "duration_seconds": 81.3,
+  "turn_count": 9,
   "outcome": null,
   "recording": "recording.mp3"
 }

@@ -1,6 +1,6 @@
 Scenario : 08_barge_in — EDGE: interrupt the agent mid-sentence
-Call SID : CA26f71dca937c8e120878abc0eba2f48f
-Duration : 5:02
+Call SID : CA3f9002ef8edff9abbca1dc56f8938245
+Duration : 2:17
 
 PATIENT_BOT = our simulated patient
 PGAI_AGENT  = the AI agent under test at +1-805-439-8008
@@ -11,10 +11,63 @@ PGAI_AGENT  = the AI agent under test at +1-805-439-8008
 [0:09] PGAI_AGENT: Thank you for calling Pivot Point Orthopedics.
 [0:12] PGAI_AGENT: Would you like to create a demo patient profile?
 [0:15] PGAI_AGENT: I just need your first and last name to get started.
-[0:18] PATIENT_BOT: Solo quiero saber si puedo ir hoy sin cita, ¿aceptan pacientes sin cita hoy?
+[0:17] PATIENT_BOT: Oh, actually I’m calling to check if you take walk-ins today.
+[0:23] PGAI_AGENT: I can help with that.
+[0:26] PGAI_AGENT: Would you like to create a demo patient profile first?
+[0:30] PATIENT_BOT: Hang on—can I just walk in today
+[0:30] PGAI_AGENT: This will let me check availability and answer your questions more accurately.
+[0:32] PGAI_AGENT: I just need your first and last name.
+[0:32] PATIENT_BOT: Yeah, but can I just walk in right now or what?
+[0:40] PATIENT_BOT: Sure,
+[0:40] PGAI_AGENT: I'll need to check today's walk-in policy for you.
+[0:41] PGAI_AGENT: To do that,
+[0:45] PATIENT_BOT: It's Dan Miller.
+[0:45] PGAI_AGENT: I'll need your first and last name to create a demo patient profile.
+[0:47] PGAI_AGENT: Can you please provide those?
+[0:47] PATIENT_BOT: Yeah, it’s Sam Parker.
+[1:05] PGAI_AGENT: Your demo patient profile is set up.
+[1:07] PATIENT_BOT: So, do you take walk-ins today or not?
+[1:10] PGAI_AGENT: And your date of birth is July 4th, 2000 for demo purposes.
+[1:13] PATIENT_BOT: No, that’s not right—look, I just need to know if I can head over now.
+[1:15] PATIENT_BOT: What time do you close today?
+[1:15] PGAI_AGENT: How may I help you today?
+[1:22] PGAI_AGENT: Would you like to check walk-in availability or schedule an appointment?
+[1:23] PATIENT_BOT: Walk-in availability, that’s all I need.
+[1:27] PGAI_AGENT: Pivot point
+[1:27] PATIENT_BOT: Yeah, so can I just show up this afternoon or not?
+[1:30] PGAI_AGENT: We don't offer walk-in visits.
+[1:31] PATIENT_BOT: Okay, got it. So what time do you close today?
+[1:33] PATIENT_BOT: Yeah, yeah, but what
+[1:33] PGAI_AGENT: All appointments at Pivot Point Orthopedics
+[1:34] PGAI_AGENT: We do not accept walk-ins.
+[1:37] PATIENT_BOT: I got that, but I need to know what time you close today.
+[1:37] PGAI_AGENT: If you'd
+[1:37] PGAI_AGENT: You like?
+[1:37] PGAI_AGENT: I can check the next.
+[1:39] PATIENT_BOT: No, just tell me when you close today.
+[1:48] PATIENT_BOT: Sorry, I
+[1:48] PGAI_AGENT: Today is Sunday.
+[1:50] PGAI_AGENT: And the clinic is closed.
+[1:58] PGAI_AGENT: Regular hours are Monday through Friday.
+[2:04] PGAI_AGENT: Would you like details on our weekly schedule?
+[2:05] PATIENT_BOT: No, that's fine. Thanks for letting me know. I'll sort it out another time. Take care.
 
 --------------------------------------------------------------------
 EVENT LOG (non-speech)
 
-[0:17] opening_gate office finished greeting
-[5:00] max_duration_reached
+[0:16] opening_gate office finished greeting
+[0:30] barge_in cut our bot off after 160ms
+[0:45] barge_in cut our bot off after 20ms
+[1:07] barge_in cut our bot off after 2400ms
+[1:13] barge_in cut our bot off after 3480ms
+[1:15] barge_in cut our bot off after 740ms
+[1:28] barge_in cut our bot off after 1040ms
+[1:30] barge_in cut our bot off after 360ms
+[1:33] barge_in cut our bot off after 100ms
+[1:37] barge_in cut our bot off after 2320ms
+[1:48] barge_in cut our bot off after 0ms
+[2:05] bot_hung_up goal_achieved
+
+--------------------------------------------------------------------
+Bot-reported outcome: goal_achieved
+Bot-reported summary: Confirmed the clinic does not accept walk-ins and is closed today.

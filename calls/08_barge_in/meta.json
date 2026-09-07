@@ -1,13 +1,16 @@
 {
   "scenario_id": "08_barge_in",
   "scenario_name": "EDGE: interrupt the agent mid-sentence",
-  "call_sid": "CA26f71dca937c8e120878abc0eba2f48f",
+  "call_sid": "CA3f9002ef8edff9abbca1dc56f8938245",
   "from_number": "+18053986093",
   "to_number": "+18054398008",
-  "placed_at_utc": "2026-09-07T03:15:11.934308+00:00",
+  "placed_at_utc": "2026-09-07T04:10:27.511659+00:00",
   "twilio_status": "completed",
-  "duration_seconds": 313.59,
-  "turn_count": 6,
-  "outcome": null,
+  "duration_seconds": 140.02,
+  "turn_count": 45,
+  "outcome": {
+    "outcome": "goal_achieved",
+    "summary": "Confirmed the clinic does not accept walk-ins and is closed today."
+  },
   "recording": "recording.mp3"
 }

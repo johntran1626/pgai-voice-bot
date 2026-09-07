@@ -1,21 +1,23 @@
 Scenario : 03_cancel — Cancel outright, resist upsell to reschedule
-Call SID : CA85449b2fdd5b52ab57c6ff3da6952f9f
-Duration : 0:50
+Call SID : CAc4101742e975f4b24c157eaabf054a53
+Duration : 1:19
 
 PATIENT_BOT = our simulated patient
 PGAI_AGENT  = the AI agent under test at +1-805-439-8008
 ====================================================================
 
-[0:06] PGAI_AGENT: This call may be recorded for quality and training purposes.
-[0:16] PGAI_AGENT: Thank you for calling Pivot Point Orthopedics. Would you like to create a demo patient profile? I just need your first and last name to get started
-[0:18] PATIENT_BOT: Hey, I need to cancel my appointment for next Tuesday.
+[0:05] PGAI_AGENT: This call may be recorded for quality and training purposes.
+[0:15] PGAI_AGENT: Thank you for calling Pivot Point Orthopedics. Would you like to create a demo patient profile? I just need your first and last name to get started.
+[0:18] PATIENT_BOT: Hi, I need to cancel my appointment for next Tuesday.
 [0:31] PGAI_AGENT: I can help with that. Would you like to create a demo patient profile first? I just need your first and last name to get started.
-[0:31] PATIENT_BOT: No, I just want to cancel the appointment as is.
-[0:46] PGAI_AGENT: No problem, you can scan the QR code at the booth later if you want to create a profile. Have a great day!
-[0:47] PATIENT_BOT: Wait, sorry, I need to know for sure—is the appointment actually canceled now?
+[0:31] PATIENT_BOT: No, I'm already a patient. The appointment's under Priya Patel.
+[0:53] PGAI_AGENT: Thanks for letting me know. Since I don't have access to your patient record yet, would you like to create a demo patient profile now? I just need your first and last name. If not, you can scan the QR code at the booth later to set it up.
+[0:53] PATIENT_BOT: No, really, I just want it cancelled for now.
+[1:13] PGAI_AGENT: Understood. Since I can't access your record without a profile, you can scan the QR code at the booth later to manage your appointments. If you need more help, the clinic staff can assist you in person. Have a great day.
+[1:13] PATIENT_BOT: Wait, can you confirm if my Tuesday appointment is actually cancelled or not?
 
 --------------------------------------------------------------------
 EVENT LOG (non-speech)
 
 [0:17] opening_gate office finished greeting
-[0:48] call_ended_by_far_side
+[1:17] call_ended_by_far_side

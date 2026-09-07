@@ -1,29 +1,39 @@
 Scenario : 07_closed_day — EDGE: ask for a Sunday appointment
-Call SID : CA2d1fc420e7fe03a53a12e640935d59a3
-Duration : 1:15
+Call SID : CA5bf74459bfd9f84a0d373f00ae80e210
+Duration : 2:39
 
 PATIENT_BOT = our simulated patient
 PGAI_AGENT  = the AI agent under test at +1-805-439-8008
 ====================================================================
 
 [0:06] PGAI_AGENT: This call may be recorded for quality and training purposes. Para español, oprima el dos.
-[0:16] PGAI_AGENT: Thank you for calling Pivot Point Orthopedics. Would you like to create a demo patient profile? I just need your first and last name to get started.
-[0:17] PATIENT_BOT: Sure, it's Lucas Miller.
-[0:46] PGAI_AGENT: Sorry, there was a problem creating your demo patient profile.
-[0:47] PATIENT_BOT: Okay, can we try Sunday at 10 a.m. for an appointment?
-[1:04] PGAI_AGENT: I'm unable to create your profile right now due to a technical issue. I'll connect you to our clinic support team so they can help you with your profile or appointment. Please stay on the line.
-[1:05] PGAI_AGENT: Transferring you now.
-[1:06] PGAI_AGENT: Thank you.
-[1:07] PATIENT_BOT: No problem, I'll wait.
-[1:12] PGAI_AGENT: Hello, you've reached the Pretty Good AI test line. Goodbye!
+[0:19] PGAI_AGENT: Thank you for calling Pivot Point Orthopedics. Would you like to create a demo patient profile?
+[0:22] PATIENT_BOT: Hi, I'm actually looking to book an appointment for Sunday at 10 a.m.
+[0:40] PATIENT_BOT: Sure, first name's Alex.
+[0:40] PGAI_AGENT: I can help with that. To book an appointment, I'll need to create a demo patient profile for you first. Can you please tell me your first and last name?
+[0:50] PGAI_AGENT: Thanks, Alex. What is your last name?
+[0:50] PATIENT_BOT: Sure, it's Bennett. B-E-N-N-E-T-T.
+[1:02] PGAI_AGENT: Let me get your demo patient profile set up. One moment while I take care of that.
+[1:02] PATIENT_BOT: Okay, no problem.
+[1:15] PGAI_AGENT: I'm setting up your profile now, please hold on just a moment.
+[1:16] PATIENT_BOT: Alright, sounds good.
+[1:34] PGAI_AGENT: Your demo patient profile is ready, and your date of birth is set as July 4, 2000 for this demo. How may I help you today?
+[1:34] PATIENT_BOT: Yeah, I'm after that Sunday 10 a.m. appointment.
+[1:44] PGAI_AGENT: Before I check the schedule, can you tell me what kind of appointment you need?
+[1:51] PGAI_AGENT: For example, is this for a routine visit, a new patient consultation, a follow-up, or something else?
+[1:51] PATIENT_BOT: It's a new patient consultation.
+[2:16] PGAI_AGENT: I checked the schedule for Sunday, but there are no openings that day. The soonest available slots are on Monday, September 14th, with Aberkirr at Pivot Point Orthopedics. The first opening is at 9 AM. Would you like to book that or would you prefer a later time?
+[2:16] PATIENT_BOT: Wait—are you guys actually open on Sundays?
+[2:35] PGAI_AGENT: Pivot Point Orthopedics does not have appointments available on Sundays. The earliest openings are on Monday. Would you like to book a Monday slot, or look at other days?
+[2:35] PATIENT_BOT: Got it, let's go with the Monday 9 a.m. then.
 
 --------------------------------------------------------------------
 EVENT LOG (non-speech)
 
-[0:17] opening_gate office finished greeting
-[1:07] barge_in cut our bot off after 420ms
-[1:12] bot_hung_up agent_confused
+[0:21] opening_gate office finished greeting
+[0:43] barge_in cut our bot off after 4140ms
+[2:36] bot_hung_up goal_achieved
 
 --------------------------------------------------------------------
-Bot-reported outcome: agent_confused
-Bot-reported summary: The agent ended the call abruptly without addressing the request for a Sunday appointment.
+Bot-reported outcome: goal_achieved
+Bot-reported summary: Booked a Monday 9 a.m. appointment after confirming no Sunday availability.

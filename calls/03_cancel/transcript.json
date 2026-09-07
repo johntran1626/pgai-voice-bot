@@ -2,53 +2,63 @@
   "scenario_id": "03_cancel",
   "scenario_name": "Cancel outright, resist upsell to reschedule",
   "watch_for": "Did the agent accept a plain cancellation, or keep pushing to rebook? Did it ever book something the patient explicitly refused? Did it mention any cancellation policy or fee?",
-  "call_sid": "CA85449b2fdd5b52ab57c6ff3da6952f9f",
-  "duration_seconds": 50.58,
+  "call_sid": "CAc4101742e975f4b24c157eaabf054a53",
+  "duration_seconds": 79.08,
   "turns": [
     {
-      "t": 6.35,
+      "t": 5.58,
       "speaker": "PGAI_AGENT",
       "text": "This call may be recorded for quality and training purposes."
     },
     {
-      "t": 16.17,
+      "t": 15.33,
       "speaker": "PGAI_AGENT",
-      "text": "Thank you for calling Pivot Point Orthopedics. Would you like to create a demo patient profile? I just need your first and last name to get started"
+      "text": "Thank you for calling Pivot Point Orthopedics. Would you like to create a demo patient profile? I just need your first and last name to get started."
     },
     {
-      "t": 18.0,
+      "t": 18.3,
       "speaker": "PATIENT_BOT",
-      "text": "Hey, I need to cancel my appointment for next Tuesday."
+      "text": "Hi, I need to cancel my appointment for next Tuesday."
     },
     {
-      "t": 31.15,
+      "t": 31.52,
       "speaker": "PGAI_AGENT",
       "text": "I can help with that. Would you like to create a demo patient profile first? I just need your first and last name to get started."
     },
     {
-      "t": 31.19,
+      "t": 31.93,
       "speaker": "PATIENT_BOT",
-      "text": "No, I just want to cancel the appointment as is."
+      "text": "No, I'm already a patient. The appointment's under Priya Patel."
     },
     {
-      "t": 46.59,
+      "t": 53.64,
       "speaker": "PGAI_AGENT",
-      "text": "No problem, you can scan the QR code at the booth later if you want to create a profile. Have a great day!"
+      "text": "Thanks for letting me know. Since I don't have access to your patient record yet, would you like to create a demo patient profile now? I just need your first and last name. If not, you can scan the QR code at the booth later to set it up."
     },
     {
-      "t": 47.07,
+      "t": 53.89,
       "speaker": "PATIENT_BOT",
-      "text": "Wait, sorry, I need to know for sure\u2014is the appointment actually canceled now?"
+      "text": "No, really, I just want it cancelled for now."
+    },
+    {
+      "t": 73.15,
+      "speaker": "PGAI_AGENT",
+      "text": "Understood. Since I can't access your record without a profile, you can scan the QR code at the booth later to manage your appointments. If you need more help, the clinic staff can assist you in person. Have a great day."
+    },
+    {
+      "t": 73.56,
+      "speaker": "PATIENT_BOT",
+      "text": "Wait, can you confirm if my Tuesday appointment is actually cancelled or not?"
     }
   ],
   "events": [
     {
-      "t": 17.02,
+      "t": 17.01,
       "kind": "opening_gate",
       "detail": "office finished greeting"
     },
     {
-      "t": 48.51,
+      "t": 77.01,
       "kind": "call_ended_by_far_side",
       "detail": ""
     }
