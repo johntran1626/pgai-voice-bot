@@ -9,7 +9,7 @@ run_call.py — the one command you actually run.
 What it does, in order:
   1. Checks your .env is filled in.
   2. Starts the audio-bridge web server inside this same process.
-  3. Opens an ngrok tunnel so Twilio can reach that server from the internet.
+  3. Opens a public tunnel (ngrok or cloudflared) so Twilio can reach it.
   4. Tells Twilio to dial +1-805-439-8008.
   5. Waits for the conversation to finish.
   6. Saves the transcript and downloads the .mp3 recording into calls/<id>/.
@@ -23,6 +23,9 @@ import json
 import os
 import shutil
 import sys
+from typing import Callable
+import subprocess
+import re
 from datetime import datetime, timezone
 
 import uvicorn
@@ -55,24 +58,42 @@ async def start_server() -> uvicorn.Server:
     raise RuntimeError(f"Server did not start on port {config.PORT}")
 
 
-async def open_tunnel() -> tuple[str, bool]:
+async def open_tunnel() -> tuple[str, "Callable[[], None]"]:
     """
     Give Twilio a public address that points at this laptop.
 
-    Returns (hostname, we_started_ngrok).
+    Returns (hostname, close) — call close() when you're done to shut down
+    whatever we started. close() is a no-op if we started nothing.
 
-    If PUBLIC_HOST is set in .env we assume you're handling this yourself and
-    just use it. Otherwise we start ngrok automatically.
+    Three ways to get that address:
+      * PUBLIC_HOST in .env — you're handling it yourself, we use it as-is.
+      * ngrok — the documented default, needs a free authtoken.
+      * cloudflared — a Cloudflare "quick tunnel", no account at all.
+
+    Why the choice exists: plenty of home routers and ISPs classify ngrok
+    subdomains as high-risk and block them, which looks like a broken setup
+    but isn't. Cloudflare tunnels usually sail through the same filters.
     """
     if config.PUBLIC_HOST:
         host = config.PUBLIC_HOST.replace("https://", "").replace("http://", "")
-        return host.rstrip("/"), False
+        return host.rstrip("/"), lambda: None
 
+    provider = config.TUNNEL_PROVIDER
+    if provider == "auto":
+        provider = "ngrok" if config.NGROK_AUTHTOKEN else "cloudflared"
+
+    if provider == "cloudflared":
+        return await open_cloudflared_tunnel()
+    return await open_ngrok_tunnel()
+
+
+async def open_ngrok_tunnel() -> tuple[str, "Callable[[], None]"]:
     if not config.NGROK_AUTHTOKEN:
         print(
             "No NGROK_AUTHTOKEN and no PUBLIC_HOST in .env.\n"
-            "Twilio needs a public URL to send call audio to. Get a free\n"
-            "token at https://dashboard.ngrok.com/get-started/your-authtoken"
+            "Twilio needs a public URL to send call audio to. Either get a\n"
+            "free token at https://dashboard.ngrok.com/get-started/your-authtoken\n"
+            "or set TUNNEL_PROVIDER=cloudflared (no account required)."
         )
         sys.exit(1)
 
@@ -81,7 +102,64 @@ async def open_tunnel() -> tuple[str, bool]:
     conf.get_default().auth_token = config.NGROK_AUTHTOKEN
     tunnel = await asyncio.to_thread(ngrok.connect, config.PORT, "http")
     host = tunnel.public_url.replace("https://", "").replace("http://", "")
-    return host, True
+    return host, ngrok.kill
+
+
+async def open_cloudflared_tunnel() -> tuple[str, "Callable[[], None]"]:
+    """
+    Start `cloudflared tunnel --url http://localhost:PORT` and read the
+    public hostname it prints.
+
+    A "quick tunnel" needs no Cloudflare account and no token. The URL is
+    random and dies with the process, which is exactly what we want.
+    """
+    if shutil.which("cloudflared") is None:
+        print(
+            "TUNNEL_PROVIDER is cloudflared but the `cloudflared` command\n"
+            "isn't installed. On a Mac:  brew install cloudflared"
+        )
+        sys.exit(1)
+
+    proc = subprocess.Popen(
+        ["cloudflared", "tunnel", "--url", f"http://localhost:{config.PORT}"],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+        bufsize=1,
+    )
+
+    def close() -> None:
+        proc.terminate()
+        try:
+            proc.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            proc.kill()
+
+    # cloudflared announces the URL on stderr a second or two after start.
+    def read_host() -> str | None:
+        for _ in range(400):
+            line = proc.stdout.readline()
+            if not line:
+                return None
+            match = re.search(r"https://([a-z0-9-]+\.trycloudflare\.com)", line)
+            if match:
+                return match.group(1)
+        return None
+
+    try:
+        host = await asyncio.wait_for(asyncio.to_thread(read_host), timeout=60)
+    except asyncio.TimeoutError:
+        host = None
+
+    if not host:
+        close()
+        print("cloudflared started but never printed a tunnel URL.")
+        sys.exit(1)
+
+    # The edge needs a few seconds before it will route to us. Without this
+    # the very first request 404s and looks like a broken tunnel.
+    await asyncio.sleep(8)
+    return host, close
 
 
 # ---------------------------------------------------------------------------
@@ -174,7 +252,7 @@ async def main_async(scenarios: list[dict]) -> None:
     )
 
     srv = await start_server()
-    host, started_ngrok = await open_tunnel()
+    host, close_tunnel = await open_tunnel()
     print(f"Bridge listening on port {config.PORT}, public at https://{host}")
     print(f"Calling {config.TARGET_NUMBER} from {config.TWILIO_FROM_NUMBER}")
 
@@ -190,9 +268,7 @@ async def main_async(scenarios: list[dict]) -> None:
         print(f"\n{'=' * 70}\n{succeeded}/{len(scenarios)} call(s) captured. "
               f"Results are in calls/\n{'=' * 70}")
         srv.should_exit = True
-        if started_ngrok:
-            from pyngrok import ngrok
-            ngrok.kill()
+        close_tunnel()
 
 
 def main() -> None:

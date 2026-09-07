@@ -234,10 +234,10 @@ async def check_tunnel() -> None:
         report(BAD, "local server failed to start", str(exc)[:160])
         return
 
-    started_ngrok = False
+    close_tunnel = lambda: None
     host = ""
     try:
-        host, started_ngrok = await open_tunnel()
+        host, close_tunnel = await open_tunnel()
         report(OK, "tunnel open", f"https://{host}")
         resp = await asyncio.to_thread(
             requests.get, f"https://{host}/health", timeout=20
@@ -257,9 +257,7 @@ async def check_tunnel() -> None:
         # Without this pause its lifespan task gets cancelled mid-await and
         # prints an alarming (but harmless) traceback under the results.
         await asyncio.sleep(0.5)
-        if started_ngrok:
-            from pyngrok import ngrok
-            ngrok.kill()
+        close_tunnel()
 
 
 async def main() -> int:

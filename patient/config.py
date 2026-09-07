@@ -47,6 +47,14 @@ TWILIO_FROM_NUMBER = os.environ.get("TWILIO_FROM_NUMBER", "")
 TARGET_NUMBER = os.environ.get("TARGET_NUMBER", ALLOWED_TARGET)
 
 PORT = int(os.environ.get("PORT", "5050"))
+# Which tunnel service gives Twilio a public door into this laptop.
+#   auto        = ngrok if NGROK_AUTHTOKEN is set, else cloudflared
+#   ngrok       = force ngrok
+#   cloudflared = force a Cloudflare quick tunnel (no account needed)
+# Some home routers and ISPs block ngrok subdomains as "high risk";
+# switching to cloudflared is the usual way around that.
+TUNNEL_PROVIDER = os.environ.get("TUNNEL_PROVIDER", "auto").strip().lower()
+
 NGROK_AUTHTOKEN = os.environ.get("NGROK_AUTHTOKEN", "")
 PUBLIC_HOST = os.environ.get("PUBLIC_HOST", "").strip()
 
