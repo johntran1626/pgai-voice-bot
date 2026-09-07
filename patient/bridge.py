@@ -92,16 +92,29 @@ class CallBridge:
         `minimal=True` strips the optional extras — used as an automatic
         fallback if OpenAI rejects a newer field.
         """
-        turn_detection = self.scenario.get(
-            "turn_detection",
-            # Default: SEMANTIC voice-activity detection. Instead of "they've
-            # been quiet for 500ms, jump in", it asks a small model "does that
-            # sound like a finished thought?" With `eagerness: low` it waits
-            # longer before speaking. That is what stops our bot from talking
-            # over the PGAI agent mid-sentence, which is the #1 thing that
-            # makes bot-to-bot calls sound broken.
-            {"type": "semantic_vad", "eagerness": "low", "interrupt_response": True},
-        )
+        # How we decide the other person has stopped talking. A scenario can
+        # override this outright (08_barge_in does); otherwise it comes from
+        # .env, because it is the setting most worth tuning by ear.
+        #
+        # The trade-off is real and has no free lunch: waiting longer means
+        # never talking over them but replying slowly, and replying fast
+        # means occasionally cutting in on a pause. See config.py.
+        if config.VAD_MODE == "server":
+            default_vad = {
+                "type": "server_vad",
+                "threshold": 0.5,
+                "prefix_padding_ms": 300,
+                "silence_duration_ms": config.VAD_SILENCE_MS,
+                "interrupt_response": True,
+                "create_response": True,
+            }
+        else:
+            default_vad = {
+                "type": "semantic_vad",
+                "eagerness": config.VAD_EAGERNESS,
+                "interrupt_response": True,
+            }
+        turn_detection = self.scenario.get("turn_detection", default_vad)
 
         session: dict = {
             "type": "realtime",

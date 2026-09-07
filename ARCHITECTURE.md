@@ -174,7 +174,9 @@ Listen to the first recording before running the rest. Symptoms and fixes:
 
 | Symptom | Cause | Fix |
 |---|---|---|
-| The bots talk over each other | Our VAD jumps in too fast | `low` is already the most patient value the API accepts (`low`/`medium`/`high`/`auto` — there is no `very_low`). Fix it in the prompt instead: tell the patient to sit through recorded greetings and never restate a request |
+| The bots talk over each other | Our VAD jumps in too fast | `.env`: `VAD_EAGERNESS=low` (the most patient value the API accepts — `low`/`medium`/`high`/`auto`; there is no `very_low`) |
+| Our patient is slow to reply | Semantic VAD is deliberating | `.env`: `VAD_EAGERNESS=high`, or `VAD_MODE=server` + `VAD_SILENCE_MS=600` for a plain, snappy silence timer |
+| Our patient talks into the silence after asking a question | Prompt, not VAD | The "STOP AND WAIT" rule in `prompts.py`; the watchdog only nudges when *nothing* has been said all call |
 | Long dead air after they finish | Our VAD waits too long | `eagerness` `low` → `"medium"` |
 | Our bot monologues | Persona drift | Tighten the turn-length rule in `VOICE_DISCIPLINE` |
 | Our bot sounds like an assistant | Same | Strengthen the "you are the caller" rules |

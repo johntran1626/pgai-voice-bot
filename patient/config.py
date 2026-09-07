@@ -60,6 +60,23 @@ PUBLIC_HOST = os.environ.get("PUBLIC_HOST", "").strip()
 
 MAX_CALL_SECONDS = int(os.environ.get("MAX_CALL_SECONDS", "300"))
 
+# --- How our patient decides the other person has finished talking ---------
+# This one setting trades response SPEED against INTERRUPTIONS. There is no
+# value that wins both; tune it by listening to a recording.
+#
+#   VAD_MODE=semantic  asks a small model "did that sound like a finished
+#                      thought?" Smarter about mid-sentence pauses, but adds
+#                      delay before our patient replies.
+#     VAD_EAGERNESS    low | medium | high | auto  (the API rejects anything
+#                      else). low = most patient, slowest to reply.
+#
+#   VAD_MODE=server    plain silence timer: reply once they have been quiet
+#                      for VAD_SILENCE_MS. Snappier and predictable, but it
+#                      will cut in on someone who pauses to think.
+VAD_MODE = os.environ.get("VAD_MODE", "semantic").strip().lower()
+VAD_EAGERNESS = os.environ.get("VAD_EAGERNESS", "medium").strip().lower()
+VAD_SILENCE_MS = int(os.environ.get("VAD_SILENCE_MS", "700"))
+
 # Where every call's transcript, recording and metadata gets written.
 CALLS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "calls")
 
