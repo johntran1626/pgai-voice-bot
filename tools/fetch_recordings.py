@@ -1,14 +1,8 @@
 #!/usr/bin/env python3
 """
-tools/fetch_recordings.py — grab any recordings that weren't ready in time.
-
-Twilio needs a few seconds after a call to finish encoding the audio. If
-run_call.py printed "recording not available yet", run this afterwards:
+Re-downloads recordings Twilio had not finished encoding when the call ended.
 
     python tools/fetch_recordings.py
-
-It walks calls/*/meta.json, finds any call with no recording.mp3 next to it,
-and downloads it.
 """
 
 import glob

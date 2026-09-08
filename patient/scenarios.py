@@ -1,17 +1,8 @@
 """
-scenarios.py — the 14 test calls.
+The 14 test calls, ordered happy-path first and deliberately hostile last.
 
-Each scenario is a dictionary with:
-  id        a short slug; also the folder name the results get saved under
-  name      human-readable title
-  goal      the character + mission, injected into the model's instructions
-  watch_for what a reviewer should look for; analyze.py passes this to the
-            bug-finding model so it grades against the RIGHT expectations
-            instead of guessing what the test was about
-
-Design note: these are ordered from "does the happy path work at all" to
-"deliberately hostile". Run the early ones first when you're debugging —
-if 01 doesn't work, nothing else will.
+Each is a dict of id, name, goal (the character and mission) and watch_for
+(what to check in the transcript, passed through to analyze.py).
 """
 
 SCENARIOS = [
@@ -320,5 +311,5 @@ Your goal: test the escalation path — is there one at all?
     },
 ]
 
-# Quick lookup by id, used by run_call.py when you pass a scenario name.
+# Lookup by id, used to resolve scenario names on the command line.
 BY_ID = {s["id"]: s for s in SCENARIOS}

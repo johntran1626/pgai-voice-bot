@@ -1,25 +1,14 @@
 """
-prompts.py — the instructions we give our fake patient.
-
-There are two layers:
-
-  1. VOICE_DISCIPLINE — the same for every call. It teaches the model how to
-     BEHAVE ON A PHONE: short turns, no lists, don't act like an assistant.
-     This is the single biggest lever on whether the calls sound human.
-
-  2. Each scenario's own `goal` text (see scenarios.py) — WHO this patient is
-     and WHAT they are trying to get done.
-
-We glue them together in build_instructions().
+Builds the instructions given to the simulated patient: shared phone-behaviour
+rules (VOICE_DISCIPLINE) joined to each scenario's own goal.
 """
 
 # ---------------------------------------------------------------------------
 # Layer 1: how to sound like a person on a phone call.
 #
-# Read this like a director's note to an actor. Every line here exists
-# because, without it, speech-to-speech models drift into "helpful AI
-# assistant" mode -- long paragraphs, bulleted options, "How can I help you
-# today?" -- which instantly breaks the illusion and ruins the test.
+# Nearly every rule below exists because a real call went wrong without it.
+# Left unconstrained, speech-to-speech models drift into assistant register --
+# long paragraphs, bulleted options, "How can I help you today?".
 # ---------------------------------------------------------------------------
 VOICE_DISCIPLINE = """\
 You are a HUMAN CALLING A DOCTOR'S OFFICE ON THE PHONE. You are the caller.
@@ -139,9 +128,7 @@ ENDING THE CALL:
 
 def build_instructions(scenario: dict) -> str:
     """
-    Glue the universal phone-behaviour rules together with this scenario's
-    character and goal, and return the single string we hand to OpenAI as the
-    session `instructions`.
+    Join the shared phone-behaviour rules to this scenario's goal.
     """
     return (
         f"{VOICE_DISCIPLINE}\n"
@@ -155,11 +142,9 @@ def build_instructions(scenario: dict) -> str:
 
 
 # ---------------------------------------------------------------------------
-# The tool that lets the patient hang up on purpose.
-#
-# Without this, calls only end when the other side hangs up or when our
-# hard timeout fires -- which wastes money and produces awkward recordings
-# with 40 seconds of silence at the end.
+# Lets the patient hang up deliberately. Without it, calls end only when the
+# far side hangs up or MAX_CALL_SECONDS fires, leaving dead air on the
+# recording and billing for it.
 # ---------------------------------------------------------------------------
 END_CALL_TOOL = {
     "type": "function",

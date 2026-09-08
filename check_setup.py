@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
 """
-check_setup.py — run this BEFORE your first real call.
-
-It checks every moving part and tells you exactly what's broken, without
-dialling anybody or spending money on a call.
+Preflight check. Verifies credentials, number ownership, Realtime access and
+the public tunnel. Places no calls.
 
     python check_setup.py
-
-Green ✓ all the way down means `python run_call.py 01_schedule_new` should work.
 """
 
 import asyncio
@@ -169,15 +165,10 @@ def check_anthropic() -> None:
 
 def diagnose_tunnel_failure(host: str) -> None:
     """
-    Work out *why* the tunnel is unreachable, so the user gets a sentence
-    instead of a stack trace.
+    Distinguish a network filter from a broken tunnel.
 
-    The common cause is not a bug in this project: home routers and ISPs
-    increasingly classify ngrok tunnels as "high risk" and block them. Over
-    plain HTTP the filter is chatty — it serves its own block page — so we
-    ask over HTTP and read what comes back. Over HTTPS it can't inject a
-    page, so it garbles the connection instead, which is what surfaces as an
-    SSL error.
+    Filters that block ngrok garble HTTPS but serve a readable block page
+    over plain HTTP, so probe HTTP and read what comes back.
     """
     import requests
 
@@ -195,7 +186,7 @@ def diagnose_tunnel_failure(host: str) -> None:
 
     if any(word in body for word in blocked_words) and "{" not in body[:200]:
         report(WARN, "your network is blocking ngrok",
-               "a filter answered instead of your laptop — see the note below")
+               "a filter answered instead of this machine — see below")
         print("""
       Something between this Mac and the internet (usually the router, the
       ISP, or a VPN / "Advanced Security" style feature) treats ngrok

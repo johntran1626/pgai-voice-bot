@@ -1,15 +1,4 @@
-"""
-transcript.py — collects both sides of the conversation and writes them out.
-
-Two sides, two sources:
-  - "PGAI_AGENT"  — what THEY said. We get this because we ask OpenAI to run
-                    speech-to-text on the audio coming IN from the phone line.
-  - "PATIENT_BOT" — what WE said. OpenAI hands us a transcript of the speech
-                    it generated, for free, as it speaks.
-
-Every line is stamped with how many seconds into the call it happened, so a
-bug report can say "transcript-07.txt at 1:23".
-"""
+"""Collects both sides of the conversation and writes them to calls/<id>/."""
 
 import json
 import os
@@ -56,7 +45,7 @@ class Transcript:
             {"t": round(self.elapsed(), 2), "kind": kind, "detail": detail}
         )
 
-    # -- writing the deliverables -------------------------------------------
+    # -- output ---------------------------------------------------------
 
     def as_text(self) -> str:
         """The human-readable transcript that goes in the repo."""

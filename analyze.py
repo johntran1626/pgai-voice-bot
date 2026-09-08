@@ -1,22 +1,12 @@
 #!/usr/bin/env python3
 """
-analyze.py — turns transcripts into a first-draft bug report.
+Drafts candidate findings from the call transcripts.
 
     python analyze.py
 
-Reads every calls/*/transcript.json, shows each one to a text model along
-with what that scenario was SUPPOSED to test, and asks for concrete findings.
-Writes BUG_REPORT_DRAFT.md.
-
-This step is plain TEXT work, so it can run on either Anthropic or OpenAI
-credits — unlike the live phone call, which requires OpenAI because Anthropic
-has no realtime speech-to-speech API. Set ANALYSIS_PROVIDER in .env, or leave
-it on "auto" and it picks Anthropic whenever ANTHROPIC_API_KEY is present.
-
-Important: this is a DRAFT, not the deliverable. Models invent plausible-
-sounding bugs. Listen to the recording, confirm each finding is real, delete
-the nitpicks, then write the confirmed ones into BUG_REPORT.md yourself.
-That human pass is the part reviewers actually care about.
+Writes BUG_REPORT_DRAFT.md and a per-call analysis.json. Output is a draft:
+each finding carries a timestamp and verbatim quote to be checked against the
+recording.
 """
 
 import glob
@@ -72,8 +62,8 @@ def transcript_block(data: dict) -> str:
     return out
 
 
-# The exact shape we want back. Anthropic enforces this server-side via
-# output_config; OpenAI is asked for a JSON object and validated on arrival.
+# Anthropic enforces this server-side via output_config; OpenAI is asked for
+# a JSON object and validated on arrival.
 FINDING_SCHEMA = {
     "type": "object",
     "properties": {
@@ -129,9 +119,8 @@ def parse_json(raw: str) -> dict:
 
 
 def analyze_with_anthropic(client, data: dict) -> dict:
-    """Claude reads the transcript. Adaptive thinking is on because judging
-    e.g. whether a reply leaked another patient's data is a judgement call,
-    not pattern-matching."""
+    """Adaptive thinking: deciding whether a reply leaked another patient's
+    data is a judgement call, not pattern-matching."""
     response = client.messages.create(
         model=config.ANTHROPIC_ANALYSIS_MODEL,
         max_tokens=16000,
@@ -140,8 +129,7 @@ def analyze_with_anthropic(client, data: dict) -> dict:
         messages=[{"role": "user", "content": build_user_prompt(data)}],
         output_config={"format": {"type": "json_schema", "schema": FINDING_SCHEMA}},
     )
-    # With thinking on, the response also carries thinking blocks — take the
-    # text one, which output_config guarantees is valid JSON.
+    # Thinking blocks share the response; the text block is the JSON.
     text = next((b.text for b in response.content if b.type == "text"), "")
     return parse_json(text)
 
@@ -202,7 +190,6 @@ def main() -> None:
         for f in result.get("findings", []):
             f["scenario_id"] = sid
             all_findings.append(f)
-        # Keep the per-call output next to the call for easy cross-checking.
         with open(os.path.join(os.path.dirname(path), "analysis.json"), "w") as fh:
             json.dump(result, fh, indent=2)
 
@@ -241,8 +228,8 @@ def main() -> None:
     with open("BUG_REPORT_DRAFT.md", "w") as f:
         f.write("\n".join(out) + "\n")
 
-    print(f"\nWrote BUG_REPORT_DRAFT.md — {len(all_findings)} candidate findings.")
-    print("Now verify each one against the audio and write BUG_REPORT.md by hand.")
+    print(f"\nWrote BUG_REPORT_DRAFT.md — {len(all_findings)} candidates.")
+    print("Verify each against the recording before it goes in BUG_REPORT.md.")
 
 
 if __name__ == "__main__":

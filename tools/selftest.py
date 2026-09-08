@@ -1,19 +1,10 @@
 #!/usr/bin/env python3
 """
-tools/selftest.py — prove the bridge works without dialling anyone.
+Exercises the bridge against a fake Realtime server and a fake Twilio stream.
 
     python tools/selftest.py
 
-It stands up a FAKE OpenAI Realtime server and a FAKE Twilio media stream,
-runs a real CallBridge between them, and checks that:
-
-  1. audio from "the phone" reaches "the brain",
-  2. audio from "the brain" is played back to "the phone",
-  3. both sides of the conversation land in the transcript,
-  4. barge-in sends Twilio a "clear" so our bot stops talking,
-  5. the call shuts down cleanly.
-
-No API keys, no phone calls, no cost. Run it after any change to bridge.py.
+No API keys, no calls, no cost.
 """
 
 import asyncio

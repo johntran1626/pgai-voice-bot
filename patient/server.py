@@ -1,14 +1,6 @@
 """
-server.py — the tiny web server Twilio connects to.
-
-Twilio cannot send audio "to your laptop" directly; it needs a public URL to
-open a WebSocket against. This file provides that URL.
-
-It is deliberately thin. All it does is:
-  - accept the WebSocket,
-  - look up which scenario this call is for (from the URL path),
-  - hand the socket to a CallBridge, which does the real work,
-  - stash the finished transcript where run_call.py can pick it up.
+The WebSocket endpoint Twilio connects to. Resolves the scenario from the URL
+path, hands the socket to a CallBridge, and publishes the finished transcript.
 """
 
 import asyncio

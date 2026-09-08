@@ -26,5 +26,5 @@ requests>=2.31.0
 # Needed by tools/selftest.py (FastAPI's TestClient).
 httpx>=0.27.0
 
-# Opens a public internet tunnel to your laptop so Twilio can reach it.
+# Opens a public internet tunnel so Twilio can reach this process.
 pyngrok>=7.2.0

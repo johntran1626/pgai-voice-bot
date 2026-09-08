@@ -1,11 +1,4 @@
-"""
-telephony.py — everything that talks to Twilio (the phone company).
-
-Three jobs:
-  1. Place the outbound call, telling Twilio to pipe the audio to our bridge.
-  2. Hang up on demand.
-  3. After the call, download the recording as an .mp3.
-"""
+"""Placing Twilio calls, hanging up, and downloading the recording."""
 
 import os
 import time
@@ -28,13 +21,10 @@ def client() -> Client:
 
 def build_twiml(public_host: str, scenario_id: str) -> str:
     """
-    TwiML is the little XML script that tells Twilio what to do once the
-    other end picks up.
+    TwiML telling Twilio to open a media stream once the call connects.
 
-    <Connect><Stream> means: "open a two-way WebSocket to this URL and pipe
-    the call's audio through it". <Connect> (as opposed to <Start>) is the
-    bidirectional version — audio flows both ways, which is what lets our bot
-    actually speak.
+    <Connect> rather than <Start>: the bidirectional form, so the bridge can
+    send audio as well as receive it.
 
     The scenario id rides along in the URL path so the bridge knows which
     patient to play the instant the socket opens.
@@ -48,7 +38,7 @@ def build_twiml(public_host: str, scenario_id: str) -> str:
 
 
 def place_call(public_host: str, scenario_id: str):
-    """Dial the assessment line and return Twilio's call object."""
+    """Dial the number under test and return Twilio's call object."""
     return client().calls.create(
         to=config.TARGET_NUMBER,
         from_=config.TWILIO_FROM_NUMBER,
@@ -83,10 +73,7 @@ def wait_for_completion(call_sid: str, timeout: int = 400) -> str:
 
 def download_recording(call_sid: str, out_dir: str, tries: int = 12) -> str | None:
     """
-    Fetch the call's recording as an .mp3.
-
-    Twilio takes a few seconds after hang-up to finish processing audio, so
-    we retry for a bit rather than giving up immediately.
+    Fetch the call's recording as .mp3, retrying while Twilio encodes it.
     """
     os.makedirs(out_dir, exist_ok=True)
     for _ in range(tries):

@@ -1,1 +1,1 @@
-"""The 'patient' package: everything needed to make our fake patient call PGAI."""
+"""The simulated patient: telephony, audio bridge, prompts and scenarios."""

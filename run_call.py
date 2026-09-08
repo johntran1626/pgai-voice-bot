@@ -1,20 +1,14 @@
 #!/usr/bin/env python3
 """
-run_call.py — the one command you actually run.
+Entry point: places calls and saves the results.
 
-    python run_call.py --list              show the scenarios
-    python run_call.py 01_schedule_new     make ONE call
-    python run_call.py --all               make all 14 calls, back to back
+    python run_call.py --list              list the scenarios
+    python run_call.py 01_schedule_new     one call
+    python run_call.py --all               all 14, back to back
 
-What it does, in order:
-  1. Checks your .env is filled in.
-  2. Starts the audio-bridge web server inside this same process.
-  3. Opens a public tunnel (ngrok or cloudflared) so Twilio can reach it.
-  4. Tells Twilio to dial +1-805-439-8008.
-  5. Waits for the conversation to finish.
-  6. Saves the transcript and downloads the .mp3 recording into calls/<id>/.
-
-Everything runs in one process so you only need one terminal window.
+Per call: validate .env, start the bridge server, open a public tunnel, dial,
+wait for the conversation to end, then write the transcript and download the
+recording into calls/<id>/. Server, tunnel and call share one process.
 """
 
 import argparse
@@ -60,19 +54,11 @@ async def start_server() -> uvicorn.Server:
 
 async def open_tunnel() -> tuple[str, "Callable[[], None]"]:
     """
-    Give Twilio a public address that points at this laptop.
+    Open a public address routing to this process.
 
-    Returns (hostname, close) — call close() when you're done to shut down
-    whatever we started. close() is a no-op if we started nothing.
-
-    Three ways to get that address:
-      * PUBLIC_HOST in .env — you're handling it yourself, we use it as-is.
-      * ngrok — the documented default, needs a free authtoken.
-      * cloudflared — a Cloudflare "quick tunnel", no account at all.
-
-    Why the choice exists: plenty of home routers and ISPs classify ngrok
-    subdomains as high-risk and block them, which looks like a broken setup
-    but isn't. Cloudflare tunnels usually sail through the same filters.
+    Returns (hostname, close); close() is a no-op when nothing was started.
+    Source is PUBLIC_HOST, ngrok, or a cloudflared quick tunnel — the last
+    because some networks block ngrok subdomains outright.
     """
     if config.PUBLIC_HOST:
         host = config.PUBLIC_HOST.replace("https://", "").replace("http://", "")
@@ -107,11 +93,9 @@ async def open_ngrok_tunnel() -> tuple[str, "Callable[[], None]"]:
 
 async def open_cloudflared_tunnel() -> tuple[str, "Callable[[], None]"]:
     """
-    Start `cloudflared tunnel --url http://localhost:PORT` and read the
-    public hostname it prints.
+    Start a cloudflared quick tunnel and read the hostname it prints.
 
-    A "quick tunnel" needs no Cloudflare account and no token. The URL is
-    random and dies with the process, which is exactly what we want.
+    No account or token; the URL is random and dies with the process.
     """
     if shutil.which("cloudflared") is None:
         print(
@@ -175,7 +159,7 @@ async def run_one(scenario: dict, public_host: str) -> bool:
         print("   (a previous result exists here and will be replaced)")
         shutil.rmtree(out_dir)
 
-    # Tell the server to expect this call, BEFORE dialling, so there's no race.
+    # Register before dialling: the agent can answer faster than we arm.
     done = server.expect(sid)
 
     try:
@@ -269,9 +253,8 @@ async def main_async(scenarios: list[dict]) -> None:
         print(f"\n{'=' * 70}\n{succeeded}/{len(scenarios)} call(s) captured. "
               f"Results are in calls/\n{'=' * 70}")
         srv.should_exit = True
-        # Give uvicorn a moment to shut down cleanly. Without it, its
-        # lifespan task gets cancelled mid-await and prints an alarming
-        # (but harmless) CancelledError traceback under your results.
+        # Let uvicorn shut down before leaving the loop, or its lifespan
+        # task is cancelled mid-await and prints a spurious traceback.
         await asyncio.sleep(0.5)
         close_tunnel()
 

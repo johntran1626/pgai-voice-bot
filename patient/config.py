@@ -1,31 +1,23 @@
-"""
-config.py — one place that reads your .env file and hands out settings.
-
-Why this file exists: every other file needs the API keys and settings.
-If each file read the .env itself, a typo would be scattered everywhere.
-Instead everything imports from here, and we validate once, loudly.
-"""
+"""Reads .env and exposes each setting as a module-level constant."""
 
 import os
 import sys
 from dotenv import load_dotenv
 
-# Reads the .env file sitting next to this project and loads it into
-# os.environ, the same place real environment variables live.
+# Load .env from the project root into os.environ.
 load_dotenv()
 
-# --- The one number we are allowed to dial ---------------------------------
-# Hard-coded on purpose. The assessment says every call must go to this
-# number. If someone edits .env to point somewhere else, we refuse to run.
+# --- The only number this dials --------------------------------------------
+# Hard-coded on purpose: editing .env to point elsewhere aborts the run.
 ALLOWED_TARGET = "+18054398008"
 
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
 REALTIME_MODEL = os.environ.get("REALTIME_MODEL", "gpt-realtime")
 PATIENT_VOICE = os.environ.get("PATIENT_VOICE", "coral")
 # --- The bug-analysis pass (text only; separate from the live call) --------
-# You can run this on Anthropic OR OpenAI credits. "auto" prefers Anthropic
+# Runs on Anthropic or OpenAI credits. "auto" prefers Anthropic
 # when an Anthropic key is present, since the live call already requires
-# OpenAI and this lets you spend a different balance on the analysis.
+# OpenAI, so the analysis can draw on a different balance.
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 ANALYSIS_PROVIDER = os.environ.get("ANALYSIS_PROVIDER", "auto").strip().lower()
 ANALYSIS_MODEL = os.environ.get("ANALYSIS_MODEL", "gpt-5")
@@ -47,7 +39,7 @@ TWILIO_FROM_NUMBER = os.environ.get("TWILIO_FROM_NUMBER", "")
 TARGET_NUMBER = os.environ.get("TARGET_NUMBER", ALLOWED_TARGET)
 
 PORT = int(os.environ.get("PORT", "5050"))
-# Which tunnel service gives Twilio a public door into this laptop.
+# Which tunnel service gives Twilio a public route to this process.
 #   auto        = ngrok if NGROK_AUTHTOKEN is set, else cloudflared
 #   ngrok       = force ngrok
 #   cloudflared = force a Cloudflare quick tunnel (no account needed)
@@ -60,19 +52,19 @@ PUBLIC_HOST = os.environ.get("PUBLIC_HOST", "").strip()
 
 MAX_CALL_SECONDS = int(os.environ.get("MAX_CALL_SECONDS", "300"))
 
-# --- How our patient decides the other person has finished talking ---------
+# --- Turn detection: when the far side has finished talking ----------------
 # This one setting trades response SPEED against INTERRUPTIONS. There is no
 # value that wins both; tune it by listening to a recording.
 #
 #   VAD_MODE=semantic  asks a small model "did that sound like a finished
 #                      thought?" Smarter about mid-sentence pauses, but adds
-#                      delay before our patient replies.
+#                      latency before replying.
 #     VAD_EAGERNESS    low | medium | high | auto  (the API rejects anything
 #                      else). low = most patient, slowest to reply.
 #
 #   VAD_MODE=server    plain silence timer: reply once they have been quiet
 #                      for VAD_SILENCE_MS. Snappier and predictable, but it
-#                      will cut in on someone who pauses to think.
+#                      cuts in on a mid-sentence pause.
 VAD_MODE = os.environ.get("VAD_MODE", "semantic").strip().lower()
 VAD_EAGERNESS = os.environ.get("VAD_EAGERNESS", "medium").strip().lower()
 VAD_SILENCE_MS = int(os.environ.get("VAD_SILENCE_MS", "700"))
@@ -83,10 +75,7 @@ CALLS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "calls")
 
 def require(*names: str) -> None:
     """
-    Stop the program with a friendly message if a required setting is blank.
-
-    Called at the top of scripts so you find out about a missing key in one
-    second, instead of after a confusing crash three minutes later.
+    Exit with a readable message if any required setting is blank.
     """
     missing = [n for n in names if not globals().get(n)]
     if missing:
@@ -100,6 +89,6 @@ def require(*names: str) -> None:
         print(
             f"Refusing to run.\n"
             f"  TARGET_NUMBER in .env is {TARGET_NUMBER!r}\n"
-            f"  but this assessment only permits calling {ALLOWED_TARGET}."
+            f"  but this program only dials {ALLOWED_TARGET}."
         )
         sys.exit(1)

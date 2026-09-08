@@ -1,23 +1,10 @@
 """
-bridge.py — the heart of the project.
+Audio bridge between a Twilio call and OpenAI's Realtime API.
 
-A phone call is just a stream of audio. This file sits in the middle of two
-streams and shovels audio between them:
+    Twilio (phone line)  <---->  CallBridge  <---->  Realtime API
 
-    Twilio (the phone line)  <---->  BRIDGE  <---->  OpenAI Realtime (the brain)
-
-Left side : Twilio opens a WebSocket to us and sends ~50 tiny audio packets
-            per second of whatever the PGAI agent is saying. It also plays
-            back any audio we send it.
-Right side: OpenAI's Realtime API takes audio in, thinks, and streams audio
-            back out in our patient's voice.
-
-Both sides speak the same audio format — G.711 mu-law at 8kHz, the ancient
-codec the phone network uses — so we never have to convert anything. We just
-pass the base64 blobs straight through. That is the single biggest reason
-this file is short.
-
-Everything else in here is the hard part: knowing WHEN to talk.
+Both sides speak G.711 mu-law at 8kHz, so audio passes through base64-encoded
+and is never transcoded. Handles turn-taking, barge-in and call teardown.
 """
 
 import asyncio
@@ -33,8 +20,7 @@ from .transcript import Transcript
 
 OPENAI_WS_URL = "wss://api.openai.com/v1/realtime?model={model}"
 
-# OpenAI renamed several event types when the Realtime API went GA.
-# We accept BOTH spellings so this keeps working either way.
+# The Realtime API renamed these at GA; both spellings are accepted.
 AUDIO_DELTA_EVENTS = {"response.output_audio.delta", "response.audio.delta"}
 BOT_TRANSCRIPT_DONE = {
     "response.output_audio_transcript.done",
@@ -44,34 +30,26 @@ AGENT_TRANSCRIPT_DONE = {
     "conversation.item.input_audio_transcription.completed",
 }
 
-# How long to wait, in silence, before nudging our bot to say "hello?"
+# Silence before prompting an opening line.
 GREETING_TIMEOUT_S = 12
 
 # --- Letting the office finish its greeting --------------------------------
-# Real receptionists open with a recorded disclaimer and/or "Dr. Smith's
-# office, how can I help you?" A human waits through all of that. Our bot
-# could not: with turn detection on, the API CREATES A REPLY every time it
-# thinks a turn ended, so the model was forced to speak over the recording
-# and then repeat itself once a person actually greeted us.
-#
-# So we start the call with create_response switched off — our patient
-# listens but cannot reply — and only open the gate once the office has
-# actually said something AND gone quiet, which is the real cue to speak.
+# Offices answer with a recorded disclaimer before a person speaks. With
+# turn detection enabled the API creates a response every time it decides a
+# turn ended, so no prompt can make the model wait — it is not given the
+# option. The call therefore starts with create_response off and is un-muted
+# only once the far side has spoken and then gone quiet.
 OPENING_SILENCE_S = 1.5   # quiet this long after they speak = our turn
 OPENING_MAX_HOLD_S = 25   # never stay muted longer than this, whatever happens
 
 # --- Hanging up politely ---------------------------------------------------
-# After our patient signs off, wait for the receptionist to say their piece
-# ("alright, see you Wednesday") before dropping the line.
+# After signing off, wait for the far side to close the conversation.
 HANGUP_QUIET_S = 1.2      # they've been quiet this long = conversation over
 HANGUP_GRACE_MAX_S = 12   # but never hold the line open longer than this
 
-# --- Dead air in the middle of a call --------------------------------------
-# Call 08 sat in total silence for four and a half minutes before the hard
-# cap ended it: the agent had stopped responding, and our silence nudge only
-# ever fired when NOTHING had been said all call. Now we watch for the line
-# going quiet at any point, prod once, then give up rather than paying for
-# minutes of nothing.
+# --- Dead air mid-call -----------------------------------------------------
+# GREETING_TIMEOUT_S only fires when nothing has been said all call, so a
+# conversation that dies partway through went unnoticed until the hard cap.
 MID_CALL_SILENCE_S = 22   # nobody has spoken this long = something is wrong
 MID_CALL_GIVE_UP_S = 45   # still nothing after this = hang up
 
@@ -92,7 +70,7 @@ class CallBridge:
         # --- state used for interruption ("barge-in") handling -------------
         # Twilio stamps every inbound audio packet with a millisecond
         # timestamp. We use those numbers as our clock, because they reflect
-        # what the phone line actually did, not what our laptop thinks.
+        # what the phone line actually did, not what this process thinks.
         self.latest_media_ts = 0
         # When our bot's current sentence STARTED playing, on that same clock.
         self.response_start_ts: int | None = None
@@ -130,20 +108,13 @@ class CallBridge:
 
     def session_config(self, minimal: bool = False) -> dict:
         """
-        The one message that configures the whole call: who our patient is,
-        what voice it uses, what audio format, and how it decides when the
-        other person has stopped talking.
+        Persona, voice, audio format and turn detection, in one message.
 
-        `minimal=True` strips the optional extras — used as an automatic
-        fallback if OpenAI rejects a newer field.
+        `minimal=True` drops the optional fields, as a retry if the API
+        rejects a newer one.
         """
-        # How we decide the other person has stopped talking. A scenario can
-        # override this outright (08_barge_in does); otherwise it comes from
-        # .env, because it is the setting most worth tuning by ear.
-        #
-        # The trade-off is real and has no free lunch: waiting longer means
-        # never talking over them but replying slowly, and replying fast
-        # means occasionally cutting in on a pause. See config.py.
+        # A scenario may override turn detection outright (08_barge_in does);
+        # otherwise it comes from .env. Trade-offs documented in config.py.
         if config.VAD_MODE == "server":
             default_vad = {
                 "type": "server_vad",
@@ -160,9 +131,8 @@ class CallBridge:
                 "interrupt_response": True,
             }
         turn_detection = dict(self.scenario.get("turn_detection", default_vad))
-        # Remember the real settings, then send a muted version: the model
-        # listens to the greeting but is not allowed to answer it yet.
-        # open_opening_gate() restores these once the office stops talking.
+        # Send a muted version first: the model listens to the greeting but
+        # cannot answer it. open_opening_gate() restores these settings.
         self.turn_detection = dict(turn_detection)
         self.turn_detection["create_response"] = True
         if not self.opening_done:
@@ -178,8 +148,7 @@ class CallBridge:
                     # audio/pcmu == G.711 mu-law == exactly what Twilio sends.
                     "format": {"type": "audio/pcmu"},
                     "turn_detection": turn_detection,
-                    # Transcribe the OTHER side so we capture their half of
-                    # the conversation for the transcript deliverable.
+                    # Transcribe the far side too, for the transcript.
                     "transcription": {"model": "gpt-4o-transcribe"},
                 },
                 "output": {
@@ -210,18 +179,15 @@ class CallBridge:
             self.openai_ws = openai_ws
             await self.send_openai(self.session_config())
 
-            # Run three jobs at the same time. asyncio lets a single thread
-            # interleave them, so none of them blocks the others.
             tasks = [
                 asyncio.create_task(self.pump_phone_to_brain()),
                 asyncio.create_task(self.pump_brain_to_phone()),
                 asyncio.create_task(self.watchdog()),
             ]
 
-            # Wait for whichever job decides the call is over, then stop the
-            # others. We can NOT just gather() all three: when the far end
-            # hangs up, the phone-side loop ends but the OpenAI socket stays
-            # open, so gather() would wait forever on a call that's finished.
+            # Wait on whichever task decides the call is over, then cancel
+            # the rest. gather() on all three deadlocks: when the far end
+            # hangs up the phone loop ends, but the OpenAI socket stays open.
             await self.finished.wait()
             for task in tasks:
                 task.cancel()
@@ -260,16 +226,14 @@ class CallBridge:
                     self.call_sid = start.get("callSid")
                     self.transcript.call_sid = self.call_sid
                     self.transcript.stream_sid = self.stream_sid
-                    # Reset the clock: the call really begins here, not when
-                    # the Python object was created.
+                    # Timestamps run from the stream opening, not from
+                    # whenever this object was constructed.
                     self.transcript.started_at = time.monotonic()
                     print(f"  ▸ media stream open (call {self.call_sid})")
 
                 elif event == "media":
-                    # Twilio's own clock for this packet, in milliseconds.
                     self.latest_media_ts = int(msg["media"]["timestamp"])
-                    # Hand the audio straight to OpenAI. No decoding needed —
-                    # it's already base64'd mu-law, which is what OpenAI wants.
+                    # Already base64 mu-law, which is what the API expects.
                     await self.send_openai(
                         {
                             "type": "input_audio_buffer.append",
@@ -278,7 +242,6 @@ class CallBridge:
                     )
 
                 elif event == "mark":
-                    # A chunk we sent has finished playing out loud.
                     if self.mark_queue:
                         self.mark_queue.pop(0)
 
@@ -351,16 +314,11 @@ class CallBridge:
             }
         )
 
-        # Note when this sentence began, so that if we get interrupted we can
-        # work out how much of it was actually heard.
-        #
-        # The clock has to restart on every NEW sentence. Each response gets a
-        # fresh item_id, so a changed id means a new sentence. Without this
-        # check response_start_ts stays pinned to the first reply of the whole
-        # call: a barge-in twenty seconds later then computes "they heard
-        # 39200ms" of a three-second sentence, OpenAI rejects the truncate
-        # ("Audio content of 3100ms is already shorter than 39200ms"), and our
-        # bot's memory quietly desynchronises from what was actually heard.
+        # Mark when this sentence began, so a barge-in can measure how much
+        # was heard. A changed item_id marks a new sentence: left pinned to
+        # the first reply of the call, a later barge-in
+        # reports a duration longer than the sentence and the truncate is
+        # rejected, silently desyncing the model's memory from what was heard.
         item_id = evt.get("item_id")
         if item_id and item_id != self.last_assistant_item:
             self.last_assistant_item = item_id
@@ -369,9 +327,7 @@ class CallBridge:
         elif self.response_start_ts is None:
             self.response_start_ts = self.latest_media_ts
 
-        # Track how much of this sentence we have actually streamed. mu-law
-        # at 8kHz is 8 bytes per millisecond, so the decoded chunk length
-        # tells us its duration.
+        # mu-law at 8kHz is 8 bytes per millisecond.
         self.audio_sent_ms += len(base64.b64decode(evt["delta"])) / 8.0
         self.last_voice_at = time.monotonic()
 
@@ -387,24 +343,18 @@ class CallBridge:
 
     async def handle_barge_in(self) -> None:
         """
-        The other side started talking while our bot was still speaking.
+        Handle the far side talking over us.
 
-        Two things must happen, and BOTH matter:
-          1. Tell Twilio to throw away audio it has buffered but not yet
-             played, so our bot goes quiet immediately instead of finishing
-             a sentence nobody is listening to.
-          2. Tell OpenAI to truncate its memory of that sentence to the part
-             that was actually heard. Without this, our bot believes it said
-             a whole sentence the other party never heard, and the rest of
-             the conversation quietly desynchronises.
+        Both halves matter: clear Twilio's playback buffer, and truncate the
+        model's memory to the audio actually heard. Without the second, the
+        model believes it said sentences nobody received.
         """
         if not self.mark_queue or self.response_start_ts is None:
             return  # our bot wasn't talking; nothing to interrupt
 
         heard_ms = self.latest_media_ts - self.response_start_ts
-        # They cannot have heard more than we sent. Twilio's inbound clock
-        # runs slightly ahead of our outbound audio, which is what produced
-        # "Audio content of 4350ms is already shorter than 4540ms".
+        # Twilio's inbound clock runs ahead of our outbound audio, so bound
+        # this by what was actually streamed.
         heard_ms = int(min(heard_ms, self.audio_sent_ms))
 
         if self.last_assistant_item:
@@ -435,10 +385,8 @@ class CallBridge:
         self.transcript.note("bot_hung_up", args.get("outcome", ""))
         print(f"  ▸ patient ended the call: {args.get('outcome')}")
 
-        # Let the receptionist finish. Hanging up the instant our patient
-        # says "that's all I needed" chops their "alright, see you Wednesday"
-        # off the recording and sounds abrupt — a real caller waits for the
-        # other person to close the conversation too.
+        # Let the far side finish. Hanging up on our own last word clips
+        # their sign-off from the recording.
         deadline = time.monotonic() + HANGUP_GRACE_MAX_S
         while time.monotonic() < deadline:
             await asyncio.sleep(0.25)
@@ -474,12 +422,9 @@ class CallBridge:
 
     async def open_opening_gate(self, why: str) -> None:
         """
-        Let our patient start talking.
+        Un-mute the patient once the far side has finished its greeting.
 
-        Called once, when the office has finished its greeting (or when we
-        have waited long enough that something is clearly odd). It restores
-        the real turn-detection settings and asks for one reply, which is
-        our patient's opening line.
+        Restores the real turn-detection settings and requests one reply.
         """
         if self.opening_done:
             return
@@ -499,10 +444,8 @@ class CallBridge:
 
     async def watchdog(self) -> None:
         """
-        Runs once a second. Two jobs:
-          - Nudge our bot to speak if the line has been dead silent.
-          - Hard-stop the call if it runs too long, so a stuck call can never
-            quietly bill you for twenty minutes.
+        Once a second: open the opening gate, nudge on silence, recover from
+        mid-call dead air, and enforce MAX_CALL_SECONDS.
         """
         while not self.finished.is_set():
             await asyncio.sleep(1)
