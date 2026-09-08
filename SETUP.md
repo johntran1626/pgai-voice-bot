@@ -59,6 +59,12 @@ pip install -r requirements.txt
 
 ## Step 2 — OpenAI account (the bot's brain and voice)
 
+> **You cannot skip this step, and Anthropic credit does not replace it.**
+> The Realtime API is what actually holds the phone conversation, and
+> Anthropic has no equivalent — so without this, there is no call. If you
+> have Anthropic credit, it covers the *bug analysis* in Step 8; see the
+> optional note at the end of this step.
+
 1. Go to **https://platform.openai.com/signup** and create an account. This
    is the *developer* platform, not ChatGPT — a ChatGPT Plus subscription
    does **not** give you API access. They're separate.
@@ -105,9 +111,29 @@ Twilio is the company that owns real phone numbers and connects real calls.
    > yours to verify, so on a trial account every call will fail with
    > error 21219. Upgrading is what makes this project work at all.
 
-3. Buy a phone number: **Phone Numbers → Manage → Buy a number**. Pick any
-   US number with a checkmark in the **Voice** column. It costs about
-   $1.15/month. Click **Buy**.
+3. Buy a phone number: **Phone Numbers → Manage → Buy a number**. Choose
+   **Local**, not Toll-free, and pick any US number with a checkmark in the
+   **Voice** column. It costs about $1.15/month. Click **Buy**.
+
+   > **Why local and not toll-free?** Real patients call a clinic from a
+   > local mobile number; an 800 number calling *in* looks like a
+   > telemarketer, and phone systems sometimes treat those differently. If
+   > the agent then behaves oddly you can't tell a real bug from spam
+   > handling. Local is also cheaper, both monthly and per minute, and
+   > skips the extra verification toll-free numbers require.
+   >
+   > Optional nicety: the search box lets you filter by area code. Picking
+   > **805** (the area the practice is in) makes your caller ID look local
+   > to them. Any US area code works — this just costs nothing to do.
+
+   After buying, Twilio shows a **"Finish setting up your number"** checklist
+   — SHAKEN/STIR, Voice Integrity, Branded Calling, CNAM. **Skip all of it.**
+   The only entry that matters is the compliance profile, which Twilio
+   completes for you during purchase. The rest are paid add-ons for
+   businesses running real outbound campaigns: they brand your caller ID and
+   protect your number's spam reputation. You are making ~14 calls to a
+   single bot that has no screen and does not read caller names. None of
+   these affect whether a call connects.
 4. Go to the console home page: **https://console.twilio.com**. In the
    **Account Info** panel you'll see:
    - **Account SID** — starts with `AC`
